@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 72px);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.image {
+  width: 100px;
+  height: auto;
+}
+
+.text {
+  color: red;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.description {
+  text-align: center;
+}
+
+.accent {
+  font-weight: 600;
+}

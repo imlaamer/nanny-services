@@ -1,0 +1,5 @@
+@import '../src/assets/styles/normalize.css';
+
+@import '../src/assets/styles/global.module.css';
+
+@import '../src/assets/theme/palette.css';

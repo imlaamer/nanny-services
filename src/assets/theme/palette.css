@@ -1,0 +1,10 @@
+:root {
+  --toastify-color-success: #5cb85c;
+  --toastify-icon-color-success: var(--toastify-color-success);
+
+  --toastify-color-error: #ef5050;
+  --toastify-icon-color-error: var(--toastify-color-error);
+
+ --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --backdrop: rgba(17, 18, 19, 0.4);
+}

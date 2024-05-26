@@ -1,0 +1,14 @@
+.loader {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+width: '100vw',
+position: 'fixed',
+ top: 0,
+left: 0, */
