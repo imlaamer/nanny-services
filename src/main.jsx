@@ -5,9 +5,10 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 
+import App from './App.jsx';
+
 import { store, persistor } from './redux/store.js';
 
-import App from './App.jsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -15,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <PersistGate loading={null} persistor={persistor}>
       <HelmetProvider>
         <Provider store={store}>
-          <BrowserRouter basename="/react-vite">
+          <BrowserRouter basename="/nanny-services">
             <App />
           </BrowserRouter>
         </Provider>
