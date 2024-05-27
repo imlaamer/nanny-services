@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <PersistGate loading={null} persistor={persistor}>
       <HelmetProvider>
         <Provider store={store}>
-          <BrowserRouter basename="/nanny-services">
+          <BrowserRouter>
             <App />
           </BrowserRouter>
         </Provider>
@@ -24,3 +24,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </PersistGate>
   </React.StrictMode>
 );
+
+//basename="/nanny-services"
