@@ -4,17 +4,19 @@ import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [react(), svgr()],
-  build: { sourcemap: true },
   resolve: {
     alias: {
-      src: '/src',
-      components: '/src/components',
-      pages: '/src/pages',
       assets: '/src/assets',
-      // helpers: '/src/helpers',
-      // services: '/src/services',
-      // reduxState: '/src/redux',
+      styles: '/src/assets/styles',
+      pages: '/src/pages',
+      components: '/src/components',
+      service: '/src/services',
+      base: '/',
+      build: {
+        rollupOptions: {
+          external: ['@chatscope/chat-ui-kit-styles'],
+        },
+      },
     },
   },
-  base: '/nanny-services/',
 });
