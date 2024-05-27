@@ -1,4 +1,4 @@
-import IconsSprite from '../../../assets/sprite.svg';
+// import IconsSprite from '../../../assets/sprite.svg';
 
 import s from './Icon.module.css';
 
@@ -18,7 +18,7 @@ const Icon = ({
       fill={fill}
       stroke={stroke}
     >
-      <use href={`${IconsSprite}#icon-${id}`} />
+      <use href={`${'IconsSprite'}#icon-${id}`} />
     </svg>
   );
 };
