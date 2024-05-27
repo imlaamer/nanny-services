@@ -11,7 +11,7 @@ export default defineConfig({
       pages: '/src/pages',
       components: '/src/components',
       service: '/src/services',
-      base: '/',
+      base: '/nanny-services/',
       build: {
         rollupOptions: {
           external: ['@chatscope/chat-ui-kit-styles'],
