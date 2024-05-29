@@ -5,7 +5,12 @@ import s from './HomePage.module.css';
 const HomePage = () => {
   return (
     <section className={s.hero}>
-      <Container className="home-page-container"></Container>
+      <div className={s.leftBox}>
+        <Container className="home-page-container"></Container>
+      </div>
+      <div className={s.rightBox}>
+        <Container className="home-page-container"></Container>
+      </div>
     </section>
   );
 };

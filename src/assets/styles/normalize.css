@@ -15,11 +15,13 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-family: 'Helvetica Neue', sans-serif;
+  /* font-weight: 400; */
+  font-weight: 500;
   font-size: 16px;
-  line-height: 20px;
-  color: var(--primary-dark);
+  /* line-height: 20px; */
+  line-height: 1.25;
+  color: var(--primary-white);
   background-color: var(--primary-white);
 }
 

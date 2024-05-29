@@ -2,67 +2,77 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 14px 40px;
+  width: auto;
+  margin: 0 auto;
   border: none;
-  padding: 16px 60px;
+  outline: none;
+
   line-height: 1.5;
+  letter-spacing: -0.08px;
   font-size: 16px;
   font-weight: 500;
   font-style: normal;
-  border-radius: 200px;
-  background-color: var(--secondary-red);
-  color: var(--primary-white);
+  border-radius: 30px;
+
+  background-color: var(--primary-blue);
+
+  color: inherit;
   transition: var(--transition);
-  width: auto;
-  margin: 0 auto;
-  letter-spacing: -0.08px;
-  outline: none;
 }
 
+/* .authBtn .loginBtn {
+  margin: 0;
+  margin-right: 8px;
+  background-color: transparent;
+  border: 1px solid var(--primary-light-gray);
+} */
+
 .button:is(:hover, :focus) {
-  background-color: var(--hover-red);
+  /* background-color: var(--hover-red); */
+  /* background-color: var(--hover); */
+  background-color: #fbfbfb;
+  color: var(--primary-blue);
 }
 
 .showMoreCardBtn {
   margin: 0;
-  padding-left: 40px;
-  padding-right: 40px;
+  /* padding-left: 40px;
+  padding-right: 40px;  */
 }
 
-.load-more-cards-btn {
+/* .load-more-cards-btn {
   background-color: transparent;
   color: var(--primary-dark);
   padding-left: 32px;
   padding-right: 32px;
   border: 1px solid rgba(71, 84, 103, 0.2);
-}
+} */
 
-.load-more-cards-btn:is(:hover, :focus) {
+/* .load-more-cards-btn:is(:hover, :focus) {
   background-color: transparent;
   border-color: var(--hover-red);
-}
+} */
 
-.booking-submit-btn {
+/* .booking-submit-btn {
   margin: 0;
-}
-
+} */
+/* 
 .filterSearchBtn {
   margin: 0;
   background-color: var(--secondary-red);
-  /* width: 174px; */
   height: 56px;
 }
 
 .filterSearchBtn:is(:hover, :focus) {
   background-color: var(--hover-red);
-}
-
+} */
+/* 
 .filterResetBtn {
   margin: 0;
   background-color: var(--secondary-light-grey);
   color: var(--primary-dark);
-  /* width: auto; */
-  /* padding-right: 30px;
-  padding-left: 30px; */
+
 }
 
 .filterResetBtn:is(:hover, :focus) {
@@ -71,4 +81,12 @@
 
 .filterResetBtn:disabled {
   cursor: not-allowed;
+} */
+.loginBtn {
+  margin: 0;
+  background-color: transparent;
+  border: 1px solid var(--primary-light-gray);
+}
+
+.registerBtn {
 }

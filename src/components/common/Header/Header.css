@@ -1,8 +1,20 @@
 header {
-  position: fixed;
+  position: absolute;
   left: 0;
+  top: 32px;
+  width: 100%;
+  z-index: 2000;
+  border-bottom: 1px solid var(--primary-light-gray);
+}
+
+.transperentHeader {
+  width: 100%;
+  background-color: transparent;
+}
+
+.coloredHeader {
+  position: fixed;
   top: 0;
   width: 100%;
-  background-color: black;
-  z-index: 2000;
+  background-color: var(--primary-blue);
 }

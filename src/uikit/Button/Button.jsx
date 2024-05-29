@@ -6,7 +6,7 @@ const Button = ({
   type = 'button',
   title,
   children,
-  className = 'load-more',
+  className,
   onClick,
   loading,
   loaderColor = '#fff',
