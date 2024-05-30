@@ -26,5 +26,7 @@
   }
 }
 
-.active {
+.coloredHeaderBtn {
+  composes: button;
+  top: 4%;
 }

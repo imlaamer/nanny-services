@@ -16,7 +16,7 @@ const Header = () => {
     <header className={headerClass}>
       <Container>
         <Navigation isNanniesPage={isNanniesPage} isHomePage={isHomePage} />
-        <BurgerMenu />
+        <BurgerMenu isNanniesPage={isNanniesPage} />
       </Container>
     </header>
   );

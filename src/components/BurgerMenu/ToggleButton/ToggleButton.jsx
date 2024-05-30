@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import s from './ToggleButton.module.css';
 import { useState } from 'react';
 
-const ToggleButton = ({ setOpen }) => {
+const ToggleButton = ({ setOpen, isNanniesPage }) => {
   const [isToggleStroke, setIsToggleStroke] = useState(false);
 
   const handleClick = () => {
@@ -11,7 +11,7 @@ const ToggleButton = ({ setOpen }) => {
   };
 
   return (
-    <button onClick={handleClick} className={s.button}>
+    <button onClick={handleClick} className={!isNanniesPage ? s.button  : s.coloredHeaderBtn}>
       <svg width="23" height="23" viewBox="0 0 23 23">
         <motion.path
           strokeWidth="2"

@@ -28,7 +28,7 @@ const variants = {
   },
 };
 
-const BurgerMenu = () => {
+const BurgerMenu = ({ isNanniesPage }) => {
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const BurgerMenu = () => {
           ))} */}
         </nav>
       </motion.div>
-      <ToggleButton setOpen={setOpen} />
+      <ToggleButton setOpen={setOpen} isNanniesPage={isNanniesPage} />
     </motion.div>
   );
 };

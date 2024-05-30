@@ -3,7 +3,8 @@
   top: 0;
   left: 0;
   bottom: 0;
-  height: 100vh;
+  height: 0;
+  /* height: 100vh; */
   /* width: 100vw; */
   width: 50vw;
 
