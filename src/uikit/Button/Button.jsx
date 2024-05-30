@@ -10,6 +10,7 @@ const Button = ({
   onClick,
   loading,
   loaderColor = '#fff',
+  id,
   ...rest
 }) => {
   const buttonClasses = `${s.button} ${s[className]}`;
@@ -20,11 +21,13 @@ const Button = ({
       onClick={onClick}
       className={buttonClasses}
       disabled={loading}
+      id={id}
       {...rest}
     >
       {loading && <Spinner color={loaderColor} />}
-      {children}
+
       {!loading && title}
+      {children}
     </button>
   );
 };

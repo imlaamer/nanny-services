@@ -3,6 +3,7 @@ import Container from '../Container/Container';
 import Navigation from './Navigation/Navigation';
 
 import './Header.css';
+import BurgerMenu from '../../BurgerMenu/BurgerMenu';
 
 const Header = () => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const Header = () => {
     <header className={headerClass}>
       <Container>
         <Navigation isNanniesPage={isNanniesPage} isHomePage={isHomePage} />
+        <BurgerMenu />
       </Container>
     </header>
   );

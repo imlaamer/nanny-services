@@ -3,19 +3,37 @@ import { NavLink } from 'react-router-dom';
 import s from './Navigation.module.css';
 import Button from '../../../../uikit/Button/Button';
 import { useState } from 'react';
+import Modal from '../../Modal/Modal';
 
 const Navigation = ({ isNanniesPage, isHomePage }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogModalOpen, setIsLogModalOpen] = useState(false);
 
-  const handleOpenModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+
+  const handleOpenModal = (e) => {
+    if (e.target.id === 'log') {
+      setIsLogModalOpen(true);
+    } else {
+      setIsSignupModalOpen(true);
+    }
+  };
+
+  const handleCloseModal = () => {
+    if (isLogModalOpen) {
+      setIsLogModalOpen(false);
+    }
+    if (isSignupModalOpen) {
+      setIsSignupModalOpen(false);
+    }
   };
 
   //temporary: isNanniesPage isHomePage -> loggedInStatus auth
 
   return (
     <div className={s.logoNavWrapper}>
-      <NavLink className={`${s.navLink} ${s.logoText} `} to="/">
+      {/* ${s.navLink} */}
+      <NavLink className={` ${s.logoText} `} to="/">
+        {/* <span>Nanny.Services</span> */}
         Nanny.Services
       </NavLink>
 
@@ -55,16 +73,21 @@ const Navigation = ({ isNanniesPage, isHomePage }) => {
           <Button
             title={isNanniesPage ? 'Log out' : 'Log in'}
             onClick={handleOpenModal}
-            className="loginBtn"
+            className="logBtn"
+            id="log"
           />
+          {isLogModalOpen && <Modal onClose={handleCloseModal}></Modal>}
 
           {isHomePage && (
             <Button
-              title="Registration"
+              title="Sign up"
+              // title="Registration"
               onClick={handleOpenModal}
               className="registerBtn"
+              id="signup"
             />
           )}
+          {isSignupModalOpen && <Modal onClose={handleCloseModal}></Modal>}
         </div>
       </div>
     </div>

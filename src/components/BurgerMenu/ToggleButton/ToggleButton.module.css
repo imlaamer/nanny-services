@@ -1,0 +1,30 @@
+@media screen and (max-width: 960px) {
+  .button {
+    z-index: 999;
+    position: fixed;
+    /* margin-top: 10px; */
+    top: 46px;
+    /* right: 52px; */
+    left: 52px;
+    background-color: transparent;
+
+    border: none;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .button {
+    /* right: 20px; */
+    left: 20px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .button {
+    top: 8%;
+  }
+}
+
+.active {
+}

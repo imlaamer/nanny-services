@@ -1,34 +1,27 @@
-.logoNavWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navWrapper {
-  display: inline-flex;
-  /* flex */
-  justify-content: space-between;
-  /* gap: 92px; */
-  align-items: center;
-  /* width: 533px; */
-  width: 50%;
-  padding-left: 70px;
-
-  /* gap: 24px; */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
 
 .btnsBox {
   display: flex;
-  gap: 8px;
+  margin-left: 50%;
+  gap: 10px;
 }
 
 .navLink {
   position: relative;
   padding: 30px 0;
   align-self: center;
-  border: 1px solid transparent;
   cursor: pointer;
-
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -0.16px;
@@ -39,17 +32,11 @@
   margin-right: 40px;
 }
 
-.active {
-  /* color: #f2f4f7; */
-}
-
 .active:after {
   content: '';
   position: absolute;
-
   bottom: 14px;
   left: 45%;
-
   background-color: var(--primary-white);
   width: 8px;
   height: 8px;
@@ -57,12 +44,82 @@
 }
 
 .logoText {
+  composes: navLink;
   font-size: 24px;
   font-weight: 500;
   line-height: 1.16;
   letter-spacing: -0.48px;
 }
 
+.navLink:first-child.logoText {
+  margin: 0;
+}
+
 .linkBox {
   display: flex;
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .logoText {
+    display: none;
+  }
+
+  .navWrapper {
+    width: 100%;
+  }
+
+  .btnsBox {
+    display: flex;
+    margin: 0;
+    gap: 10px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 960px) {
+  .navLink {
+    display: none;
+  }
+
+  .btnsBox {
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .navLink {
+    display: block;
+  }
+
+  .logoNavWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navWrapper {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    padding-left: 5%;
+  }
+
+  .btnsBox {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 1157px) {
+  .navWrapper {
+    padding-left: 2%;
+  }
+
+  .navLink:first-child,
+  .navLink:nth-child(2) {
+    margin-right: 20px;
+  }
 }

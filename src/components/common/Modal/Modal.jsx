@@ -42,8 +42,7 @@ const Modal = ({ onClose, children, className }) => {
           onClick={onClose}
           aria-label="Close"
         >
-          Close
-          {/* <Icon id={''} size="" /> */}
+          <Icon id="x" width="32" height="32" />
         </button>
 
         <div className={s.content}>{children}</div>
