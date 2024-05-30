@@ -31,9 +31,7 @@ const Navigation = ({ isNanniesPage, isHomePage }) => {
 
   return (
     <div className={s.logoNavWrapper}>
-      {/* ${s.navLink} */}
       <NavLink className={` ${s.logoText} `} to="/">
-        {/* <span>Nanny.Services</span> */}
         Nanny.Services
       </NavLink>
 

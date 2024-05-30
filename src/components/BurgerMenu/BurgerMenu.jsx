@@ -19,7 +19,8 @@ const variants = {
   closed: {
     x: '-100%',
     transition: {
-      delay: 0.5,
+      // delay: 0.5,
+      delay: 0.2,
       type: 'spring',
       stiffness: 450,
       damping: 40,
@@ -50,7 +51,7 @@ const BurgerMenu = ({ isNanniesPage }) => {
 
   return (
     <motion.div className={s.sidebar} animate={isOpen ? 'open' : 'closed'}>
-      <motion.div className={s.bg} variants={variants}>
+      <motion.div className={isOpen ? s.bg : ''} variants={variants}>
         <nav className={s.container}>
           {/* {navConfig.map(({ id, name, path }) => (
             <NavItem key={id} name={name} to={path} />
