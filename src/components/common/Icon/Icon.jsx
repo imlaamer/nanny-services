@@ -1,4 +1,4 @@
-import IconsSprite from '../../../assets/sprite.svg';
+import IconsSprite from '../../../assets/static/icons/sprite.svg';
 
 import s from './Icon.module.css';
 

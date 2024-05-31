@@ -6,7 +6,6 @@
   --toastify-icon-color-error: var(--toastify-color-error);
 
   --primary-blue: #103931;
-  --hover: rgba(16, 57, 49, 0.2);
 
   /* --primary-blue: #0957c3; */
   --primary-white: #fbfbfb;
@@ -20,4 +19,6 @@
 
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   --backdrop: rgba(17, 18, 19, 0.4);
+
+  --hover: rgba(16, 57, 49, 0.2);
 }

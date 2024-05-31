@@ -7,81 +7,26 @@
   margin: 0 auto;
   border: none;
   outline: none;
-
   line-height: 1.5;
   letter-spacing: -0.08px;
   font-size: 16px;
   font-weight: 500;
   font-style: normal;
   border-radius: 30px;
-
   background-color: var(--primary-blue);
-
   color: inherit;
   transition: var(--transition);
 }
 
-/* .authBtn .loginBtn {
-  margin: 0;
-  margin-right: 8px;
-  background-color: transparent;
-  border: 1px solid var(--primary-light-gray);
-} */
-
 .button:is(:hover, :focus) {
-  /* background-color: var(--hover-red); */
-  /* background-color: var(--hover); */
   background-color: #fbfbfb;
   color: var(--primary-blue);
 }
 
 .showMoreCardBtn {
   margin: 0;
-  /* padding-left: 40px;
-  padding-right: 40px;  */
 }
 
-/* .load-more-cards-btn {
-  background-color: transparent;
-  color: var(--primary-dark);
-  padding-left: 32px;
-  padding-right: 32px;
-  border: 1px solid rgba(71, 84, 103, 0.2);
-} */
-
-/* .load-more-cards-btn:is(:hover, :focus) {
-  background-color: transparent;
-  border-color: var(--hover-red);
-} */
-
-/* .booking-submit-btn {
-  margin: 0;
-} */
-/* 
-.filterSearchBtn {
-  margin: 0;
-  background-color: var(--secondary-red);
-  height: 56px;
-}
-
-.filterSearchBtn:is(:hover, :focus) {
-  background-color: var(--hover-red);
-} */
-/* 
-.filterResetBtn {
-  margin: 0;
-  background-color: var(--secondary-light-grey);
-  color: var(--primary-dark);
-
-}
-
-.filterResetBtn:is(:hover, :focus) {
-  background-color: var(--filters-border-bottom);
-}
-
-.filterResetBtn:disabled {
-  cursor: not-allowed;
-} */
 .logBtn {
   margin: 0;
   background-color: transparent;
@@ -91,37 +36,53 @@
 .logBtn,
 .registerBtn {
   font-size: clamp(10px, 12px, 14px);
-  /* padding : clamp(10px, 6vw, 50px); */
-}
-
-@media screen and (max-width: 767px) {
-  .logBtn,
-  .registerBtn {
-    /* padding: 15px; */
-  }
-}
-
-@media screen and (min-width: 320px) and (max-width: 768px) {
 }
 
 .heroBtn {
   margin: 0;
-
   gap: 14px;
-
-  background-color: transparent;
-
-  border: 1px solid var(--primary-light-gray);
   padding: 18px 50px;
   max-width: 230px;
-
   font-size: 20px;
   line-height: 1.2;
   letter-spacing: -0.2px;
+  background-color: transparent;
+  border: 1px solid var(--primary-light-gray);
 }
 
-@media screen and (min-width: 320px) and (max-width: 960px) {
+@media screen and (min-width: 320px) {
   .registerBtn {
     margin: 0;
+  }
+}
+
+/* ---------btns in mob menu---- */
+@media screen and (min-width: 320px) and (max-width: 960px) {
+  .navRegisterBtn,
+  .navLogBtn {
+    width: 100%;
+    margin: 0;
+    max-width: 300px;
+    /* margin: 0 auto; */
+  }
+
+  .navRegisterBtn {
+    background-color: transparent;
+    border: 1px solid var(--primary-blue);
+    color: var(--primary-dark);
+  }
+
+  .navLogBtn {
+    margin-bottom: 10px;
+  }
+
+  .navRegisterBtn:is(:hover, :focus) {
+    background-color: transparent;
+    color: var(--primary-dark);
+  }
+
+  .navLogBtn:is(:hover, :focus) {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
   }
 }

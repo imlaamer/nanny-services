@@ -2,7 +2,10 @@ header {
   position: absolute;
   left: 32px;
   right: 32px;
+
   top: 32px;
+  /* !!! */
+  min-height: 60px;
   width: calc(100vw - 64px);
   z-index: 2000;
   border-bottom: 1px solid var(--primary-light-gray);
@@ -27,11 +30,20 @@ header {
     left: 0;
     right: 0;
     width: 100vw;
-    padding-bottom: 20px;
+
+    padding: 20px 0;
+
+    /* padding-bottom: 20px; */
   }
 
   .coloredHeader {
-    padding: 20px 0;
+    /* padding: 20px 0; */
+  }
+
+  .transperentHeader {
+    background-color: var(--primary-blue);
+    position: fixed;
+    top: 0;
   }
 }
 

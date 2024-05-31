@@ -5,32 +5,24 @@ import Button from '../../../../uikit/Button/Button';
 import { useState } from 'react';
 import Modal from '../../Modal/Modal';
 
-const Navigation = ({ isNanniesPage, isHomePage }) => {
-  const [isLogModalOpen, setIsLogModalOpen] = useState(false);
+import logo from '../../../../assets/static/icons/baby.svg';
 
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-
-  const handleOpenModal = (e) => {
-    if (e.target.id === 'log') {
-      setIsLogModalOpen(true);
-    } else {
-      setIsSignupModalOpen(true);
-    }
-  };
-
-  const handleCloseModal = () => {
-    if (isLogModalOpen) {
-      setIsLogModalOpen(false);
-    }
-    if (isSignupModalOpen) {
-      setIsSignupModalOpen(false);
-    }
-  };
-
+const Navigation = ({
+  isNanniesPage,
+  isHomePage,
+  handleOpenModal,
+  handleCloseModal,
+  isLogModalOpen,
+  isSignupModalOpen,
+}) => {
   //temporary: isNanniesPage isHomePage -> loggedInStatus auth
 
   return (
     <div className={s.logoNavWrapper}>
+      <NavLink to="/" className={s.logo}>
+        <img src={logo} alt="logo" />
+      </NavLink>
+
       <NavLink className={` ${s.logoText} `} to="/">
         Nanny.Services
       </NavLink>
