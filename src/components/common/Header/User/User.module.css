@@ -1,0 +1,22 @@
+.userWrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.userIconBox {
+  background-color: var(--primary-white);
+  max-width: 40px;
+  max-height: 40px;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.userName {
+  font-size: 18px;
+  line-height: 1.11;
+  letter-spacing: -0.18px;
+}
+
+@media screen and (min-width: 960px) {
+}

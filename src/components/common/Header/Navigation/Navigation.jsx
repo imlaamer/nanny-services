@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
-
-import s from './Navigation.module.css';
-import Button from '../../../../uikit/Button/Button';
 import { useState } from 'react';
+
+import Button from '../../../../uikit/Button/Button';
 import Modal from '../../Modal/Modal';
+import User from '../User/User';
 
 import logo from '../../../../assets/static/icons/baby.svg';
+import s from './Navigation.module.css';
 
 const Navigation = ({
   isNanniesPage,
@@ -15,13 +16,18 @@ const Navigation = ({
   isLogModalOpen,
   isSignupModalOpen,
 }) => {
-  //temporary: isNanniesPage isHomePage -> loggedInStatus auth
+  // const loggedInStatus = true;
+  const loggedInStatus = false;
 
   return (
     <div className={s.logoNavWrapper}>
-      <NavLink to="/" className={s.logo}>
-        <img src={logo} alt="logo" />
-      </NavLink>
+      {/* {loggedInStatus && <User />} */}
+
+      {!loggedInStatus && (
+        <NavLink to="/" className={s.logo}>
+          <img src={logo} alt="logo" />
+        </NavLink>
+      )}
 
       <NavLink className={` ${s.logoText} `} to="/">
         Nanny.Services
@@ -47,7 +53,7 @@ const Navigation = ({
             Nannies
           </NavLink>
 
-          {!isHomePage && (
+          {loggedInStatus && (
             <NavLink
               className={({ isActive }) =>
                 `${s.navLink} ${isActive ? s.active : ''}`
@@ -59,25 +65,29 @@ const Navigation = ({
           )}
         </div>
 
-        <div className={s.btnsBox}>
-          <Button
-            title={isNanniesPage ? 'Log out' : 'Log in'}
-            onClick={handleOpenModal}
-            className="logBtn"
-            id="log"
-          />
-          {isLogModalOpen && <Modal onClose={handleCloseModal}></Modal>}
+        <div className={s.userBtnWrapper}>
+          {loggedInStatus && <User />}
 
-          {isHomePage && (
+          <div className={s.btnsBox}>
             <Button
-              title="Sign up"
-              // title="Registration"
+              title={loggedInStatus ? 'Log out' : 'Log in'}
               onClick={handleOpenModal}
-              className="registerBtn"
-              id="signup"
+              className={isHomePage ? 'logBtn' : 'coloredBgBtn'}
+              id="log"
             />
-          )}
-          {isSignupModalOpen && <Modal onClose={handleCloseModal}></Modal>}
+            {isLogModalOpen && <Modal onClose={handleCloseModal}></Modal>}
+
+            {!loggedInStatus && (
+              <Button
+                title="Sign up"
+                // title="Registration"
+                onClick={handleOpenModal}
+                className={isHomePage ? 'registerBtn' : 'whiteRegisterBtn'}
+                id="signup"
+              />
+            )}
+            {isSignupModalOpen && <Modal onClose={handleCloseModal}></Modal>}
+          </div>
         </div>
       </div>
     </div>

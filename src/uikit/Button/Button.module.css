@@ -18,7 +18,7 @@
   transition: var(--transition);
 }
 
-.button:is(:hover, :focus) {
+.button:hover {
   background-color: #fbfbfb;
   color: var(--primary-blue);
 }
@@ -62,10 +62,11 @@
   .navLogBtn {
     width: 100%;
     margin: 0;
-    max-width: 300px;
+    min-width: 260px;
     /* margin: 0 auto; */
   }
 
+  .navRegisterBtn:hover,
   .navRegisterBtn {
     background-color: transparent;
     border: 1px solid var(--primary-blue);
@@ -76,13 +77,52 @@
     margin-bottom: 10px;
   }
 
-  .navRegisterBtn:is(:hover, :focus) {
-    background-color: transparent;
-    color: var(--primary-dark);
-  }
-
-  .navLogBtn:is(:hover, :focus) {
+  /* .navLogBtn:hover {
     background-color: var(--primary-blue);
     color: var(--primary-white);
-  }
+  } */
+}
+
+.whiteRegisterBtn {
+  composes: registerBtn;
+}
+
+.whiteRegisterBtn,
+.whiteRegisterBtn:hover {
+  background-color: #fbfbfb;
+  color: var(--primary-blue);
+}
+
+.coloredBgBtn {
+  composes: logBtn;
+}
+
+.coloredBgBtn:hover {
+  /* background-color: var(--secondary-light-green); */
+  /* color: var(--primary-white); */
+  /* background-color: transparent; */
+  /* border: 1px solid var(--primary-light-gray); */
+  /* color: var(--primary-white); */
+}
+
+.navLogBtn {
+  border: 1px solid transparent;
+}
+
+.navRegisterBtn:hover,
+.navLogBtn:hover {
+  /* background-color: black; */
+  /* background-color: var(--backdrop); */
+  /* background-color: var(--primary-dark); */
+  /* color: var(--primary-white); */
+  /* border: 1px solid transparent; */
+  /* background-color: var(--secondary-light-green); */
+  /* color: var(--primary-blue); */
+  /* border: 1px solid var(--primary-blue); */
+  /* border: 1px solid var(--secondary-light-gray); */
+}
+
+.navLogBtn:hover {
+  color: var(--primary-white);
+  background-color: var(--primary-blue);
 }

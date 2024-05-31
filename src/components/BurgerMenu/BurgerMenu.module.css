@@ -11,9 +11,18 @@
 .container {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+  align-items: center;
   margin-top: 50px;
   padding: 30px;
   gap: 25px;
+
+  min-height: 400px;
+
+  /* 
+  min-height: 400px;
+  overflow-y: scroll; */
 }
 
 .notHomePageBg,
@@ -25,6 +34,12 @@
   height: 100%;
   background: rgba(255, 255, 255, 0.921);
   /* background: rgba(255, 255, 255, 0.931); */
+}
+
+nav:first-child {
+  /* display: flex; */
+  /* min-width: 280px; */
+  /* flex-grow: 2; */
 }
 
 .navLink {

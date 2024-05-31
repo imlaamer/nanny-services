@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useLockBodyScroll } from 'react-use';
 import Icon from '../common/Icon/Icon';
 import Button from '../../uikit/Button/Button';
+import Modal from '../common/Modal/Modal';
 import ToggleButton from './ToggleButton/ToggleButton';
 // import NavItem from '../Navigation/NavItem/NavItem';
 // import { navConfig } from '../../data/navigation';
 import s from './BurgerMenu.module.css';
-import Modal from '../common/Modal/Modal';
 
 const variants = {
   open: {
@@ -45,6 +46,19 @@ const BurgerMenu = ({
   const loggedInStatus = false;
   // const loggedInStatus = true;
 
+  // useLockBodyScroll(true); - теж блокує любий скрол
+
+  // але тоді на моб модалка та меню не будуть скролитись
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
@@ -65,18 +79,22 @@ const BurgerMenu = ({
 
   const handleOpen = (e) => {
     setOpen(false);
-    handleOpenModal(e);
+
+    setTimeout(() => {
+      handleOpenModal(e);
+    }, 200);
   };
 
   return (
     <motion.div
       className={s.sidebar}
-      // className={isHomePage ? s.sidebar : s.notHomeSidebar}
       animate={isOpen ? 'open' : 'closed'}
+      // animate={{ opacity: isOpen ? 1 : 0 }}
     >
       <motion.div
         className={isHomePage ? s.bg : s.notHomePageBg}
         variants={variants}
+        animate={{ opacity: isOpen ? 1 : 0 }}
       >
         <nav className={s.container}>
           {/* <div> */}
@@ -117,9 +135,8 @@ const BurgerMenu = ({
               `${s.navLink} ${isActive ? s.active : ''}`
             }
             to="/"
-            onClick={(e) => {
+            onClick={() => {
               setOpen(false);
-              handleCloseModal(e);
             }}
           >
             <Icon id="home" stroke="#103931" fill="#103931" />
@@ -131,9 +148,8 @@ const BurgerMenu = ({
               `${s.navLink} ${isActive ? s.active : ''}`
             }
             to="/nannies"
-            onClick={(e) => {
+            onClick={() => {
               setOpen(false);
-              handleCloseModal(e);
             }}
           >
             <Icon id="search" stroke="#103931" fill="#103931" />
@@ -146,9 +162,8 @@ const BurgerMenu = ({
                 `${s.navLink} ${isActive ? s.active : ''}`
               }
               to="/favorites"
-              onClick={(e) => {
+              onClick={() => {
                 setOpen(false);
-                handleCloseModal(e);
               }}
             >
               <Icon id="heart" stroke="#103931" fill="#103931" />
@@ -163,6 +178,7 @@ const BurgerMenu = ({
         // isToggleStroke={isToggleStroke}
         // setIsToggleStroke={setIsToggleStroke}
         isHomePage={isHomePage}
+        handleCloseModal={handleCloseModal}
       />
     </motion.div>
   );

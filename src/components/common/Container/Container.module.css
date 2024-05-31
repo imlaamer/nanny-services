@@ -10,6 +10,17 @@
   max-width: 518px;
 }
 
+@media screen and (max-width: 960px) {
+  .hero-colored-container {
+    margin: 0;
+    margin-right: 64px;
+  }
+
+  .header-container {
+    /* position: relative; */
+  }
+}
+
 @media screen and (min-width: 1360px) {
   .hero-colored-container {
     margin-right: 64px;

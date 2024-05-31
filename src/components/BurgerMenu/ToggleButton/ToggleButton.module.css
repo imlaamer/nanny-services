@@ -1,8 +1,8 @@
 @media screen and (max-width: 960px) {
   .button {
-    position: fixed;
+    position: absolute;
+    /* position: fixed; */
     z-index: 999;
-    top: 20px;
     right: 20px;
     background-color: transparent;
     border: none;
@@ -10,17 +10,23 @@
   }
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (max-width: 768px) {
   .button {
-    top: 52px;
-    right: 52px;
+    top: 20px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 769px) {
+  .button {
+    /* padding-top: 50px; */
+    top: 62px;
+    right: 52px;
+  }
+  .coloredHeaderBtn {
+    top: 30px;
+  }
 }
 
 .coloredHeaderBtn {
   composes: button;
-  top: 20px;
 }

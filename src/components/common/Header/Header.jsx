@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import Container from '../Container/Container';
 import Navigation from './Navigation/Navigation';
 import BurgerMenu from '../../BurgerMenu/BurgerMenu';
@@ -7,7 +8,6 @@ import BurgerMenu from '../../BurgerMenu/BurgerMenu';
 // import { selectIsLoading } from '../../../redux/items/itemsSelectors';
 
 import './Header.css';
-import { useState } from 'react';
 
 const Header = () => {
   // const isLoading = useSelector(selectIsLoading);
@@ -40,7 +40,7 @@ const Header = () => {
 
   return (
     <header className={headerClass}>
-      <Container>
+      <Container className="header-container">
         <Navigation
           isNanniesPage={isNanniesPage}
           isHomePage={isHomePage}

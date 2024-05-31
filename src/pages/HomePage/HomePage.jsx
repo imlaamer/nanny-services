@@ -9,6 +9,8 @@ import Modal from '../../components/common/Modal/Modal';
 import s from './HomePage.module.css';
 
 const HomePage = () => {
+  // document.body.style.overflow = 'scroll';
+
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isHover, setIsHover] = useState(false);

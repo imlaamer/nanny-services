@@ -6,7 +6,9 @@
   width: 100vw;
   height: 100vh;
   background-color: var(--backdrop);
-  z-index: 100;
+  /* z-index: 100; */
+  z-index: 2001;
+
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -20,7 +22,8 @@
   transform: translate(-50%, -50%);
   border-radius: 20px;
   background-color: var(--primary-white);
-  z-index: 101;
+  /* z-index: 101; */
+  z-index: 2002;
 }
 
 .closeBtn {

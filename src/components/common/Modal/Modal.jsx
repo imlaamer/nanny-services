@@ -11,7 +11,14 @@ const modalRootRef = document.querySelector('#modal-root');
 const Modal = ({ onClose, children, className }) => {
   const containerClassNames = `${s.container} ${s[className]}`;
 
-  useLockBodyScroll(true);
+  // useLockBodyScroll(true);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   useEffect(() => {
     const onEscPress = (e) => {
@@ -24,6 +31,7 @@ const Modal = ({ onClose, children, className }) => {
 
     return () => {
       window.removeEventListener('keydown', onEscPress);
+      // document.body.style.overflow = 'auto';
     };
   }, [onClose]);
 

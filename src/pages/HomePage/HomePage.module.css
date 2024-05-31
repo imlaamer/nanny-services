@@ -12,19 +12,21 @@
 
 .leftBox,
 .rightBox {
-  min-height: 400px;
+  min-height: 540px;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   flex: 1;
   background-color: var(--primary-blue);
+  /* padding-top: 120px; */
 }
 
 .leftBox {
   justify-content: left;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
+  padding-top: 120px;
 }
 
 .rightBox {
@@ -138,6 +140,11 @@
     margin: 0;
     border-radius: 0;
   }
+
+  .rightBox,
+  .leftBox {
+    min-height: 400px;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1439px) {
@@ -148,6 +155,9 @@
   .navLink {
     max-width: 230px;
   }
+}
+
+@media screen and (min-width: 960px) {
 }
 
 @media screen and (min-width: 1260px) {
