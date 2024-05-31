@@ -6,9 +6,11 @@ import Icon from '../common/Icon/Icon';
 import Button from '../../uikit/Button/Button';
 import Modal from '../common/Modal/Modal';
 import ToggleButton from './ToggleButton/ToggleButton';
+import LoginForm from '../forms/LoginForm/LoginForm';
 // import NavItem from '../Navigation/NavItem/NavItem';
 // import { navConfig } from '../../data/navigation';
 import s from './BurgerMenu.module.css';
+import SignupForm from '../forms/SignupForm/SignupForm';
 
 const variants = {
   open: {
@@ -46,18 +48,7 @@ const BurgerMenu = ({
   const loggedInStatus = false;
   // const loggedInStatus = true;
 
-  // useLockBodyScroll(true); - теж блокує любий скрол
-
-  // але тоді на моб модалка та меню не будуть скролитись
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isOpen]);
+  // useLockBodyScroll(true); - теж блокує  скрол
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -85,6 +76,7 @@ const BurgerMenu = ({
     }, 200);
   };
 
+  //  ???
   return (
     <motion.div
       className={s.sidebar}
@@ -106,8 +98,8 @@ const BurgerMenu = ({
               id="log"
             />
             {isLogModalOpen && (
-              <Modal onClose={handleCloseModal}>
-                <p>Log in</p>
+              <Modal onClose={handleCloseModal} className="loginModal">
+                <LoginForm />
               </Modal>
             )}
 
@@ -122,7 +114,9 @@ const BurgerMenu = ({
             )}
 
             {isSignupModalOpen && (
-              <Modal onClose={handleCloseModal}>Sign up</Modal>
+              <Modal onClose={handleCloseModal} className="signupModal">
+                <SignupForm />
+              </Modal>
             )}
           </div>
           {/* <nav className={s.container}> */}

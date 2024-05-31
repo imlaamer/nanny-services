@@ -10,6 +10,16 @@
   max-width: 518px;
 }
 
+/* --signup login logout modals-- */
+.auth-container {
+  max-width: 438px;
+  padding: 0;
+  color: var(--primary-dark);
+}
+.auth-container button {
+  color: var(--primary-white);
+}
+
 @media screen and (max-width: 960px) {
   .hero-colored-container {
     margin: 0;

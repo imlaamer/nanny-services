@@ -19,7 +19,7 @@ const EyeBtn = () => {
   return (
     <>
       <button type="button" className={s.eyeBtn} onClick={handleToggleEye}>
-        {!isOpenEye ? <Icon id={'eye-slash'} /> : <Icon id={'eye'} />}
+        {!isOpenEye ? <Icon id={'eye-close'} /> : <Icon id={'eye-open'} />}
       </button>
     </>
   );

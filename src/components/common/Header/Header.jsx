@@ -13,9 +13,8 @@ const Header = () => {
   // const isLoading = useSelector(selectIsLoading);
   const location = useLocation();
   const isHomePage = location.pathname === '/'; //-> loggedInStatus auth
-  const headerClass = isHomePage ? 'transperentHeader' : 'coloredHeader';
 
-  const isNanniesPage = location.pathname === '/nannies'; //-> loggedInStatus auth
+  const headerClass = isHomePage ? 'transperentHeader' : 'coloredHeader';
 
   const [isLogModalOpen, setIsLogModalOpen] = useState(false);
 
@@ -42,7 +41,6 @@ const Header = () => {
     <header className={headerClass}>
       <Container className="header-container">
         <Navigation
-          isNanniesPage={isNanniesPage}
           isHomePage={isHomePage}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}

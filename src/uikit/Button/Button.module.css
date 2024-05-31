@@ -99,8 +99,8 @@
 
 .coloredBgBtn:hover {
   /* background-color: var(--secondary-light-green); */
-  /* color: var(--primary-white); */
-  /* background-color: transparent; */
+  color: var(--primary-white);
+  background-color: transparent;
   /* border: 1px solid var(--primary-light-gray); */
   /* color: var(--primary-white); */
 }
@@ -125,4 +125,16 @@
 .navLogBtn:hover {
   color: var(--primary-white);
   background-color: var(--primary-blue);
+}
+
+.formSignupBtn,
+.formLoginBtn {
+  width: 100%;
+  border: 1px solid transparent;
+}
+
+.formSignupBtn:is(:hover, :focus),
+.formLoginBtn:is(:hover, :focus) {
+  background-color: transparent;
+  border: 1px solid var(--primary-blue);
 }

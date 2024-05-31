@@ -9,7 +9,6 @@ import logo from '../../../../assets/static/icons/baby.svg';
 import s from './Navigation.module.css';
 
 const Navigation = ({
-  isNanniesPage,
   isHomePage,
   handleOpenModal,
   handleCloseModal,

@@ -1,0 +1,27 @@
+.signupTitle {
+  margin-bottom: 20px;
+  font-size: clamp(28px, 5vw + 1rem, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+}
+
+.signupText {
+  margin-bottom: 40px;
+  color: var(--secondary-light-gray);
+
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.form > input {
+  margin-bottom: 18px;
+}
+
+.label {
+  display: block;
+  position: relative;
+}
+
+.form > label {
+  margin-bottom: 40px;
+}

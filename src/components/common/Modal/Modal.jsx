@@ -13,12 +13,12 @@ const Modal = ({ onClose, children, className }) => {
 
   // useLockBodyScroll(true);
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.body.style.overflow = 'hidden';
+  //   return () => {
+  //     document.body.style.overflow = 'auto';
+  //   };
+  // }, []);
 
   useEffect(() => {
     const onEscPress = (e) => {
@@ -31,7 +31,6 @@ const Modal = ({ onClose, children, className }) => {
 
     return () => {
       window.removeEventListener('keydown', onEscPress);
-      // document.body.style.overflow = 'auto';
     };
   }, [onClose]);
 
