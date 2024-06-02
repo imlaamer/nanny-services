@@ -36,6 +36,7 @@
 .logBtn,
 .registerBtn {
   font-size: clamp(10px, 12px, 14px);
+  /* ?? */
 }
 
 .heroBtn {
@@ -127,6 +128,7 @@
   background-color: var(--primary-blue);
 }
 
+.logoutBtn,
 .formSignupBtn,
 .formLoginBtn {
   width: 100%;
@@ -137,4 +139,16 @@
 .formLoginBtn:is(:hover, :focus) {
   background-color: transparent;
   border: 1px solid var(--primary-blue);
+}
+
+.logoutBtn {
+  margin-bottom: 20px;
+}
+
+.button.logoutCancelBtn {
+  width: 100%;
+  margin: 0;
+  background-color: transparent;
+  border: 1px solid var(--primary-blue);
+  color: var(--primary-dark);
 }

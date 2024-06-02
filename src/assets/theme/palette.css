@@ -20,7 +20,7 @@
   --secondary-gray: #8a8a89;
 
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  --backdrop: rgba(17, 18, 19, 0.4);
+  --backdrop: rgba(11, 11, 11, 0.6);
 
   --secondary-light-green: rgba(16, 57, 49, 0.2);
   /* --hover: rgba(16, 57, 49, 0.2); */

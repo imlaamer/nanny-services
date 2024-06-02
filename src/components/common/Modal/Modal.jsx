@@ -1,5 +1,5 @@
 import { useLockBodyScroll } from 'react-use';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Icon from '../Icon/Icon';
@@ -8,17 +8,15 @@ import s from './Modal.module.css';
 
 const modalRootRef = document.querySelector('#modal-root');
 
-const Modal = ({ onClose, children, className }) => {
+const Modal = ({ onClose, children, className, isOpen }) => {
   const containerClassNames = `${s.container} ${s[className]}`;
 
   // useLockBodyScroll(true);
 
   // useEffect(() => {
-  //   document.body.style.overflow = 'hidden';
-  //   return () => {
-  //     document.body.style.overflow = 'auto';
-  //   };
-  // }, []);
+  //   if (isOpen) document.body.style.overflow = 'hidden';
+  //   if (!isOpen) document.body.style.overflow = 'scroll';
+  // }, [isOpen]);
 
   useEffect(() => {
     const onEscPress = (e) => {

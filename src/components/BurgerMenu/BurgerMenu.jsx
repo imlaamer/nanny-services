@@ -9,8 +9,10 @@ import ToggleButton from './ToggleButton/ToggleButton';
 import LoginForm from '../forms/LoginForm/LoginForm';
 // import NavItem from '../Navigation/NavItem/NavItem';
 // import { navConfig } from '../../data/navigation';
-import s from './BurgerMenu.module.css';
 import SignupForm from '../forms/SignupForm/SignupForm';
+import LogoutCard from '../LogoutCard/LogoutCard';
+
+import s from './BurgerMenu.module.css';
 
 const variants = {
   open: {
@@ -19,18 +21,23 @@ const variants = {
       type: 'spring',
       stiffness: 40,
       damping: 20,
-      duration: 0.2,
+      // duration: 0.0005,
+      // duration: 0.1,
     },
   },
   closed: {
     x: '100%',
 
     transition: {
-      delay: 0.2,
+      delay: 0.1,
+
+      // delay: 0.05,
       type: 'spring',
       stiffness: 450,
       damping: 40,
-      duration: 0.2,
+      duration: 0.1, //не змінюється
+      // duration: 0.05,
+      // duration: 0.0005,
     },
   },
 };
@@ -97,9 +104,24 @@ const BurgerMenu = ({
               className="navLogBtn"
               id="log"
             />
-            {isLogModalOpen && (
-              <Modal onClose={handleCloseModal} className="loginModal">
+
+            {isLogModalOpen && !loggedInStatus && (
+              <Modal
+                onClose={handleCloseModal}
+                className="authModal"
+                // isOpen={isLogModalOpen}
+              >
                 <LoginForm />
+              </Modal>
+            )}
+
+            {isLogModalOpen && loggedInStatus && (
+              <Modal
+                onClose={handleCloseModal}
+                className="authModal"
+                // isOpen={isLogModalOpen}
+              >
+                <LogoutCard />
               </Modal>
             )}
 
@@ -112,9 +134,12 @@ const BurgerMenu = ({
                 id="signup"
               />
             )}
-
             {isSignupModalOpen && (
-              <Modal onClose={handleCloseModal} className="signupModal">
+              <Modal
+                onClose={handleCloseModal}
+                className="authModal"
+                // isOpen={isSignupModalOpen}
+              >
                 <SignupForm />
               </Modal>
             )}

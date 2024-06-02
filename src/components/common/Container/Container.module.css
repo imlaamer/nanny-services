@@ -1,7 +1,9 @@
 .container {
   width: 100%;
   max-width: 1184px;
-  min-width: 280px;
+  /* min-width: 280px; */
+  /* width: 280px; */
+
   padding: 0 20px;
   margin: 0px auto;
 }
@@ -11,6 +13,7 @@
 }
 
 /* --signup login logout modals-- */
+/* .container */
 .auth-container {
   max-width: 438px;
   padding: 0;

@@ -23,8 +23,10 @@ const Header = () => {
   const handleOpenModal = (e) => {
     if (e.target.id === 'log') {
       setIsLogModalOpen(true);
+      // console.log(e.target);
     } else {
       setIsSignupModalOpen(true);
+      // console.log(e.target);
     }
   };
 
