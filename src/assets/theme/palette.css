@@ -23,5 +23,9 @@
   --backdrop: rgba(11, 11, 11, 0.6);
 
   --secondary-light-green: rgba(16, 57, 49, 0.2);
+  --background-light-gray: #f3f3f3;
+
   /* --hover: rgba(16, 57, 49, 0.2); */
+
+  --user-status-online: #38cd3e;
 }

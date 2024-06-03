@@ -20,6 +20,7 @@ export const dropdownStyles = {
   container: (baseStyles) => ({
     ...baseStyles,
     width: 226,
+    marginBottom: 32,
   }),
   placeholder: (baseStyles) => ({
     ...baseStyles,
