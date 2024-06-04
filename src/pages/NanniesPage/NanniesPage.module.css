@@ -2,7 +2,11 @@
   padding-top: 178px;
   /* padding-bottom: 100px; */
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
+  /* height: 150vh; */
+  min-height: 100vh;
+  height: fit-content;
+
   /* height: max-content; */
   /* height: 100%; */
   background-color: var(--background-light-gray);
