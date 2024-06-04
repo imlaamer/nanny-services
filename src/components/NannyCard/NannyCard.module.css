@@ -1,12 +1,15 @@
 .wrapper {
+  position: relative;
   display: flex;
+
   /* flex-wrap: wrap; */
   align-items: start;
   gap: 24px;
   padding: 24px;
   min-width: 280px;
   max-width: 1184px;
-  max-height: 318px;
+  /* max-height: 318px; */
+  max-height: max-content;
   border-radius: 24px;
   background: var(--primary-white);
 
@@ -43,6 +46,10 @@ height: 96px; */
 
   width: 100%;
 }
+.avatarUserStatusBox {
+  background-color: lightgray;
+  border-radius: 15px;
+}
 
 .statusBox {
   position: absolute;
@@ -67,7 +74,7 @@ height: 96px; */
   height: 10px;
   width: 10px;
   border-radius: 50%;
-  background-color: var(--user-status-online);
+  background-color: var(--secondary-bright-green);
 }
 
 .detailsWrapper {
@@ -86,6 +93,10 @@ height: 96px; */
   font-size: 16px;
   /* font-size: clamp(12px, 0.5vw + 1rem, 16px); */
   line-height: 1.5;
+}
+
+.nameTitle {
+  margin-top: 8px;
 }
 
 .accent {
@@ -116,7 +127,91 @@ height: 96px; */
   margin-bottom: 8px;
 }
 
+.mainInfoWrapper {
+  display: flex;
+  align-items: start;
+  /* align-items: center; */
+  justify-content: space-between;
+  max-width: calc(100% - 26px - 48px);
+}
+
+.iconsTextFavWrapper {
+  display: flex;
+  gap: 48px;
+}
+
+.iconsTextBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* margin-right: 48px; */
+  gap: 32px;
+}
+
+.iconTextWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priceAccent {
+  color: var(--secondary-bright-green);
+}
+
+.iconTextWrapper {
+  position: relative;
+}
+
+.iconTextWrapper::after {
+  position: absolute;
+  content: '';
+  width: 1px;
+  height: 16px;
+  transform: rotate(90deg, 90deg);
+  top: 1;
+  right: -16px;
+  background-color: rgba(17, 16, 28, 0.2);
+}
+
+.nameTitle.hiddenToTabl {
+  display: none;
+}
+
+.readMoreText {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: var(--transition);
+}
+
+.readMoreText::after {
+  position: absolute;
+  content: '';
+  left: 0;
+  bottom: 1px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+}
+
+.readMoreText:is(:hover, :focus) {
+  color: var(--primary-blue);
+}
+
+@media screen and (min-width: 320px) and (max-width: 400px) {
+  .iconTextWrapper::after {
+    /* display: none; */
+  }
+}
+
 @media screen and (min-width: 320px) and (max-width: 768px) {
+  .nameTitle.hiddenToTabl {
+    display: block;
+    margin-bottom: 10px;
+  }
+
   .avatarWrapper img {
   }
 
@@ -126,25 +221,72 @@ height: 96px; */
 
   .wrapper {
     display: inline-flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    gap: 10px;
+    padding: 15px;
+    /* align-items: end;  */
   }
 
   .wrapper {
     max-height: max-content;
-    position: relative;
+    /* position: relative; */
   }
 
   .namePositionedWrapper {
-    position: absolute;
+    margin-bottom: 10px;
+    /* position: absolute;
     top: 24px;
-    left: 160px;
+    left: 160px; */
   }
 
   .nameTitle {
     /* font-size: 16px; */
-    font-size: clamp(16px, 1vw + 1rem, 24px);
+    font-size: clamp(16px, 0.5vw + 1rem, 24px);
   }
   .detailsWrapper {
     margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .mainInfoWrapper {
+    display: block;
+    /* margin-bottom: 10px; */
+  }
+
+  .nameTitle.hiddenToDeskt {
+    display: none;
+  }
+
+  .iconsTextFavWrapper {
+    margin-top: 10px;
+    /* position: absolute; */
+    top: 18px;
+
+    left: calc(280px - 15px - 120px);
+    /* and10px */
+
+    /* flex-wrap: wrap; */
+    gap: 8px;
+    justify-content: space-between;
+    /* justify-content: start; */
+    min-width: calc(280px - 48px - 120px);
+    /* min-width: calc(280px -30px - 120px - 26px); */
+    /* - 8px */
+    /* max-width: calc(100% - 120px - 30px - 10px - 26px - 32px); */
+
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* flex-wrap: wrap; */
+    /* left: calc((100% - 160px) / 2); */
+    /* right: calc(100% - 144px); */
+  }
+  .iconsTextBox {
+    flex-wrap: wrap;
+    justify-content: start;
+    row-gap: 8px;
+  }
+
+  .iconTextWrapper:after {
   }
 }

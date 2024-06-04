@@ -23,3 +23,8 @@
 .input:focus {
   outline: none;
 }
+
+.appointmentWrappedInput {
+  width: unset;
+  width: calc(50% -8px);
+}

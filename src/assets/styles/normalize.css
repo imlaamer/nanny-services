@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  height: 100vh;
   font-family: 'Helvetica Neue', sans-serif;
   /* font-family: 'Helvetica Neue Bold', sans-serif; */
   font-weight: 500;
@@ -22,6 +22,10 @@ body {
   line-height: 1.25;
   color: var(--primary-white);
   background-color: var(--primary-white);
+}
+
+main {
+  height: 100vh;
 }
 
 h1,

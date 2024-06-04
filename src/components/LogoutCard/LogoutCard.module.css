@@ -1,6 +1,7 @@
 .title {
   margin-bottom: 20px;
-  font-size: clamp(28px, 5vw + 1rem, 40px);
+  font-size: clamp(28px, 1vw + 1rem, 40px);
+  /* font-size: clamp(28px, 5vw + 1rem, 40px); */
   /* font-size: 40px; */
   line-height: 1.2;
   letter-spacing: -0.8px;

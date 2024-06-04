@@ -1,6 +1,15 @@
 .nannies {
   padding-top: 178px;
-  background-color: var(--background-light-gray);
-  height: 100vh;
+  /* padding-bottom: 100px; */
   width: 100vw;
+  height: 100vh;
+  /* height: max-content; */
+  /* height: 100%; */
+  background-color: var(--background-light-gray);
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .nannies {
+    padding-top: 100px;
+  }
 }

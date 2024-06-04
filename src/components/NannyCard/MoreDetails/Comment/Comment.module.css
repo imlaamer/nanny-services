@@ -1,0 +1,33 @@
+.avatarNameRatingBox {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background-color: var(--secondary-blue);
+  border-radius: 50%;
+  background-color: var(--secondary-light-green);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.nameRatingBox p {
+  margin-bottom: 4px;
+}
+
+.iconRatingBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.commentText {
+  color: var(--secondary-light-gray);
+}

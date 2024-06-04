@@ -19,6 +19,7 @@
   padding: 0;
   color: var(--primary-dark);
 }
+
 .auth-container button {
   color: var(--primary-white);
 }
@@ -32,6 +33,10 @@
   .header-container {
     /* position: relative; */
   }
+}
+
+.nanies-page-container {
+  padding-bottom: 100px;
 }
 
 @media screen and (min-width: 1360px) {

@@ -53,21 +53,24 @@
   transition: var(--transition);
 }
 
+.appointmentModal {
+  /* padding: 32px; */
+  padding: clamp(15px, 2vw + 1rem, 32px);
+}
+
 .authModal {
   padding: clamp(20px, 5vw + 1rem, 64px);
 }
 
-@media screen and (min-width: 768px) {
-  .container {
-    /* width: 566px; */
+.container.appointmentModal {
+  max-width: 600px;
+}
 
-    /* width: 704px; */
-    /* width: 592px; */
+@media screen and (min-width: 768px) {
+  .appointmentModal {
+    padding: 64px;
   }
 }
 
 @media screen and (min-width: 1440px) {
-  .container {
-    /* width: 1008px; */
-  }
 }
