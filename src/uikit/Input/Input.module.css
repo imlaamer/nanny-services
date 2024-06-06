@@ -3,6 +3,7 @@
   /* width: 400px; */
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 16px 18px;
   border-radius: 12px;
   background-color: transparent;
@@ -14,6 +15,8 @@
   /* font-size: 16px; */
   font-weight: 400;
   line-height: 1.25;
+
+  transition: var(--transition);
 }
 
 .input::placeholder {
@@ -22,9 +25,20 @@
 
 .input:focus {
   outline: none;
+  border-color: var(--secondary-transperent-gray);
+  /* border-color: var(--primary-blue); */
 }
 
 .appointmentWrappedInput {
   width: unset;
-  width: calc(50% -8px);
+  /* flex-basis: 50%; */
+  /* 232px  */
+  /* width: min(100%, 232px); */
+  width: 100%;
+  flex-basis: calc(100% / 2 - 8px);
+  /* width: calc(100% / 2 - 8px); */
+}
+
+.errorInput {
+  /* border-color: var(--toastify-color-error); */
 }

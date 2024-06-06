@@ -9,7 +9,8 @@ header {
   /* !!! */
   min-height: 60px;
   width: calc(100vw - 64px);
-  z-index: 2000;
+  z-index: 1000;
+  /* 2000 */
   border-bottom: 1px solid var(--primary-light-gray);
 }
 

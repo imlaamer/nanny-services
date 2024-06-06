@@ -1,0 +1,8 @@
+.errorMessage {
+  color: var(--toastify-color-error);
+  font-size: 12px;
+  line-height: 18px;
+  position: absolute;
+  bottom: 1px;
+  left: 2px;
+}
