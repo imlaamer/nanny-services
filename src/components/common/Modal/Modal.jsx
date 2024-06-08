@@ -11,7 +11,7 @@ const modalRootRef = document.querySelector('#modal-root');
 const Modal = ({ onClose, children, className, isOpen }) => {
   const containerClassNames = `${s.container} ${s[className]}`;
 
-  // useLockBodyScroll(true);
+  useLockBodyScroll(true);
 
   // useEffect(() => {
   //   if (isOpen) document.body.style.overflow = 'hidden';

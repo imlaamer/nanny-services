@@ -8,3 +8,5 @@ export const selectIsLoading = createSelector(
 );
 
 export const selectError = createSelector(selectItems, (items) => items.error);
+
+export const selectNannies = (state) => state.nannies.nannies;

@@ -24,12 +24,12 @@ const appointmentFormValidationSchema = Yup.object().shape({
   time: Yup.string().matches().required(REQUIRED_TIME_MESSAGE),
 
   email: Yup.string()
-    .matches(EMAIL_REGEX, EMAIL_ERROR_MESSAGE)
-    .required(REQUIRED_EMAIL_MESSAGE),
+    .required(REQUIRED_EMAIL_MESSAGE)
+    .matches(EMAIL_REGEX, EMAIL_ERROR_MESSAGE),
 
   username: Yup.string()
-    .matches(USER_NAME_REGEX, USER_NAME_ERROR_MESSAGE)
-    .required(REQUIRED_USER_NAME_MESSAGE),
+    .required(REQUIRED_USER_NAME_MESSAGE)
+    .matches(USER_NAME_REGEX, USER_NAME_ERROR_MESSAGE),
 
   comment: Yup.string().min(5, COMMENT_ERROR_MESSAGE),
 });

@@ -15,7 +15,7 @@ import appointmentFormValidationSchema from '../../../schemas/appointmentFormVal
 import './AntD.css';
 import s from './AppointmentForm.module.css';
 
-const AppointmentForm = () => {
+const AppointmentForm = ({ name, avatar }) => {
   const [selectedTime, setSelectedTime] = useState(dayjs());
 
   const {
@@ -50,15 +50,11 @@ const AppointmentForm = () => {
       </p>
 
       <div className={s.avatarNameWrapper}>
-        <img
-          className={s.avatar}
-          src="https://ftp.goit.study/img/avatars/10.jpg"
-          alt="nanny`s avatar"
-        />
+        <img className={s.avatar} src={avatar} alt="nanny`s avatar" />
 
         <div className={s.textWrapper}>
           <p className={s.accentText}>Your nanny</p>
-          <p>Anna Shevchenko</p>
+          <p>{name}</p>
         </div>
       </div>
 

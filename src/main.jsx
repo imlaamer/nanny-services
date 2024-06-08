@@ -13,19 +13,19 @@ import { store, persistor } from './redux/store.js';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <PersistGate loading={null} persistor={persistor}>
-      <HelmetProvider>
-        <ConfigProvider>
-          <Provider store={store}>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </Provider>
-        </ConfigProvider>
-      </HelmetProvider>
-    </PersistGate>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <PersistGate loading={null} persistor={persistor}>
+    <HelmetProvider>
+      <ConfigProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </ConfigProvider>
+    </HelmetProvider>
+  </PersistGate>
+  // </React.StrictMode>
 );
 
 //basename="/nanny-services"

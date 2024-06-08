@@ -2,32 +2,28 @@ import Icon from '../../../common/Icon/Icon';
 
 import s from './Comment.module.css';
 
-const Comment = () => {
-  //  const defaultAvatarFirstLetter = user.email.split('')[0].toUpperCase();
+const Comment = ({ review }) => {
+  const { comment, rating, reviewer } = review;
+  const avatarFirstLetter = reviewer.split('')[0].toUpperCase();
 
   return (
     <>
+      {/* li */}
+
       <div className={s.avatarNameRatingBox}>
         <div className={s.avatar}>
-          <span>J</span>
-          {/* {user.avatarURL && !isLoading && (
-          <img src={user.avatarURL} alt="avatar" />
-        )}
-        {!user.avatarURL && !isLoading && <p>{defaultAvatarFirstLetter}</p>}
-        {isLoading && <Spinner />} */}
+          <span>{avatarFirstLetter}</span>
         </div>
 
         <div className={s.nameRatingBox}>
-          <p>Olga K.</p>
+          <p>{reviewer}</p>
           <div className={s.iconRatingBox}>
             <Icon id="star" width="16" height="16" />
-            <span>5.0</span>
+            <span>{rating}</span>
           </div>
         </div>
       </div>
-      <p className={s.commentText}>
-        Anna is wonderful! My kids loved her and she was always punctual.
-      </p>
+      <p className={s.commentText}>{comment}</p>
     </>
   );
 };

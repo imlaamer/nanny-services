@@ -1,3 +1,6 @@
+//-----nannies fetching limit
+export const limit = 3;
+
 //---------------NAME
 export const USER_NAME_ERROR_MESSAGE = 'Enter a valid name';
 export const REQUIRED_USER_NAME_MESSAGE = 'Name field is required';

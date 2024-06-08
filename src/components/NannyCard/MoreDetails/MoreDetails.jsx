@@ -8,7 +8,10 @@ import AppointmentForm from '../../forms/AppointmentForm/AppointmentForm';
 
 import s from './MoreDetails.module.css';
 
-export const MoreDetails = forwardRef(function MoreDetails(props, ref) {
+export const MoreDetails = forwardRef(function MoreDetails(
+  { reviews, name, avatar },
+  ref
+) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpen = () => {
@@ -21,9 +24,9 @@ export const MoreDetails = forwardRef(function MoreDetails(props, ref) {
 
   return (
     <ul className={s.list} ref={ref}>
-      {[...Array(5)].map((comment, index) => (
+      {reviews.map((review, index) => (
         <li key={index}>
-          <Comment />
+          <Comment review={review} />
         </li>
       ))}
 
@@ -39,7 +42,7 @@ export const MoreDetails = forwardRef(function MoreDetails(props, ref) {
           className="appointmentModal"
           // isOpen={isLogModalOpen}
         >
-          <AppointmentForm />
+          <AppointmentForm name={name} avatar={avatar} />
         </Modal>
       )}
     </ul>
