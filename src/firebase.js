@@ -40,7 +40,7 @@ function writeUserData(username, email) {
   const userId = nanoid(); //-
 
   //-------генерування key
-  const autoId = rootUsersFef.push().key; // - check it !
+  // const autoId = rootNanniesRef.push().key; // - check it !
 
   //rootUsersFef.child(userId.value) - check it !
   set(ref(db, 'users/' + userId), {

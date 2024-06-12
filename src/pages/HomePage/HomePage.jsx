@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Container from '../../components/common/Container/Container';
@@ -7,11 +7,11 @@ import Button from '../../uikit/Button/Button';
 import Modal from '../../components/common/Modal/Modal';
 
 import s from './HomePage.module.css';
+import { useDispatch } from 'react-redux';
+import { resetNannies } from '../../redux/nannies/nanniesSlice';
 
 const HomePage = () => {
-  // document.body.style.overflow = 'scroll';
-
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const [isHover, setIsHover] = useState(false);
 
@@ -30,6 +30,10 @@ const HomePage = () => {
   const handleResetHover = () => {
     setIsHover(false);
   };
+
+  useEffect(() => {
+    dispatch(resetNannies());
+  }, [dispatch]);
 
   return (
     <section className={s.hero}>

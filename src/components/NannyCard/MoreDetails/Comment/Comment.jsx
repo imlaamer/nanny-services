@@ -7,9 +7,7 @@ const Comment = ({ review }) => {
   const avatarFirstLetter = reviewer.split('')[0].toUpperCase();
 
   return (
-    <>
-      {/* li */}
-
+    <li>
       <div className={s.avatarNameRatingBox}>
         <div className={s.avatar}>
           <span>{avatarFirstLetter}</span>
@@ -24,7 +22,7 @@ const Comment = ({ review }) => {
         </div>
       </div>
       <p className={s.commentText}>{comment}</p>
-    </>
+    </li>
   );
 };
 export default Comment;

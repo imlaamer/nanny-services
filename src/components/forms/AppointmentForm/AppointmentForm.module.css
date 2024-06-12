@@ -4,6 +4,7 @@
   /* font-size: clamp(28px, 5vw + 1rem, 40px); */
   line-height: 1.2;
   letter-spacing: -0.8px;
+  max-width: calc(100% - 30px);
 }
 
 .text {
@@ -38,41 +39,49 @@
 .avatar {
   max-width: 100%;
   border-radius: 15px;
-  min-width: 44px;
-  max-width: 44px;
+  width: 44px;
+  height: 44px;
 }
 
 /* --------- form ---- */
 /*  винести ще й тільки  форму  окремо  в компонент?  */
 
-.form > input {
+.errorMessageBox {
   margin-bottom: 16px;
 }
 
-.form > input:nth-last-child(2) {
-  margin-bottom: 40px;
+.formWapper > .errorMessageBox {
+  margin-bottom: 0;
 }
 
 .formWapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* column-gap: 8px; */
+  column-gap: 8px;
   row-gap: 16px;
   margin-bottom: 16px;
 }
 
-.form > input[type='text']:nth-last-child(2) {
-  padding-bottom: 80px;
+.formWapper > div {
+  width: 100%;
 }
 
 .errorMessageBox {
   position: relative;
-  /* padding-bottom: 18px; */
 }
 
 .lastErrorMessageBox {
   position: relative;
-  /* padding-bottom: 18px; */
-  /* margin-bottom: 22px; */
+  margin-bottom: 40px;
+}
+
+@media screen and (min-width: 768px) {
+  .formWapper > div {
+    width: calc(50% - 4px);
+  }
+
+  .ant-picker {
+    width: 100% !important;
+  }
 }

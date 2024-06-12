@@ -1,37 +1,48 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-// import {
-//   getDatabase,
-//   ref,
-//   onValue,
-//   child,
-//   get,
-//   limitToFirst,
-//   onChildAdded,
-//   onChildChanged,
-//   query,
-// } from 'firebase/database';
 
 import Container from '../../components/common/Container/Container';
 import Dropdown from '../../components/Dropdown/Dropdown';
-import NannyCard from '../../components/NannyCard/NannyCard';
-import AuthProvider from '../../components/forms/AuthProvider';
+import NanniesList from '../../components/NanniesList/NanniesList';
+// import AuthProvider from '../../components/forms/AuthProvider';
+
+import { getNanniesData } from '../../redux/nannies/nanniesOperations';
+import { resetNannies, updateLast } from '../../redux/nannies/nanniesSlice';
+import {
+  selectFilter,
+  selectLastValue,
+  selectNannies,
+  selectPage,
+} from '../../redux/nannies/nanniesSelectors';
 
 import s from './NanniesPage.module.css';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { getNanniesData } from '../../redux/nannies/nanniesOperations';
-import { selectNannies } from '../../redux/nannies/nanniesSelectors';
-import NanniesList from '../../components/NanniesList/NanniesList';
 
 const NanniesPage = () => {
   const dispatch = useDispatch();
 
   const nannies = useSelector(selectNannies);
-  // console.log(nannies);
+  const page = useSelector(selectPage);
+  const lastValue = useSelector(selectLastValue);
 
+  const filter = useSelector(selectFilter);
+  // console.log(lastKey);
+
+  //memo ?
   useEffect(() => {
-    dispatch(getNanniesData()); //
-  }, [dispatch]);
+    if (!filter) {
+      dispatch(getNanniesData()).then((nannies) => {
+        // const firstValue = nannies.payload[0].id;
+        // const lastNannyValue = nannies.payload[nannies.payload.length - 1].id;
+      });
+    } else {
+      // dispatch(getSortedNanniesData());
+    }
+  }, [dispatch, page, filter]);
+
+  // useEffect(() => {
+  //   setKeys(Object.keys(nannies));
+  //   // setNanniesWithId(keys.map((key) => ({ id: key, ...nannies[key] })));
+  // }, [nannies]);
 
   // useEffect(() => {
   //   const dbRef = ref(getDatabase());
@@ -56,7 +67,7 @@ const NanniesPage = () => {
 
         <NanniesList nannies={nannies} />
 
-        <AuthProvider />
+        {/* <AuthProvider /> */}
       </Container>
     </section>
   );

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import Cards from '../../components/Cards/Cards';
 import Container from '../../components/common/Container/Container';
@@ -9,9 +9,15 @@ import Button from '../../uikit/Button/Button';
 // import { POSTS_PER_PAGE } from '../../helpers/constants';
 
 import s from './FavoritesPage.module.css';
+import { resetNannies } from '../../redux/nannies/nanniesSlice';
 
 const FavoritesPage = () => {
+  const dispatch = useDispatch();
   const handleLoadMore = () => {};
+
+  useEffect(() => {
+    dispatch(resetNannies());
+  }, [dispatch]);
 
   return (
     <section className={s.favoritesSection}>

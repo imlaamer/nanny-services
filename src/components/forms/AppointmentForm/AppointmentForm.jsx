@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import Button from '../../../uikit/Button/Button';
 import Input from '../../../uikit/Input/Input';
+import Textarea from '../../../uikit/Textarea/Textarea';
 import Container from '../../common/Container/Container';
 // import Icon from '../../common/Icon/Icon';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -50,7 +51,7 @@ const AppointmentForm = ({ name, avatar }) => {
       </p>
 
       <div className={s.avatarNameWrapper}>
-        <img className={s.avatar} src={avatar} alt="nanny`s avatar" />
+        <img className={s.avatar} src={avatar} alt="nanny's avatar" />
 
         <div className={s.textWrapper}>
           <p className={s.accentText}>Your nanny</p>
@@ -58,7 +59,11 @@ const AppointmentForm = ({ name, avatar }) => {
         </div>
       </div>
 
-      <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
+      <form
+        className={s.form}
+        onSubmit={handleSubmit(onSubmitHandler)}
+        id="appointment-form"
+      >
         <div className={s.formWapper}>
           <div className={s.errorMessageBox}>
             <Input
@@ -72,10 +77,13 @@ const AppointmentForm = ({ name, avatar }) => {
                   : 'appointmentWrappedInput'
               }
             />
-            <ErrorMessage errorMessage={errors.address?.message} />
+            <ErrorMessage
+              errorMessage={errors.address?.message}
+              className="appointmentErrMessage"
+            />
           </div>
 
-          <div className={s.lastErrorMessageBox}>
+          <div className={s.errorMessageBox}>
             <Input
               type="tel"
               // name="tel"
@@ -87,10 +95,13 @@ const AppointmentForm = ({ name, avatar }) => {
                   : 'appointmentWrappedInput'
               }
             />
-            <ErrorMessage errorMessage={errors.tel?.message} />
+            <ErrorMessage
+              errorMessage={errors.tel?.message}
+              className="appointmentErrMessage"
+            />
           </div>
 
-          <div className={s.lastErrorMessageBox}>
+          <div className={s.errorMessageBox}>
             <Input
               type="text"
               // name="age"
@@ -102,14 +113,17 @@ const AppointmentForm = ({ name, avatar }) => {
                   : 'appointmentWrappedInput'
               }
             />
-            <ErrorMessage errorMessage={errors.age?.message} />
+            <ErrorMessage
+              errorMessage={errors.age?.message}
+              className="appointmentErrMessage"
+            />
           </div>
 
           {/* <label>
             <Input type="time" name="time" placeholder="00:00" />
           </label> */}
 
-          <div className={s.lastErrorMessageBox}>
+          <div className={s.errorMessageBox}>
             <TimePicker
               className="input customInput appointmentWrappedInput"
               // {...register('time')}
@@ -150,11 +164,11 @@ const AppointmentForm = ({ name, avatar }) => {
               //     : setDefaultTime(dayjs(value).format('h:mm A'))
               // }
             />
-            {/* <ErrorMessage errorMessage={errors.time?.message} /> */}
+            {/* <ErrorMessage errorMessage={errors.time?.message} className='appointmentErrMessage'  /> */}
           </div>
         </div>
 
-        <div className={s.lastErrorMessageBox}>
+        <div className={s.errorMessageBox}>
           <Input
             type="email"
             // name="email"
@@ -166,10 +180,13 @@ const AppointmentForm = ({ name, avatar }) => {
                 : 'appointmentWrappedInput'
             }
           />
-          <ErrorMessage errorMessage={errors.email?.message} />
+          <ErrorMessage
+            errorMessage={errors.email?.message}
+            className="appointmentErrMessage"
+          />
         </div>
 
-        <div className={s.lastErrorMessageBox}>
+        <div className={s.errorMessageBox}>
           <Input
             type="name"
             // name="username"
@@ -181,11 +198,14 @@ const AppointmentForm = ({ name, avatar }) => {
                 : 'appointmentWrappedInput'
             }
           />
-          <ErrorMessage errorMessage={errors.username?.message} />
+          <ErrorMessage
+            errorMessage={errors.username?.message}
+            className="appointmentErrMessage"
+          />
         </div>
 
         <div className={s.lastErrorMessageBox}>
-          <Input
+          {/* <Input
             type="text"
             // name="comment"
             placeholder="Comment"
@@ -195,8 +215,23 @@ const AppointmentForm = ({ name, avatar }) => {
                 ? 'errorInput appointmentWrappedInput'
                 : 'appointmentWrappedInput'
             }
+          /> */}
+
+          <Textarea
+            form="appointment-form"
+            // name="comment"
+            placeholder="Comment"
+            {...register('comment')}
+            className={
+              errors.comment?.message
+                ? 'errorInput appointmentWrappedInput'
+                : 'textarea'
+            }
           />
-          <ErrorMessage errorMessage={errors.comment?.message} />
+          <ErrorMessage
+            errorMessage={errors.comment?.message}
+            className="appointmentErrMessage"
+          />
         </div>
 
         <Button

@@ -40,19 +40,11 @@ const NannyCard = ({ nanny }) => {
 
   const handleReadMore = () => {
     setIsOpenReadMore(!isOpenReadMore);
-
-    // const setScrollDown = (ref) => {
-    //   setTimeout(() => {
-    //     if (!ref.current) return;
-    //     scrollDownOnLoadMore(ref);
-    //   }, 500);
-    // };
-    // setScrollDown(listRef);
   };
 
   return (
     <>
-      <div className={s.wrapper}>
+      <li className={s.wrapper}>
         <div className={s.avatarWrapper}>
           <div className={s.avatarUserStatusBox}>
             <img src={avatar_url} alt="nanny's avatar" />
@@ -134,7 +126,7 @@ const NannyCard = ({ nanny }) => {
             />
           )}
         </div>
-      </div>
+      </li>
     </>
   );
 };

@@ -25,9 +25,7 @@ export const MoreDetails = forwardRef(function MoreDetails(
   return (
     <ul className={s.list} ref={ref}>
       {reviews.map((review, index) => (
-        <li key={index}>
-          <Comment review={review} />
-        </li>
+        <Comment review={review} key={index} />
       ))}
 
       <Button

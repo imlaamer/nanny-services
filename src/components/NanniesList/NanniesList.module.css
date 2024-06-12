@@ -1,0 +1,3 @@
+.nanniesList li:not(:last-child) {
+  margin-bottom: 32px;
+}
