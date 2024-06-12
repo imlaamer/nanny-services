@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { GoogleAuthProvider } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database'; // for Realtime DB
 import firebase from 'firebase/compat/app';
 import { getFirestore } from 'firebase/firestore'; // for Cloud
@@ -27,7 +27,7 @@ export const app = initializeApp(firebaseConfig);
 // export const cloud_db = getFirestore(app);
 
 //getDatabase(app); vs   getDatabase();?
-export const realtime_db = getDatabase(app);
+// export const realtime_db = getDatabase(app);
 
 export const db = getDatabase();
 
@@ -52,8 +52,8 @@ function writeUserData(username, email) {
 }
 // writeUserData('Lolita', 'test@ghj.com');
 
-//------гугл автентифікація по попапу
-export const googleAuthProvider = new GoogleAuthProvider();
+// Initialize Firebase Authentication and get a reference to the service
+export const auth = getAuth(app);
 
 //------update data  --- check it !
 

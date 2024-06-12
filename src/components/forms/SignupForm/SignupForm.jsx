@@ -8,11 +8,14 @@ import EyeBtn from '../../EyeBtn/EyeBtn';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 import useValidationSchema from '../../../schemas/authFormValidationSchema';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../../redux/auth/authOperations';
 
 import s from './SignupForm.module.css';
 
 const SignupForm = () => {
   const { signupFormSchema } = useValidationSchema();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -23,9 +26,15 @@ const SignupForm = () => {
     resolver: yupResolver(signupFormSchema),
   });
 
-  const onSubmitHandler = (data) => {
-    console.log({ data });
-    reset();
+  const onSubmitHandler = async (data) => {
+    dispatch(registerUser(data))
+      .unwrap()
+      .then(() => {
+        // setSubmitting(false); //знайти в реакт хук форм що дізейблить кнопку
+        reset();
+        // onClose(); закрити модалку
+      })
+      .catch((error) => console.error(error));
   };
 
   return (

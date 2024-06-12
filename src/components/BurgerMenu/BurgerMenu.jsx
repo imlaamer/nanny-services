@@ -13,6 +13,7 @@ import SignupForm from '../forms/SignupForm/SignupForm';
 import LogoutCard from '../LogoutCard/LogoutCard';
 
 import s from './BurgerMenu.module.css';
+import { auth } from '../../firebase';
 
 const variants = {
   open: {
@@ -52,8 +53,7 @@ const BurgerMenu = ({
   const [isOpen, setOpen] = useState(false);
   // const [isToggleStroke, setIsToggleStroke] = useState(false);
 
-  const loggedInStatus = false;
-  // const loggedInStatus = true;
+  const loggedInStatus = auth.currentUser; //temporary !
 
   // useLockBodyScroll(true); - теж блокує  скрол
 
@@ -105,11 +105,17 @@ const BurgerMenu = ({
               id="log"
             />
 
-            {isLogModalOpen && !loggedInStatus && (
+            {isLogModalOpen && (
+              <Modal onClose={handleCloseModal} className="authModal">
+                {loggedInStatus ? <LogoutCard /> : <LoginForm />}
+              </Modal>
+            )}
+
+            {/* {isLogModalOpen && !loggedInStatus && (
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                // isOpen={isLogModalOpen}
+                // isOpen={isLogModalOpen} //?
               >
                 <LoginForm />
               </Modal>
@@ -119,11 +125,11 @@ const BurgerMenu = ({
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                // isOpen={isLogModalOpen}
+                // isOpen={isLogModalOpen} //?
               >
                 <LogoutCard />
               </Modal>
-            )}
+            )} */}
 
             {!loggedInStatus && (
               <Button

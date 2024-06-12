@@ -10,8 +10,11 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import useValidationSchema from '../../../schemas/authFormValidationSchema';
 
 import s from './LoginForm.module.css';
+import { loginUser } from '../../../redux/auth/authOperations';
+import { useDispatch } from 'react-redux';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const { signinFormSchema } = useValidationSchema();
 
   const {
@@ -24,8 +27,15 @@ const LoginForm = () => {
   });
 
   const onSubmitHandler = (data) => {
-    console.log({ data });
-    reset();
+    console.log(data, 'data');
+    dispatch(loginUser(data))
+      .unwrap()
+      .then(() => {
+        // setSubmitting(false); //знайти в реакт хук форм що дізейблить кнопку
+        reset();
+        // onClose(); закрити модалку
+      })
+      .catch((error) => console.error(error?.message));
   };
 
   return (

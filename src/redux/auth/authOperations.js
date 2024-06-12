@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
+import { createUserAndSetData, login, logout } from '../../services/auth-api';
 // import { AUTH_ENDPOINT } from '../../helpers/endpoints/authEndpoint';
 
-const AUTH_ENDPOINT = '';
+// const AUTH_ENDPOINT = '';
 
-const SERVER_URL = ''; //import.meta.env.VITE_SERVER_BASE_URL
-axios.defaults.baseURL = SERVER_URL;
+// const SERVER_URL = ''; //import.meta.env.VITE_SERVER_BASE_URL
+// axios.defaults.baseURL = SERVER_URL;
 
 export const setTokenAuthInstance = (token) =>
   (axios.defaults.headers.common.Authorization = `Bearer ${token}`);
@@ -20,16 +21,16 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (credentials, ThunkAPI) => {
     try {
-      const { data } = await axios.post(AUTH_ENDPOINT.REGISTER, credentials);
+      await createUserAndSetData(credentials);
       toast.success('You`ve been successfully registered!');
-      return data;
+      return;
     } catch (error) {
-      if (error.response.status === 400) {
-        toast.error(error.response?.data?.message);
+      const errorCode = error.code;
+      if (errorCode == 'auth/weak-password') {
+        toast.error('The password is too weak.');
       }
-      if (error.response.status === 409) {
-        toast.error(error.response?.data?.message);
-      }
+
+      toast.error(error.response?.data?.message);
       return ThunkAPI.rejectWithValue(error.message);
     }
   }
@@ -39,29 +40,27 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (credentials, ThunkAPI) => {
     try {
-      const { data } = await axios.post(AUTH_ENDPOINT.LOGIN, credentials);
+      const user = await login(credentials);
       toast.success('Welcome!');
-      return data;
+      return user;
     } catch (error) {
+      // const errorCode = error?.code;
+      // console.log(errorCode, 'errorCode'); //
+
       // if (
-      //   error.response.status === 500 ||
-      //   error.response?.data?.message ===
-      //     "Cannot read properties of null - 'verify'"
+      //   errorCode === 'auth/wrong-password' ||
+
       // ) {
-      //   toast.error('Email is not verified');
+      //   toast.error('Password invalid');
+      // } else {
+      //   toast.error(error.response?.data?.message);
       // }
 
-      if (error.response.status === 404) {
-        toast.error(
-          error.response?.data?.message || 'Email or password invalid'
-        );
-      }
+      // toast.error('Email or password invalid');
 
-      if (error.response.status === 401) {
-        toast.error(
-          error.response?.data?.message || 'Email or password invalid'
-        );
-      }
+      //error.code === 400 invalid credentials
+      toast.error(error.message); //.response?.data?
+
       return ThunkAPI.rejectWithValue(error.message);
     }
   }
@@ -71,7 +70,7 @@ export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
   async (_, ThunkAPI) => {
     try {
-      await axios.post(AUTH_ENDPOINT.LOGOUT);
+      await logout();
       return;
     } catch (error) {
       return ThunkAPI.rejectWithValue(error.message);

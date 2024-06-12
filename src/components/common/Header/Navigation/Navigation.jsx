@@ -7,6 +7,10 @@ import User from '../User/User';
 
 import logo from '../../../../assets/static/icons/baby.svg';
 import s from './Navigation.module.css';
+import LogoutCard from '../../../LogoutCard/LogoutCard';
+import { auth } from '../../../../firebase';
+import LoginForm from '../../../forms/LoginForm/LoginForm';
+import SignupForm from '../../../forms/SignupForm/SignupForm';
 
 const Navigation = ({
   isHomePage,
@@ -16,7 +20,7 @@ const Navigation = ({
   isSignupModalOpen,
 }) => {
   // const loggedInStatus = true;
-  const loggedInStatus = false;
+  const loggedInStatus = auth.currentUser; //temporary !
 
   return (
     <div className={s.logoNavWrapper}>
@@ -74,7 +78,12 @@ const Navigation = ({
               className={isHomePage ? 'logBtn' : 'coloredBgBtn'}
               id="log"
             />
-            {isLogModalOpen && <Modal onClose={handleCloseModal}></Modal>}
+
+            {isLogModalOpen && (
+              <Modal onClose={handleCloseModal} className="authModal">
+                {loggedInStatus ? <LogoutCard /> : <LoginForm />}
+              </Modal>
+            )}
 
             {!loggedInStatus && (
               <Button
@@ -85,7 +94,11 @@ const Navigation = ({
                 id="signup"
               />
             )}
-            {isSignupModalOpen && <Modal onClose={handleCloseModal}></Modal>}
+            {isSignupModalOpen && (
+              <Modal onClose={handleCloseModal} className="authModal">
+                <SignupForm />
+              </Modal>
+            )}
           </div>
         </div>
       </div>

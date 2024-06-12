@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   user: {
+    // id: null,
     username: null,
     email: null,
     favorites: [], //id
@@ -34,7 +35,6 @@ export const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
-        state.user.email = payload.email;
         state.loading = false;
       })
       .addCase(registerUser.rejected, (state, { payload }) => {
@@ -50,9 +50,10 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.user = { ...payload.user };
+        state.user = payload; //
         state.token = payload.token;
-        setTokenAuthInstance(payload.token);
+
+        // setTokenAuthInstance(payload.token);
         // setTokenwaterPortionsInstance(payload.token);
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
@@ -66,7 +67,7 @@ export const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(logoutUser.fulfilled, () => {
-        clearTokenAuthInstance();
+        // clearTokenAuthInstance();
         // clearTokenwaterPortionsInstance();
         return initialState;
       })
