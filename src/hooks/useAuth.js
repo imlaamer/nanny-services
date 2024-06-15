@@ -1,26 +1,25 @@
 import { useSelector } from 'react-redux';
-// import {
-//   getLoading,
-//   getError,
-//   getUser,
-//   getLoggedInStatus,
-//   getToken,
-//   getRefreshingStatus,
-// } from '../redux/auth/authSelectors';
+import {
+  selectUser,
+  selectLoading,
+  selectError,
+  selectIsLoggedIn,
+  selectRefreshingStatus,
+} from '../redux/auth/authSelectors';
 
 export const useAuth = () => {
-  //   const loading = useSelector(getLoading);
-  //   const error = useSelector(getError);
-  //   const user = useSelector(getUser);
-  //   const loggedInStatus = useSelector(getLoggedInStatus);
-  //   const token = useSelector(getToken);
-  //   const refreshingStatus = useSelector(getRefreshingStatus);
-  //   return {
-  //     loading,
-  //     error,
-  //     user,
-  //     loggedInStatus,
-  //     token,
-  //     refreshingStatus,
-  //   };
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+  const user = useSelector(selectUser);
+  const loggedInStatus = useSelector(selectIsLoggedIn);
+  const refreshingStatus = useSelector(selectRefreshingStatus);
+  // const token = useSelector(getToken);
+  return {
+    loading,
+    error,
+    user,
+    loggedInStatus,
+    refreshingStatus,
+    // token,
+  };
 };

@@ -6,7 +6,7 @@ import Container from '../common/Container/Container';
 import s from './LogoutCard.module.css';
 import { logoutUser } from '../../redux/auth/authOperations';
 
-const LogoutCard = () => {
+const LogoutCard = ({ handleCloseModal }) => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -18,6 +18,7 @@ const LogoutCard = () => {
     dispatch(logoutUser())
       .unwrap()
       .then(() => {
+        handleCloseModal();
         // onClose(); закрити модалку + redirect
       })
       .catch((error) => console.error(error?.message));
@@ -33,7 +34,11 @@ const LogoutCard = () => {
         title="Log out"
         onClick={handleLogout}
       />
-      <Button className="logoutCancelBtn" title="Cancel" />
+      <Button
+        className="logoutCancelBtn"
+        title="Cancel"
+        onClick={handleCloseModal}
+      />
     </Container>
   );
 };

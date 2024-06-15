@@ -13,7 +13,7 @@ import s from './LoginForm.module.css';
 import { loginUser } from '../../../redux/auth/authOperations';
 import { useDispatch } from 'react-redux';
 
-const LoginForm = () => {
+const LoginForm = ({ handleCloseModal }) => {
   const dispatch = useDispatch();
   const { signinFormSchema } = useValidationSchema();
 
@@ -32,8 +32,8 @@ const LoginForm = () => {
       .unwrap()
       .then(() => {
         // setSubmitting(false); //знайти в реакт хук форм що дізейблить кнопку
-        reset();
-        // onClose(); закрити модалку
+        // reset();
+        handleCloseModal();
       })
       .catch((error) => console.error(error?.message));
   };
@@ -77,6 +77,7 @@ const LoginForm = () => {
           type="submit"
           title={'Log in'}
           className="formLoginBtn"
+
           //   loading={loadingSave}
           //   disabled={loadingSave}
         />

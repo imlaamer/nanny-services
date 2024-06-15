@@ -1,16 +1,18 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Button from '../../../../uikit/Button/Button';
 import Modal from '../../Modal/Modal';
 import User from '../User/User';
 
 import logo from '../../../../assets/static/icons/baby.svg';
-import s from './Navigation.module.css';
 import LogoutCard from '../../../LogoutCard/LogoutCard';
-import { auth } from '../../../../firebase';
 import LoginForm from '../../../forms/LoginForm/LoginForm';
 import SignupForm from '../../../forms/SignupForm/SignupForm';
+import { selectIsLoggedIn } from '../../../../redux/auth/authSelectors';
+
+import s from './Navigation.module.css';
 
 const Navigation = ({
   isHomePage,
@@ -18,15 +20,15 @@ const Navigation = ({
   handleCloseModal,
   isLogModalOpen,
   isSignupModalOpen,
+  isLogoutModalOpen,
 }) => {
-  // const loggedInStatus = true;
-  const loggedInStatus = auth.currentUser; //temporary !
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
     <div className={s.logoNavWrapper}>
       {/* {loggedInStatus && <User />} */}
 
-      {!loggedInStatus && (
+      {!isLoggedIn && (
         <NavLink to="/" className={s.logo}>
           <img src={logo} alt="logo" />
         </NavLink>
@@ -56,7 +58,7 @@ const Navigation = ({
             Nannies
           </NavLink>
 
-          {loggedInStatus && (
+          {isLoggedIn && (
             <NavLink
               className={({ isActive }) =>
                 `${s.navLink} ${isActive ? s.active : ''}`
@@ -69,23 +71,38 @@ const Navigation = ({
         </div>
 
         <div className={s.userBtnWrapper}>
-          {loggedInStatus && <User />}
+          {isLoggedIn && <User />}
 
           <div className={s.btnsBox}>
             <Button
-              title={loggedInStatus ? 'Log out' : 'Log in'}
+              title={isLoggedIn ? 'Log out' : 'Log in'}
               onClick={handleOpenModal}
               className={isHomePage ? 'logBtn' : 'coloredBgBtn'}
-              id="log"
+              id={isLoggedIn ? 'logout' : 'log'}
             />
 
+            {/*  !loggedInStatus && */}
             {isLogModalOpen && (
-              <Modal onClose={handleCloseModal} className="authModal">
-                {loggedInStatus ? <LogoutCard /> : <LoginForm />}
+              <Modal
+                onClose={handleCloseModal}
+                className="authModal"
+                // isOpen={isLogModalOpen} //?
+              >
+                <LoginForm handleCloseModal={handleCloseModal} />
               </Modal>
             )}
 
-            {!loggedInStatus && (
+            {isLogoutModalOpen && (
+              <Modal
+                onClose={handleCloseModal}
+                className="authModal"
+                // isOpen={isLogModalOpen} //?
+              >
+                <LogoutCard handleCloseModal={handleCloseModal} />
+              </Modal>
+            )}
+
+            {!isLoggedIn && (
               <Button
                 title="Sign up"
                 // title="Registration"
@@ -96,7 +113,7 @@ const Navigation = ({
             )}
             {isSignupModalOpen && (
               <Modal onClose={handleCloseModal} className="authModal">
-                <SignupForm />
+                <SignupForm handleCloseModal={handleCloseModal} />
               </Modal>
             )}
           </div>

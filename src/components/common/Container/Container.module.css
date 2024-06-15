@@ -24,6 +24,10 @@
   color: var(--primary-white);
 }
 
+.favorites-page-container {
+  color: var(--primary-dark);
+}
+
 @media screen and (max-width: 960px) {
   .hero-colored-container {
     margin: 0;

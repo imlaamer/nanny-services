@@ -1,11 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database'; // for Realtime DB
-import firebase from 'firebase/compat/app';
-import { getFirestore } from 'firebase/firestore'; // for Cloud
-
-import { nanoid } from 'nanoid';
-// import { getAnalytics } from 'firebase/analytics';
+import { getDatabase, ref, set } from 'firebase/database';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const DATABASE_URL = import.meta.env.VITE_DATABASE_URL;
@@ -21,39 +16,31 @@ const firebaseConfig = {
   measurementId: 'G-0SNP7N5WMN',
 };
 
-// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-// export const cloud_db = getFirestore(app);
-
-//getDatabase(app); vs   getDatabase();?
-// export const realtime_db = getDatabase(app);
-
 export const db = getDatabase();
+export const auth = getAuth(app);
 
 //------ refs
-const rootUsersFef = ref(db, 'users');
-const rootNanniesRef = ref(db, 'nannies');
+// const rootUsersFef = ref(db, 'users');
+// const rootNanniesRef = ref(db, 'nannies');
 
 //-----додати новий вузол / в поточний вузол  users/'  вузол  userId з  даними ( лише якщо не пусте поле)
-function writeUserData(username, email) {
-  const userId = nanoid(); //-
+// function writeUserData(username, email) {
 
-  //-------генерування key
-  // const autoId = rootNanniesRef.push().key; // - check it !
+//-------генерування key
+// const autoId = rootNanniesRef.push().key; // - check it !
 
-  //rootUsersFef.child(userId.value) - check it !
-  set(ref(db, 'users/' + userId), {
-    username,
-    email,
-    favorites: [], //'0'
-    token: null,
-  });
-}
+//rootUsersFef.child(userId.value) - check it !
+// set(ref(db, 'users/' + userId), {
+//   username,
+//   email,
+//   favorites: [], //'0'
+//   token: null,
+// });
+// }
 // writeUserData('Lolita', 'test@ghj.com');
 
 // Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app);
 
 //------update data  --- check it !
 

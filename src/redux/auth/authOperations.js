@@ -1,36 +1,27 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { createUserAndSetData, login, logout } from '../../services/auth-api';
-// import { AUTH_ENDPOINT } from '../../helpers/endpoints/authEndpoint';
-
-// const AUTH_ENDPOINT = '';
-
-// const SERVER_URL = ''; //import.meta.env.VITE_SERVER_BASE_URL
-// axios.defaults.baseURL = SERVER_URL;
-
-export const setTokenAuthInstance = (token) =>
-  (axios.defaults.headers.common.Authorization = `Bearer ${token}`);
-
-export const clearTokenAuthInstance = () =>
-  (axios.defaults.headers.common.Authorization = '');
-
-//endpoints -
+import {
+  createUserAndSetData,
+  login,
+  logout,
+  refreshAndGetCurrentUser,
+} from '../../services/auth-api';
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (credentials, ThunkAPI) => {
     try {
-      await createUserAndSetData(credentials);
+      const user = await createUserAndSetData(credentials);
       toast.success('You`ve been successfully registered!');
-      return;
+      return user;
     } catch (error) {
-      const errorCode = error.code;
-      if (errorCode == 'auth/weak-password') {
-        toast.error('The password is too weak.');
-      }
+      const errorCode = error?.code;
 
-      toast.error(error.response?.data?.message);
+      if (errorCode === 'auth/email-already-in-use') {
+        toast.error('The provided email is already in use by an existing user');
+      } else {
+        toast.error(error?.message);
+      }
       return ThunkAPI.rejectWithValue(error.message);
     }
   }
@@ -45,22 +36,11 @@ export const loginUser = createAsyncThunk(
       return user;
     } catch (error) {
       // const errorCode = error?.code;
-      // console.log(errorCode, 'errorCode'); //
-
-      // if (
-      //   errorCode === 'auth/wrong-password' ||
-
-      // ) {
-      //   toast.error('Password invalid');
-      // } else {
-      //   toast.error(error.response?.data?.message);
-      // }
-
-      // toast.error('Email or password invalid');
-
-      //error.code === 400 invalid credentials
-      toast.error(error.message); //.response?.data?
-
+      //'auth/wrong-password'
+      // toast.error(
+      //   'Invalid login or password. Also, please check if you have registered.'
+      // );
+      toast.error(error?.messsage);
       return ThunkAPI.rejectWithValue(error.message);
     }
   }
@@ -81,37 +61,21 @@ export const logoutUser = createAsyncThunk(
 export const refreshUser = createAsyncThunk(
   'auth/refreshUser',
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token;
-    if (!token) return thunkAPI.rejectWithValue("You don't have a token!");
-
     try {
-      setTokenAuthInstance(token);
-      // setTokenwaterPortionsInstance(token);
-      const { data } = await axios.get(AUTH_ENDPOINT.REFRESH);
-      return data;
+      const state = thunkAPI.getState();
+      const id = state.auth.user.id; //or token
+      if (!id) {
+        return thunkAPI.rejectWithValue('No id');
+      } //?
+      const user = await refreshAndGetCurrentUser(id, thunkAPI);
+      // console.log(user, 'user from thunk');
+      return user;
     } catch (error) {
+      toast.error(error?.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-
-// export const updateAvatar = createAsyncThunk(
-//   'auth/updateAvatar',
-
-//   async (file, thunkApi) => {
-//     try {
-//       const state = thunkApi.getState();
-//       const token = state.auth.token; //
-//       const avatarURL = await apiUpdateAvatar(file, token);
-//       toast.success('Your avatar was successfully updated!');
-//       return avatarURL;
-//     } catch (error) {
-//       toast.error(error.response?.data?.message);
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
 
 // export const updateUserData = createAsyncThunk(
 //   'auth/updateUserData',
@@ -125,21 +89,6 @@ export const refreshUser = createAsyncThunk(
 //     } catch (error) {
 //       toast.error(error.response?.data?.message);
 //       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-// export const sentWaterRate = createAsyncThunk(
-//   'auth/sentWaterRate',
-//   async (waterDailyNorma, ThunkAPI) => {
-//     try {
-//       const { data } = await axios.patch(
-//         AUTH_ENDPOINT.WATER_RATE,
-//         waterDailyNorma
-//       );
-//       return data;
-//     } catch (error) {
-//       return ThunkAPI.rejectWithValue(error.message);
 //     }
 //   }
 // );

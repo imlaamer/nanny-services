@@ -13,7 +13,7 @@ import { registerUser } from '../../../redux/auth/authOperations';
 
 import s from './SignupForm.module.css';
 
-const SignupForm = () => {
+const SignupForm = ({ handleCloseModal }) => {
   const { signupFormSchema } = useValidationSchema();
   const dispatch = useDispatch();
 
@@ -31,8 +31,8 @@ const SignupForm = () => {
       .unwrap()
       .then(() => {
         // setSubmitting(false); //знайти в реакт хук форм що дізейблить кнопку
-        reset();
-        // onClose(); закрити модалку
+        handleCloseModal();
+        // reset();
       })
       .catch((error) => console.error(error));
   };

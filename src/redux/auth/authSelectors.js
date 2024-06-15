@@ -1,11 +1,24 @@
-export const getLoading = (state) => state.auth.loading;
+import { createSelector } from '@reduxjs/toolkit';
 
-export const getError = (state) => state.auth.error;
+export const selectAuth = (state) => state.auth;
 
-export const getUser = (state) => state.auth.user;
+export const selectUser = createSelector(selectAuth, (auth) => auth.user);
 
-export const getLoggedInStatus = (state) => state.auth.isLoggedIn;
+export const selectLoading = createSelector(selectAuth, (auth) => auth.loading);
 
-export const getToken = (state) => state.auth.token;
+export const selectError = createSelector(selectAuth, (auth) => auth.error);
 
-// export const getRefreshingStatus = (state) => state.auth.isRefreshing;
+export const selectIsLoggedIn = createSelector(
+  selectAuth,
+  (auth) => auth.isLoggedIn
+);
+
+export const selectRefreshingStatus = createSelector(
+  selectAuth,
+  (auth) => auth.isRefreshing
+);
+
+export const selectFavorites = createSelector(
+  selectAuth,
+  (auth) => auth.user.favorites
+);

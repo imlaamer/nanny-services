@@ -3,15 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // import Cards from '../../components/Cards/Cards';
 import Container from '../../components/common/Container/Container';
-// import Icon from '../../components/Icon/Icon';
+import Icon from '../../components/common/Icon/Icon';
 import Button from '../../uikit/Button/Button';
 // import { selectFavorites } from '../../redux/adverts/advertsSelectors';
 // import { POSTS_PER_PAGE } from '../../helpers/constants';
 
-import s from './FavoritesPage.module.css';
 import { resetNannies } from '../../redux/nannies/nanniesSlice';
+import { selectFavorites } from '../../redux/auth/authSelectors';
+import s from './FavoritesPage.module.css';
 
 const FavoritesPage = () => {
+  const favorites = useSelector(selectFavorites);
+
   const dispatch = useDispatch();
   const handleLoadMore = () => {};
 
@@ -29,13 +32,20 @@ const FavoritesPage = () => {
             <span className={s.noFavsText}>
               You don`t have any favorites yet
             </span>
-            {/* <Icon id={'heart'} size="120" fill={'#E44848'} stroke={'#E44848'} /> */}
+            <Icon
+              id={'heart-red'}
+              height="120"
+              width="120"
+              // fill={'#E44848'}
+              // stroke={'#E44848'}
+            />
           </div>
         </div>
-
-        <Button onClick={handleLoadMore} className="load-more-cards-btn">
-          Load more
-        </Button>
+        {favorites?.length !== 0 && (
+          <Button onClick={handleLoadMore} className="load-more-cards-btn">
+            Load more
+          </Button>
+        )}
       </Container>
     </section>
   );

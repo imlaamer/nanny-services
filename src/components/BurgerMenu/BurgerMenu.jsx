@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -12,8 +13,9 @@ import LoginForm from '../forms/LoginForm/LoginForm';
 import SignupForm from '../forms/SignupForm/SignupForm';
 import LogoutCard from '../LogoutCard/LogoutCard';
 
-import s from './BurgerMenu.module.css';
 import { auth } from '../../firebase';
+import { selectIsLoggedIn } from '../../redux/auth/authSelectors';
+import s from './BurgerMenu.module.css';
 
 const variants = {
   open: {
@@ -49,13 +51,15 @@ const BurgerMenu = ({
   handleOpenModal,
   isSignupModalOpen,
   isLogModalOpen,
+  isLogoutModalOpen,
 }) => {
   const [isOpen, setOpen] = useState(false);
   // const [isToggleStroke, setIsToggleStroke] = useState(false);
 
-  const loggedInStatus = auth.currentUser; //temporary !
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  // const loggedInStatus = auth.currentUser; //temporary !
 
-  // useLockBodyScroll(true); - теж блокує  скрол
+  useLockBodyScroll(true); //- теж блокує  скрол
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -100,38 +104,50 @@ const BurgerMenu = ({
           <div>
             <Button
               onClick={handleOpen}
-              title={loggedInStatus ? 'Log out' : 'Log in'}
+              title={isLoggedIn ? 'Log out' : 'Log in'}
               className="navLogBtn"
-              id="log"
+              id={isLoggedIn ? 'logout' : 'log'}
             />
 
-            {isLogModalOpen && (
-              <Modal onClose={handleCloseModal} className="authModal">
-                {loggedInStatus ? <LogoutCard /> : <LoginForm />}
-              </Modal>
+            {/* {!loggedInStatus && (
+              <Button
+                onClick={handleOpen}
+                title="Log in"
+                className="navLogBtn"
+                id="log"
+              />
             )}
 
-            {/* {isLogModalOpen && !loggedInStatus && (
-              <Modal
-                onClose={handleCloseModal}
-                className="authModal"
-                // isOpen={isLogModalOpen} //?
-              >
-                <LoginForm />
-              </Modal>
-            )}
-
-            {isLogModalOpen && loggedInStatus && (
-              <Modal
-                onClose={handleCloseModal}
-                className="authModal"
-                // isOpen={isLogModalOpen} //?
-              >
-                <LogoutCard />
-              </Modal>
+            {loggedInStatus && (
+              <Button
+                onClick={handleOpen}
+                title="Log out"
+                className="navLogBtn"
+                id="logout"
+              />
             )} */}
 
-            {!loggedInStatus && (
+            {/* !loggedInStatus */}
+            {isLogModalOpen && (
+              <Modal
+                onClose={handleCloseModal}
+                className="authModal"
+                // isOpen={isLogModalOpen} //scroll test
+              >
+                <LoginForm handleCloseModal={handleCloseModal} />
+              </Modal>
+            )}
+            {/* && loggedInStatus */}
+            {isLogoutModalOpen && (
+              <Modal
+                onClose={handleCloseModal}
+                className="authModal"
+                // isOpen={isLogModalOpen} //scroll test?
+              >
+                <LogoutCard handleCloseModal={handleCloseModal} />
+              </Modal>
+            )}
+            {!isLoggedIn && (
               <Button
                 onClick={handleOpen}
                 title="Sign up"
@@ -146,7 +162,7 @@ const BurgerMenu = ({
                 className="authModal"
                 // isOpen={isSignupModalOpen}
               >
-                <SignupForm />
+                <SignupForm handleCloseModal={handleCloseModal} />
               </Modal>
             )}
           </div>
@@ -181,7 +197,7 @@ const BurgerMenu = ({
             Nannies
           </NavLink>
 
-          {loggedInStatus && (
+          {isLoggedIn && (
             <NavLink
               className={({ isActive }) =>
                 `${s.navLink} ${isActive ? s.active : ''}`

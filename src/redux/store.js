@@ -18,13 +18,13 @@ import storage from 'redux-persist/lib/storage';
 const persistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['token'],
+  whitelist: ['token', 'user'],
 };
 
 export const store = configureStore({
   reducer: {
     auth: persistReducer(persistConfig, authSlice.reducer),
-    nannies: nanniesSlice.reducer, //
+    nannies: nanniesSlice.reducer, 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

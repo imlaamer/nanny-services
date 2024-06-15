@@ -20,23 +20,59 @@ const Header = () => {
 
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
   const handleOpenModal = (e) => {
-    if (e.target.id === 'log') {
-      setIsLogModalOpen(true);
-      // console.log(e.target);
-    } else {
-      setIsSignupModalOpen(true);
-      // console.log(e.target);
+    switch (e.target.id) {
+      case 'log':
+        setIsLogModalOpen(true);
+        break;
+      case 'signup':
+        setIsSignupModalOpen(true);
+        break;
+      case 'logout':
+        setIsLogoutModalOpen(true);
+        break;
+      default:
+        console.log('Unexpected id'); //
+        break;
     }
+
+    // switch (false) {
+    //   case isLogModalOpen:
+    //     return setIsLogModalOpen(true);
+    //   case isSignupModalOpen:
+    //     return setIsSignupModalOpen(true);
+    //   case isLogoutModalOpen:
+    //     return setIsLogoutModalOpen(true);
+    //   default:
+    //     console.log('Unexpected false state ');
+    //     break;
+    // }
   };
 
   const handleCloseModal = () => {
     if (isLogModalOpen) {
-      setIsLogModalOpen(false);
+      return setIsLogModalOpen(false);
+    } else if (isSignupModalOpen) {
+      return setIsSignupModalOpen(false);
+    } else if (isLogoutModalOpen) {
+      return setIsLogoutModalOpen(false);
     }
-    if (isSignupModalOpen) {
-      setIsSignupModalOpen(false);
-    }
+    // switch (true) {
+    //   case isLogModalOpen:
+    //     setIsLogModalOpen(false);
+    //     break;
+    //   case isSignupModalOpen:
+    //     setIsSignupModalOpen(false);
+    //     break;
+    //   case isLogoutModalOpen:
+    //     setIsLogoutModalOpen(false);
+    //     break;
+    //   default:
+    //     console.log('Unexpected true state');
+    //     break;
+    // }
   };
 
   return (
@@ -48,6 +84,7 @@ const Header = () => {
           handleCloseModal={handleCloseModal}
           isLogModalOpen={isLogModalOpen}
           isSignupModalOpen={isSignupModalOpen}
+          isLogoutModalOpen={isLogoutModalOpen}
         />
         <BurgerMenu
           isHomePage={isHomePage}
@@ -55,6 +92,7 @@ const Header = () => {
           handleCloseModal={handleCloseModal}
           isLogModalOpen={isLogModalOpen}
           isSignupModalOpen={isSignupModalOpen}
+          isLogoutModalOpen={isLogoutModalOpen}
         />
       </Container>
     </header>
