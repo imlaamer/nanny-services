@@ -13,10 +13,14 @@ const Modal = ({ onClose, children, className, isOpen }) => {
 
   // useLockBodyScroll(true);
 
-  // useEffect(() => {
-  //   if (isOpen) document.body.style.overflow = 'hidden';
-  //   if (!isOpen) document.body.style.overflow = 'scroll';
-  // }, [isOpen]);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+    // else {
+    //   document.body.style.overflow = 'scroll';
+    // }
+  }, [isOpen]);
 
   useEffect(() => {
     const onEscPress = (e) => {
@@ -29,12 +33,14 @@ const Modal = ({ onClose, children, className, isOpen }) => {
 
     return () => {
       window.removeEventListener('keydown', onEscPress);
+      document.body.style.overflow = 'scroll';
     };
   }, [onClose]);
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
+      document.body.style.overflow = 'scroll';
     }
   };
 

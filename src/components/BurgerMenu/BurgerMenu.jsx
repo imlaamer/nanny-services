@@ -13,7 +13,6 @@ import LoginForm from '../forms/LoginForm/LoginForm';
 import SignupForm from '../forms/SignupForm/SignupForm';
 import LogoutCard from '../LogoutCard/LogoutCard';
 
-import { auth } from '../../firebase';
 import { selectIsLoggedIn } from '../../redux/auth/authSelectors';
 import s from './BurgerMenu.module.css';
 
@@ -132,7 +131,7 @@ const BurgerMenu = ({
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                // isOpen={isLogModalOpen} //scroll test
+                isOpen={isLogModalOpen} //scroll
               >
                 <LoginForm handleCloseModal={handleCloseModal} />
               </Modal>
@@ -142,7 +141,7 @@ const BurgerMenu = ({
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                // isOpen={isLogModalOpen} //scroll test?
+                isOpen={isLogoutModalOpen} //scroll
               >
                 <LogoutCard handleCloseModal={handleCloseModal} />
               </Modal>
@@ -160,7 +159,7 @@ const BurgerMenu = ({
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                // isOpen={isSignupModalOpen}
+                isOpen={isSignupModalOpen} //scroll
               >
                 <SignupForm handleCloseModal={handleCloseModal} />
               </Modal>

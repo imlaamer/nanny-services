@@ -26,6 +26,7 @@
 
 .favorites-page-container {
   color: var(--primary-dark);
+  height: 100%;
 }
 
 @media screen and (max-width: 960px) {

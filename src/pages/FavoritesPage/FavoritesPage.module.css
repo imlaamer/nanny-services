@@ -1,29 +1,37 @@
 .favoritesSection {
   padding: 100px 0;
-}
-
-.noFavsBox {
-  position: fixed;
-  top: 0;
-  left: 0;
+  /* padding-top: 178px; */
   width: 100vw;
-  height: 100vh;
-  margin: 0px auto;
-}
+  min-height: 100vh;
+  height: fit-content;
 
-.noFavsContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  background-color: var(--background-light-gray);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
+.noFavsBox {
+  width: 100%;
+  min-height: 400px;
+  max-height: 100vh;
+  margin: 0px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noFavsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .noFavsText {
-  font-size: 50px;
+  font-size: clamp(30px, 1rem + 1vw, 50px);
   padding: 20px;
   line-height: 1.33;
   text-align: center;
 }
+

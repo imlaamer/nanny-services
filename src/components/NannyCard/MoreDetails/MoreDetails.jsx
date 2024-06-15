@@ -38,7 +38,7 @@ export const MoreDetails = forwardRef(function MoreDetails(
         <Modal
           onClose={handleCloseModal}
           className="appointmentModal"
-          // isOpen={isLogModalOpen}
+          isOpen={isModalOpen}
         >
           <AppointmentForm name={name} avatar={avatar} />
         </Modal>

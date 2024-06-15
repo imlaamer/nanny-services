@@ -86,7 +86,7 @@ const Navigation = ({
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                // isOpen={isLogModalOpen} //?
+                isOpen={isLogModalOpen} //
               >
                 <LoginForm handleCloseModal={handleCloseModal} />
               </Modal>
@@ -96,7 +96,7 @@ const Navigation = ({
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                // isOpen={isLogModalOpen} //?
+                isOpen={isLogoutModalOpen} //
               >
                 <LogoutCard handleCloseModal={handleCloseModal} />
               </Modal>
@@ -113,7 +113,10 @@ const Navigation = ({
             )}
             {isSignupModalOpen && (
               <Modal onClose={handleCloseModal} className="authModal">
-                <SignupForm handleCloseModal={handleCloseModal} />
+                <SignupForm
+                  handleCloseModal={handleCloseModal}
+                  isOpen={isSignupModalOpen}
+                />
               </Modal>
             )}
           </div>
