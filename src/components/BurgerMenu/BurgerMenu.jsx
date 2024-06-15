@@ -59,7 +59,7 @@ const BurgerMenu = ({
   const isLoggedIn = useSelector(selectIsLoggedIn);
   // const loggedInStatus = auth.currentUser; //temporary !
 
-  useLockBodyScroll(true); //- теж блокує  скрол
+  // useLockBodyScroll(true); //- теж блокує  скрол
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
