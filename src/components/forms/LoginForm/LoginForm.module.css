@@ -1,3 +1,8 @@
+.scrollContainer {
+  max-height: 416px;
+  overflow-y: scroll;
+}
+
 .loginTitle {
   margin-bottom: 20px;
   font-size: clamp(22px, 2vw + 1rem, 40px);

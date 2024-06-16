@@ -12,7 +12,7 @@
   z-index: 1001;
 
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   /* transform: scale(1); */
 }
 
@@ -20,11 +20,18 @@
   overflow: hidden;
 }
 
+.scrollContainer {
+  overflow-y: scroll;
+  min-height: min-content;
+}
+
 .backdrop.active {
   /* transform: scale(1); */
 }
 
 .container {
+  overflow: hidden;
+  /* height: 500px; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -59,7 +66,10 @@
 }
 
 .authModal {
-  padding: clamp(20px, 5vw + 1rem, 64px);
+  padding: clamp(15px, 2vw + 1rem, 32px);
+
+  /* padding: clamp(15px, 2vw + 1rem, 32px); */
+  /* padding: clamp(20px, 5vw + 1rem, 64px); */
 }
 
 .container.appointmentModal {
@@ -67,7 +77,8 @@
 }
 
 @media screen and (min-width: 768px) {
-  .appointmentModal {
+  .appointmentModal,
+  .authModal {
     padding: 64px;
     width: 600px;
   }

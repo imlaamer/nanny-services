@@ -87,6 +87,7 @@ const Navigation = ({
                 onClose={handleCloseModal}
                 className="authModal"
                 isOpen={isLogModalOpen} //
+                title="Log in"
               >
                 <LoginForm handleCloseModal={handleCloseModal} />
               </Modal>

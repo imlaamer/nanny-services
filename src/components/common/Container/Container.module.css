@@ -15,9 +15,10 @@
 /* --signup login logout modals-- */
 /* .container */
 .auth-container {
-  max-width: 438px;
+  /* max-width: 438px; */
   padding: 0;
   color: var(--primary-dark);
+  margin: 0;
 }
 
 .auth-container button {

@@ -41,48 +41,50 @@ const LoginForm = ({ handleCloseModal }) => {
   return (
     <Container className="auth-container">
       <h2 className={s.loginTitle}>Log In</h2>
-      <p className={s.loginText}>
-        Welcome back! Please enter your credentials to access your account and
-        continue your babysitter search.
-      </p>
 
-      <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
-        <div className={s.errorMessageBox}>
-          <Input
-            type="email"
-            // name="email"
-            placeholder="Email"
-            {...register('email')}
-            className={errors.email?.message && 'errorInput'}
-          />
-          <ErrorMessage errorMessage={errors.email?.message} />
-        </div>
+      <div className={s.scrollContainer}>
+        <p className={s.loginText}>
+          Welcome back! Please enter your credentials to access your account and
+          continue your babysitter search.
+        </p>
 
-        <div className={s.lastErrorMessageBox}>
-          <label className={s.label}>
+        <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
+          <div className={s.errorMessageBox}>
             <Input
-              type="password"
-              // name="password"
-              placeholder="Password"
-              {...register('password')}
-              className={errors.password?.message && 'errorInput'}
-              autoComplete="new-password"
+              type="email"
+              // name="email"
+              placeholder="Email"
+              {...register('email')}
+              className={errors.email?.message && 'errorInput'}
             />
-            <EyeBtn />
-          </label>
-          <ErrorMessage errorMessage={errors.password?.message} />
-        </div>
+            <ErrorMessage errorMessage={errors.email?.message} />
+          </div>
 
-        <Button
-          type="submit"
-          title={'Log in'}
-          className="formLoginBtn"
+          <div className={s.lastErrorMessageBox}>
+            <label className={s.label}>
+              <Input
+                type="password"
+                // name="password"
+                placeholder="Password"
+                {...register('password')}
+                className={errors.password?.message && 'errorInput'}
+                autoComplete="new-password"
+              />
+              <EyeBtn />
+            </label>
+            <ErrorMessage errorMessage={errors.password?.message} />
+          </div>
 
-          //   loading={loadingSave}
-          //   disabled={loadingSave}
-        />
-      </form>
+          <Button
+            type="submit"
+            title={'Log in'}
+            className="formLoginBtn"
 
+            //   loading={loadingSave}
+            //   disabled={loadingSave}
+          />
+        </form>
+      </div>
       {/* <div className={s.login}></div>; */}
     </Container>
   );
