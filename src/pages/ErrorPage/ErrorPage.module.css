@@ -6,6 +6,8 @@
   height: calc(100vh - 72px);
   max-width: 620px;
   margin: 0 auto;
+
+  color: var(--primary-dark)
 }
 
 .image {

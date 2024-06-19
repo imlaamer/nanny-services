@@ -14,15 +14,15 @@ import {
   selectUserId,
 } from '../../redux/auth/authSelectors';
 import { db } from '../../firebase';
-import {
-  removeFromFavorites,
-  updateFavorites,
-} from '../../redux/auth/authSlice';
-
+// import { removeFromFavorites } from '../../redux/auth/authSlice';
 
 import s from './NannyCard.module.css';
+import {
+  removeNannieFromFavs,
+  updateFavorites,
+} from '../../redux/nannies/nanniesSlice';
 
-const NannyCard = ({ nanny }) => {
+const NannyCard = ({ nanny, favorites }) => {
   const dispatch = useDispatch();
   const [isOpenReadMore, setIsOpenReadMore] = useState(false);
   const [isFav, setIsFav] = useState(false);
@@ -59,25 +59,29 @@ const NannyCard = ({ nanny }) => {
 
   const keys = Object.keys(detailsBlocks);
 
+  //--------set red heart if in db favs
   useEffect(() => {
-    if (!uid) return setIsFav(false);
-    const favsRef = ref(db, 'users/' + uid + '/favorites');
+    if (!uid) {
+      return setIsFav(false);
+    }
+    //|| favorites.length === 0 не працює , слухач все одно відпрацьовує
 
+    const favsRef = ref(db, 'users/' + uid + '/favorites');
     const unsubscribe = onValue(favsRef, (snapshot) => {
       // if (snapshot.exists()) return;
-      const favorites = snapshot.val();
+      const favs = snapshot.val();
+      if (!favs) return;
 
-      favorites?.forEach((fav) => {
+      Object.values(favs)?.forEach((fav) => {
         if (fav.id === nanny.id) {
           setIsFav(true);
-          console.log('for each');
           return;
         }
       });
     });
 
     return () => unsubscribe();
-  }, [uid, nanny.id]); //?
+  }, [uid, nanny.id]); //?favorites.length
 
   const handleReadMore = () => {
     setIsOpenReadMore(!isOpenReadMore);
@@ -99,10 +103,13 @@ const NannyCard = ({ nanny }) => {
     //function writeUserData(userId, name, email, imageUrl) - винести логіку файрбейз
     if (isFav) {
       const nannyRef = ref(db, 'users/' + uid + '/favorites/' + nanny.id);
+      console.log('users/' + uid + '/favorites/' + nanny.id); //
+      console.log(nannyRef); //
+
       remove(nannyRef)
         .then(() => {
           setIsFav(false);
-          dispatch(removeFromFavorites(nanny.id));
+          dispatch(removeNannieFromFavs(nanny.id)); //- ?
         })
         .catch((error) => console.error(error?.message));
       return;
@@ -115,7 +122,8 @@ const NannyCard = ({ nanny }) => {
     update(ref(db), updates)
       .then(() => {
         setIsFav(true);
-        dispatch(updateFavorites(nanny));
+        // dispatch(updateFavorites(nanny));
+        // dispatch(updateFavsNannies())
       })
       .catch((error) => console.error(error?.message));
   };

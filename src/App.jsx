@@ -54,7 +54,8 @@ const App = () => {
     return () => unsubscribe();
   }, [dispatch]);
 
-  if (refreshingStatus) {
+  if (refreshingStatus ) {
+    //&& !auth.current user
     return <Loader />;
   }
 

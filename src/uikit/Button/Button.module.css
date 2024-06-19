@@ -20,17 +20,11 @@
 
 .button:is(:hover, :focus) {
   box-shadow: var(--box-shadow);
-  /* background-color: #fbfbfb; */
-  /* color: var(--primary-blue); */
 }
-
-/* showMoreCardBtn ?? */
 
 .loadMoreBtn {
   color: var(--primary-white);
-  /* margin: 0; */
   margin-top: 64px;
-  /* margin-bottom: 100px; */
   border: 1px solid transparent;
 }
 
@@ -67,41 +61,7 @@
 
 .loadMoreBtn:is(:hover, :focus),
 .makeAppointmentBtn:is(:hover, :focus) {
-  /* background-color: transparent;
-  border-color: var(--primary-blue);
-  color: var(--primary-dark); */
-
   box-shadow: var(--box-shadow);
-}
-
-@media screen and (min-width: 320px) {
-  .registerBtn {
-    margin: 0;
-  }
-}
-
-/* ---------btns in mob menu---- */
-@media screen and (min-width: 320px) and (max-width: 960px) {
-  .navRegisterBtn,
-  .navLogBtn {
-    width: 100%;
-    margin: 0;
-    min-width: 260px;
-    /* margin: 0 auto; */
-  }
-
-  .navRegisterBtn:hover,
-  .navRegisterBtn {
-  }
-
-  .navLogBtn {
-    margin-bottom: 10px;
-  }
-
-  /* .navLogBtn:hover {
-    background-color: var(--primary-blue);
-    color: var(--primary-white);
-  } */
 }
 
 .whiteRegisterBtn {
@@ -118,30 +78,8 @@
   composes: logBtn;
 }
 
-.coloredBgBtn:hover {
-  /* background-color: var(--secondary-light-green); */
-  /* color: var(--primary-white);
-  background-color: transparent; */
-
-  /* border: 1px solid var(--primary-light-gray); */
-  /* color: var(--primary-white); */
-}
-
 .navLogBtn {
   border: 1px solid transparent;
-}
-
-.navRegisterBtn:hover,
-.navLogBtn:hover {
-  /* background-color: black; */
-  /* background-color: var(--backdrop); */
-  /* background-color: var(--primary-dark); */
-  /* color: var(--primary-white); */
-  /* border: 1px solid transparent; */
-  /* background-color: var(--secondary-light-green); */
-  /* color: var(--primary-blue); */
-  /* border: 1px solid var(--primary-blue); */
-  /* border: 1px solid var(--secondary-light-gray); */
 }
 
 .navLogBtn:hover {
@@ -157,13 +95,6 @@
   border: 1px solid transparent;
 }
 
-.formSendBtn:is(:hover, :focus),
-.formSignupBtn:is(:hover, :focus),
-.formLoginBtn:is(:hover, :focus) {
-  /* background-color: transparent;
-  border: 1px solid var(--primary-blue); */
-}
-
 .logoutBtn {
   margin-bottom: 20px;
 }
@@ -174,4 +105,33 @@
   background-color: transparent;
   border: 1px solid var(--primary-blue);
   color: var(--primary-dark);
+}
+
+.favs-access-btn {
+  margin: 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 320px) {
+  .registerBtn {
+    margin: 0;
+  }
+}
+
+/* ---------btns in mob menu---- */
+@media screen and (min-width: 320px) and (max-width: 960px) {
+  .navRegisterBtn,
+  .navLogBtn {
+    width: 100%;
+    margin: 0;
+    min-width: 260px;
+  }
+
+  .navRegisterBtn:hover,
+  .navRegisterBtn {
+  }
+
+  .navLogBtn {
+    margin-bottom: 10px;
+  }
 }

@@ -30,14 +30,14 @@ export const authSlice = createSlice({
     resetUser: () => {
       return initialState;
     },
-    updateFavorites: (state, { payload }) => {
-      state.user.favorites = [...state.user.favorites, payload];
-    },
-    removeFromFavorites: (state, {payload}) => {
+    // updateFavorites: (state, { payload }) => {
+    //   state.user.favorites = [...state.user.favorites, payload];
+    // },
+    removeFromFavorites: (state, { payload }) => {
       const index = state.user.favorites.findIndex(
-        (advert) => advert._id === payload //payload = id
+        (fav) => fav.id === payload //payload = id
       );
-       state.user.favorites.splice(index, 1);
+      state.user.favorites.splice(index, 1);
     },
   },
   extraReducers: (builder) => {
@@ -53,7 +53,9 @@ export const authSlice = createSlice({
       .addCase(getUser.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.user = payload.user;
+        // state.user = payload.user;
+        state.user = { ...payload.user, favorites: null }; //?
+
         state.token = payload.token;
       })
       //--------------- REFRESH  ------------------
@@ -132,4 +134,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetUser, updateFavorites, removeFromFavorites } = authSlice.actions;
+export const { resetUser, updateFavorites, removeFromFavorites } =
+  authSlice.actions;

@@ -10,7 +10,7 @@ const FavoritesAccessCard = ({ onClose }) => {
       <p className={s.text}>
         Only registered and logged users have access to Favorites.
       </p>
-      <Button className="logoutBtn" title="OK" onClick={onClose} />
+      <Button className="favs-access-btn" title="OK" onClick={onClose} />
     </Container>
   );
 };

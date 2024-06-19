@@ -1,6 +1,6 @@
 .favoritesSection {
-  padding: 100px 0;
-  /* padding-top: 178px; */
+  /* padding: 100px 0;
+
   width: 100vw;
   min-height: 100vh;
   height: fit-content;
@@ -8,7 +8,7 @@
   background-color: var(--background-light-gray);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .noFavsBox {
@@ -35,3 +35,16 @@
   text-align: center;
 }
 
+.favoritesSection {
+  padding-top: 178px;
+  width: 100vw;
+  min-height: 100vh;
+  height: fit-content;
+  background-color: var(--background-light-gray);
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .favoritesSection {
+    padding-top: 100px;
+  }
+}

@@ -16,33 +16,37 @@ import {
 } from '../../redux/nannies/nanniesSelectors';
 
 import s from './NanniesPage.module.css';
+import { useLocation } from 'react-use';
+import { selectFavorites } from '../../redux/auth/authSelectors';
 
 const NanniesPage = () => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const isFavoritesPage = location.pathname === '/favorites';
+  const favorites = useSelector(selectFavorites);
   const nannies = useSelector(selectNannies);
   const page = useSelector(selectPage);
+  const filter = useSelector(selectFilter);
   const lastValue = useSelector(selectLastValue);
 
-  const filter = useSelector(selectFilter);
   // console.log(lastKey);
 
   //memo ?
   useEffect(() => {
+    dispatch(resetNannies());
+  }, [dispatch, isFavoritesPage]);
+
+  useEffect(() => {
     if (!filter) {
       dispatch(getNanniesData()).then((nannies) => {
+        console.log('nannies get ');
         // const firstValue = nannies.payload[0].id;
         // const lastNannyValue = nannies.payload[nannies.payload.length - 1].id;
       });
     } else {
       // dispatch(getSortedNanniesData());
     }
-  }, [dispatch, page, filter]);
-
-  // useEffect(() => {
-  //   setKeys(Object.keys(nannies));
-  //   // setNanniesWithId(keys.map((key) => ({ id: key, ...nannies[key] })));
-  // }, [nannies]);
+  }, [dispatch, page, filter]); //isFavoritesPage
 
   // useEffect(() => {
   //   const dbRef = ref(getDatabase());
@@ -65,9 +69,11 @@ const NanniesPage = () => {
       <Container className="nanies-page-container">
         <Dropdown />
 
-        <NanniesList nannies={nannies} />
-
-        {/* <AuthProvider /> */}
+        <NanniesList
+          nannies={nannies}
+          isFavoritesPage={isFavoritesPage}
+          favorites={favorites}
+        />
       </Container>
     </section>
   );

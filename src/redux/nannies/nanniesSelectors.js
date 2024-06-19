@@ -12,6 +12,12 @@ export const selectPage = createSelector(
   (nannies) => nannies.page
 );
 
+export const selectFavsPage = createSelector(
+  selectAllNannies,
+  (nannies) => nannies.favsPage
+);
+
+
 export const selectLastValue = createSelector(
   selectAllNannies,
   (nannies) => nannies.lastValue
@@ -35,6 +41,11 @@ export const selectIsLoading = createSelector(
 export const selectFilter = createSelector(
   selectAllNannies,
   (nannies) => nannies.filter
+);
+
+export const selectFavorites = createSelector(
+  selectAllNannies,
+  (nannies) => nannies.favorites
 );
 // const selectItems = (state) => state.items;
 

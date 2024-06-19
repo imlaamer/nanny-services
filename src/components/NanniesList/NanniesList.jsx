@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../uikit/Button/Button';
 import NannyCard from '../NannyCard/NannyCard';
 
-import { increasePage } from '../../redux/nannies/nanniesSlice';
+import {
+  increaseFavsPage,
+  increasePage,
+} from '../../redux/nannies/nanniesSlice';
 import { getRatedNanniesData } from '../../redux/nannies/nanniesOperations';
 import {
   selectFilter,
@@ -18,40 +21,46 @@ import { limit } from '../../helpers/constants';
 
 import s from './NanniesList.module.css';
 
-const NanniesList = ({ nannies }) => {
+const NanniesList = ({ nannies, isFavoritesPage, favorites }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const isFavoritesPage = location.pathname === '/favorites';
 
   const isLoadMore = useSelector(selectIsLoadMore);
   const isLoading = useSelector(selectIsLoading);
   const filter = useSelector(selectFilter);
-  const favorites = useSelector(selectFavorites);
   const page = useSelector(selectPage);
   const visibleNannies = limit * page;
 
   const handleLoadMore = () => {
     if (filter) {
-      dispatch(getRatedNanniesData());
+      dispatch(getRatedNanniesData(isFavoritesPage));
       return;
     }
-    dispatch(increasePage());
+    if (!isFavoritesPage) {
+      return dispatch(increasePage());
+    }
+    dispatch(increaseFavsPage());
     // dispatch(getNanniesData(page));
   };
 
   return (
     <>
       <ul className={s.nanniesList}>
+        {/* {nannies?.map((nanny, index) => (
+          <NannyCard key={index} nanny={nanny} favorites={favorites} />
+        ))} */}
+
         {!isFavoritesPage &&
           nannies?.map((nanny, index) => (
             <NannyCard key={index} nanny={nanny} />
           ))}
+
         {isFavoritesPage &&
-          favorites
-            ?.slice(0, visibleNannies)
-            .map((nanny, index) => <NannyCard key={index} nanny={nanny} />)}
+          favorites.map((nanny, index) => (
+            <NannyCard key={index} nanny={nanny} favorites={favorites} />
+          ))}
       </ul>
 
+      {/* !isFavoritesPage && */}
       {isLoadMore && !isLoading && (
         <Button
           className="loadMoreBtn"
@@ -59,6 +68,16 @@ const NanniesList = ({ nannies }) => {
           onClick={handleLoadMore}
         />
       )}
+      {/* {isFavoritesPage &&
+        !isLoading &&
+        favorites.length > limit &&
+        isLoadMore && (
+          <Button
+            className="loadMoreBtn"
+            title="Load  more"
+            onClick={handleLoadMore}
+          />
+        )} */}
     </>
   );
 };

@@ -1,33 +1,63 @@
+import { useLocation } from 'react-use';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import Cards from '../../components/Cards/Cards';
 import Container from '../../components/common/Container/Container';
 import Icon from '../../components/common/Icon/Icon';
-import Button from '../../uikit/Button/Button';
-// import { selectFavorites } from '../../redux/adverts/advertsSelectors';
-// import { POSTS_PER_PAGE } from '../../helpers/constants';
+import NanniesList from '../../components/NanniesList/NanniesList';
+import Dropdown from '../../components/Dropdown/Dropdown';
 
 import { resetNannies } from '../../redux/nannies/nanniesSlice';
-import { selectFavorites } from '../../redux/auth/authSelectors';
+import {
+  selectFavorites,
+  selectFavsPage,
+  selectFilter,
+  selectNannies,
+  selectPage,
+} from '../../redux/nannies/nanniesSelectors';
+import { getFavoritesData, getNanniesData } from '../../redux/nannies/nanniesOperations';
 import s from './FavoritesPage.module.css';
-import NanniesList from '../../components/NanniesList/NanniesList';
 
 const FavoritesPage = () => {
-  const favorites = useSelector(selectFavorites);
-
   const dispatch = useDispatch();
-  const handleLoadMore = () => {};
+  const location = useLocation();
+  const isFavoritesPage = location.pathname === '/favorites';
+  const favsPage = useSelector(selectFavsPage);
+  const filter = useSelector(selectFilter);
+  const nannies = useSelector(selectNannies);
+  const favorites = useSelector(selectFavorites); //
+
 
   useEffect(() => {
     dispatch(resetNannies());
-  }, [dispatch]);
+  }, [dispatch, isFavoritesPage]);
+
+  useEffect(() => {
+        if (!filter) {
+      dispatch(getFavoritesData(isFavoritesPage)).then((nannies) => {
+        // console.log('favs get');
+      });
+      // const firstValue = nannies.payload[0].id;
+      // const lastNannyValue = nannies.payload[nannies.payload.length - 1].id;
+      //  });
+    } else {
+      // dispatch(getSortedNanniesData());
+    }
+  }, [dispatch, isFavoritesPage, filter, favsPage]); //page, //favorites.length ??
 
   return (
     <section className={s.favoritesSection}>
       <Container className="favorites-page-container">
-        {/* <Cards /> */}
-        {favorites?.length !== 0 && <NanniesList />}
+        {favorites?.length !== 0 && <Dropdown />}
+
+        {favorites?.length !== 0 && (
+          <NanniesList
+            nannies={nannies}
+            isFavoritesPage={isFavoritesPage}
+            favorites={favorites}
+          />
+        )}
+
         {favorites?.length === 0 && (
           <div className={s.noFavsBox}>
             <div className={s.noFavsContainer}>
@@ -38,17 +68,11 @@ const FavoritesPage = () => {
                 id={'heart-red'}
                 height="120"
                 width="120"
-                // fill={'#E44848'}
-                // stroke={'#E44848'}
               />
             </div>
           </div>
         )}
-        {/* {favorites?.length !== 0 && (
-          <Button onClick={handleLoadMore} className="load-more-cards-btn">
-            Load more
-          </Button>
-        )} */}
+       
       </Container>
     </section>
   );

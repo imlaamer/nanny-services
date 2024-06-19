@@ -30,6 +30,11 @@
   height: 100%;
 }
 
+.favorites-page-container,
+.nanies-page-container {
+  padding-bottom: 100px;
+}
+
 @media screen and (max-width: 960px) {
   .hero-colored-container {
     margin: 0;
@@ -39,10 +44,6 @@
   .header-container {
     /* position: relative; */
   }
-}
-
-.nanies-page-container {
-  padding-bottom: 100px;
 }
 
 @media screen and (min-width: 1360px) {
