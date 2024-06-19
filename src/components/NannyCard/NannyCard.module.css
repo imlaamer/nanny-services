@@ -200,6 +200,18 @@ height: 96px; */
   color: var(--primary-blue);
 }
 
+.favBtn {
+  position: absolute;
+  right: 24px;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  transition: var(--transition);
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
 @media screen and (min-width: 320px) and (max-width: 400px) {
   .iconTextWrapper::after {
     /* display: none; */
@@ -288,5 +300,13 @@ height: 96px; */
   }
 
   .iconTextWrapper:after {
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .favBtn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
   }
 }

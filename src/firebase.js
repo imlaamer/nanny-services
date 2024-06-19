@@ -4,16 +4,22 @@ import { getDatabase, ref, set } from 'firebase/database';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const DATABASE_URL = import.meta.env.VITE_DATABASE_URL;
+const AUTH_DOMAIN = import.meta.env.VITE_AUTH_DOMAIN;
+const PROJECT_ID = import.meta.env.VITE_PROJECT_ID;
+const STORAGE_BUCKET = import.meta.env.VITE_STORAGE_BUCKET;
+const MESSAGING_SENDER_ID = import.meta.env.VITE_MESSAGING_SENDER_ID;
+const APP_ID = import.meta.env.VITE_APP_ID;
+const MEASUREMENT_ID = import.meta.env.VITE_MEASUREMENT_ID;
 
 const firebaseConfig = {
   apiKey: API_KEY,
-  authDomain: 'nannny-services.firebaseapp.com',
+  authDomain: AUTH_DOMAIN,
   databaseURL: DATABASE_URL,
-  projectId: 'nannny-services',
-  storageBucket: 'nannny-services.appspot.com',
-  messagingSenderId: '893873000977',
-  appId: '1:893873000977:web:3be30c2878585d0010d7b0',
-  measurementId: 'G-0SNP7N5WMN',
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID,
 };
 
 export const app = initializeApp(firebaseConfig);

@@ -86,7 +86,7 @@ export const refreshAndGetCurrentUser = async (id, thunkAPI) => {
   const dbRef = ref(db);
   //----get token
   onAuthStateChanged(auth, async (user) => {
-    console.log(user, 'user');
+    // console.log(user, 'user');
     if (!user) {
       return thunkAPI.rejectWithValue('No user'); //?
     }

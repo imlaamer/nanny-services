@@ -1,3 +1,6 @@
+import { useDispatch } from 'react-redux';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -8,10 +11,9 @@ import EyeBtn from '../../EyeBtn/EyeBtn';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 import useValidationSchema from '../../../schemas/authFormValidationSchema';
+import { getUser, loginUser } from '../../../redux/auth/authOperations';
 
 import s from './LoginForm.module.css';
-import { loginUser } from '../../../redux/auth/authOperations';
-import { useDispatch } from 'react-redux';
 
 const LoginForm = ({ handleCloseModal }) => {
   const dispatch = useDispatch();
@@ -26,16 +28,38 @@ const LoginForm = ({ handleCloseModal }) => {
     resolver: yupResolver(signinFormSchema),
   });
 
-  const onSubmitHandler = (data) => {
-    console.log(data, 'data');
-    dispatch(loginUser(data))
-      .unwrap()
+  const onSubmitHandler = async (credentials) => {
+    const { email, password } = credentials;
+    const auth = getAuth();
+   
+    //error в консолі навіть з сatch 
+    signInWithEmailAndPassword(auth, email, password)
+      .then(({ user: { uid, accessToken } }) => {
+        dispatch(
+          getUser({
+            id: uid,
+            token: accessToken,
+          })
+        );
+      })
       .then(() => {
-        // setSubmitting(false); //знайти в реакт хук форм що дізейблить кнопку
-        // reset();
+        toast.success('Welcome!');
         handleCloseModal();
       })
-      .catch((error) => console.error(error?.message));
+      .catch((error) => {
+        toast.error(
+          'Invalid login or password. Also, please check if you have registered.'
+        );
+        // toast.error(error?.message);
+      });
+    // dispatch(loginUser(data))
+    //   .unwrap()
+    //   .then(() => {
+    //     // setSubmitting(false); //знайти в реакт хук форм що дізейблить кнопку
+    //     // reset();
+    //     handleCloseModal();
+    //   })
+    //   .catch((error) => console.error(error?.message));
   };
 
   return (
@@ -52,7 +76,6 @@ const LoginForm = ({ handleCloseModal }) => {
           <div className={s.errorMessageBox}>
             <Input
               type="email"
-              // name="email"
               placeholder="Email"
               {...register('email')}
               className={errors.email?.message && 'errorInput'}
@@ -64,7 +87,6 @@ const LoginForm = ({ handleCloseModal }) => {
             <label className={s.label}>
               <Input
                 type="password"
-                // name="password"
                 placeholder="Password"
                 {...register('password')}
                 className={errors.password?.message && 'errorInput'}
@@ -79,7 +101,6 @@ const LoginForm = ({ handleCloseModal }) => {
             type="submit"
             title={'Log in'}
             className="formLoginBtn"
-
             //   loading={loadingSave}
             //   disabled={loadingSave}
           />

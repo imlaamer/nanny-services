@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 import SharedLayout from './components/common/SharedLayout/SharedLayout';
 // import { RestrictedRoute } from '../RestrictedRoute/RestrictedRoute';
@@ -13,6 +13,9 @@ import { refreshUser } from './redux/auth/authOperations';
 import { selectRefreshingStatus } from './redux/auth/authSelectors';
 import Loader from './components/common/Loader/Loader';
 import { login } from './services/auth-api';
+import { getAuth, getIdToken, onAuthStateChanged } from 'firebase/auth';
+import { child, get, ref } from 'firebase/database';
+import { db } from './firebase';
 
 const HomePage = lazy(() => import('pages/HomePage/HomePage'));
 const NanniesPage = lazy(() => import('pages/NanniesPage/NanniesPage'));
@@ -23,9 +26,32 @@ const App = () => {
   const dispatch = useDispatch();
 
   const refreshingStatus = useSelector(selectRefreshingStatus);
-  
+
   useEffect(() => {
-    dispatch(refreshUser());
+    // dispatch(refreshUser());
+
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        return;
+      }
+      const token = await getIdToken(user);
+      if (!token) {
+        return toast.error('No token');
+      }
+      const dbRef = ref(db);
+      const snapshot = await get(child(dbRef, `users/${user.uid}`));
+      if (!snapshot.exists()) {
+        return toast.error('No user data');
+      }
+      const { email, username, favorites: newFavorites = [] } = snapshot.val();
+      const favorites = Object.values(newFavorites);
+      const data = { email, username, favorites, id: user.uid };
+
+      dispatch(refreshUser(data)); //token  -?
+    });
+
+    return () => unsubscribe();
   }, [dispatch]);
 
   if (refreshingStatus) {

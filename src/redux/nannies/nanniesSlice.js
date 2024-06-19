@@ -48,7 +48,7 @@ export const nanniesSlice = createSlice({
     builder
       .addCase(getNanniesData.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        console.log(payload, 'payload'); //
+        // console.log(payload, 'payload'); //
 
         state.nannies = [...state.nannies, ...payload];
         if (payload.length < limit) state.isLoadMore = false;

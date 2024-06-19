@@ -41,7 +41,7 @@ export const getNannies = async (lastValue) => {
   const snapshot = await get(nanniesQuery);
 
   if (!snapshot.val()) {
-    console.log(snapshot.val(), 'snapshot.val()');
+    // console.log(snapshot.val(), 'snapshot.val()');
     toast.error('There is no more nannies');
     return [];
   }
@@ -50,7 +50,7 @@ export const getNannies = async (lastValue) => {
   const values = Object.values(data);
   return values;
 };
-getNannies();
+// getNannies();
 
 //------sorting
 

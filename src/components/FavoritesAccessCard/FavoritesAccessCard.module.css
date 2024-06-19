@@ -1,0 +1,14 @@
+.title {
+  margin-bottom: 20px;
+  font-size: clamp(28px, 1vw + 1rem, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  max-width: calc(100% - 30px);
+}
+
+.text {
+  margin-bottom: 24px;
+  color: var(--secondary-light-gray);
+  font-weight: 400;
+  line-height: 1.25;
+}

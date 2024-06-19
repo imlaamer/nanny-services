@@ -6,6 +6,69 @@ import {
   logout,
   refreshAndGetCurrentUser,
 } from '../../services/auth-api';
+import { child, get, ref, set } from 'firebase/database';
+import { db } from '../../firebase';
+
+
+export const setUser = createAsyncThunk(
+  'auth/setUser',
+  async (data, ThunkAPI) => {
+    const { id, token, email, username, favorites } = data;
+    try {
+      await set(ref(db, 'users/' + id), {
+        username,
+        email,
+      });
+      return {
+        user: {
+          id,
+          username,
+          email,
+          favorites,
+        },
+        token,
+      };
+    } catch (error) {
+      toast.error(error?.message);
+      return ThunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getUser = createAsyncThunk('auth/getUser', async (data, ThunkAPI) => {
+  const { id, token } = data;
+  try {
+    const dbRef = ref(db);
+    const snapshot = await get(child(dbRef, `users/${id}`));
+    const { email, username, favorites = [] } = snapshot.val(); //favorites 
+    return {
+      user: {
+        id,
+        username,
+        email,
+        favorites,
+      },
+      token,
+    };
+  } catch (error) {
+    toast.error(error?.message);
+    return ThunkAPI.rejectWithValue(error.message);
+  }
+});
+
+export const refreshUser = createAsyncThunk(
+  'auth/refreshUser',
+  async (data, thunkAPI) => {
+    try {
+      return data;
+    } catch (error) {
+      toast.error(error?.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+//-------------------------
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
@@ -58,24 +121,24 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-export const refreshUser = createAsyncThunk(
-  'auth/refreshUser',
-  async (_, thunkAPI) => {
-    try {
-      const state = thunkAPI.getState();
-      const id = state.auth.user.id; //or token
-      if (!id) {
-        return thunkAPI.rejectWithValue('No id');
-      } //?
-      const user = await refreshAndGetCurrentUser(id, thunkAPI);
-      // console.log(user, 'user from thunk');
-      return user;
-    } catch (error) {
-      toast.error(error?.message);
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// export const refreshUser = createAsyncThunk(
+//   'auth/refreshUser',
+//   async (_, thunkAPI) => {
+//     try {
+//       const state = thunkAPI.getState();
+//       const id = state.auth.user.id; //or token
+//       if (!id) {
+//         return thunkAPI.rejectWithValue('No id');
+//       } //?
+//       const user = await refreshAndGetCurrentUser(id, thunkAPI);
+//       // console.log(user, 'user from thunk');
+//       return user;
+//     } catch (error) {
+//       toast.error(error?.message);
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 // export const updateUserData = createAsyncThunk(
 //   'auth/updateUserData',

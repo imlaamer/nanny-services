@@ -26,7 +26,7 @@ const AuthProvider = () => {
       //повертає проміс з креденшілс
     });
 
-    console.log('log');
+    // console.log('log');
     return unsubscribe;
   };
 

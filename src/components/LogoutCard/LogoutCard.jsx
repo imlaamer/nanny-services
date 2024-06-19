@@ -1,27 +1,38 @@
 import { useDispatch } from 'react-redux';
-import { auth } from '../../firebase';
+
 import Button from '../../uikit/Button/Button';
 import Container from '../common/Container/Container';
 
 import s from './LogoutCard.module.css';
-import { logoutUser } from '../../redux/auth/authOperations';
+// import { logoutUser } from '../../redux/auth/authOperations';
+import { getAuth, signOut } from 'firebase/auth';
+import { toast } from 'react-toastify';
+import { resetUser } from '../../redux/auth/authSlice';
 
 const LogoutCard = ({ handleCloseModal }) => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    const isLoggedIn = auth.currentUser;
-    if (!isLoggedIn) {
-      return console.error('Not authorized');
+    const auth = getAuth();
+    if (!auth.currentUser) {
+      return toast.error('Not authorized');
     }
-
-    dispatch(logoutUser())
-      .unwrap()
+    signOut(auth)
       .then(() => {
-        handleCloseModal();
-        // onClose(); закрити модалку + redirect
+        dispatch(resetUser());
       })
-      .catch((error) => console.error(error?.message));
+      .then(() => {
+        toast.success('Log out success!');
+        handleCloseModal();
+      })
+      .catch((error) => toast.error(error?.message));
+    // dispatch(logoutUser())
+    //   .unwrap()
+    //   .then(() => {
+    //     handleCloseModal();
+    //     // onClose(); закрити модалку + redirect
+    //   })
+    //   .catch((error) => console.error(error?.message));
   };
 
   return (
