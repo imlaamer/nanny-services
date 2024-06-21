@@ -36,6 +36,13 @@ const Dropdown = ({ isFavoritesPage }) => {
     dispatch(setFilter(selectedOption?.value));
 
     switch (selectedOption?.value) {
+      case 'all':
+        if (!isFavoritesPage) {
+          dispatch(getNanniesData());
+          break;
+        }
+        dispatch(getFavoritesData());
+        break;
       case 'popular':
       case 'not-popular':
       case 'a-to-z':
@@ -47,13 +54,6 @@ const Dropdown = ({ isFavoritesPage }) => {
           break;
         }
         dispatch(getRatedFavsData());
-        break;
-      case 'all':
-        if (!isFavoritesPage) {
-          dispatch(getNanniesData());
-          break;
-        }
-        dispatch(getFavoritesData());
         break;
     }
   };

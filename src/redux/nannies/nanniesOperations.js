@@ -1,13 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { getFavorites, getNannies, getRatedFavs, getRatedNannies } from '../../services/nannies-api';
+import {
+  getFavorites,
+  getNannies,
+  getRatedFavs,
+  getRatedNannies,
+} from '../../services/nannies-api';
 
 export const getNanniesData = createAsyncThunk(
   'nannies/getNanniesData',
   async (_, ThunkAPI) => {
     try {
-      const { lastValue } = ThunkAPI.getState().nannies;      
-      const data = await getNannies(lastValue,);
+      const { lastValue } = ThunkAPI.getState().nannies;
+      const data = await getNannies(lastValue);
       return data;
     } catch (error) {
       toast.error(error?.message);
@@ -48,7 +53,7 @@ export const getFavoritesData = createAsyncThunk(
       const { lastValue } = ThunkAPI.getState().nannies;
       const {
         user: { id },
-      } = ThunkAPI.getState().auth; 
+      } = ThunkAPI.getState().auth;
       const data = await getFavorites(lastValue, isFavoritesPage, id);
       return data;
     } catch (error) {
@@ -57,7 +62,6 @@ export const getFavoritesData = createAsyncThunk(
     }
   }
 );
-
 
 export const getRatedFavsData = createAsyncThunk(
   'nannies/getRatedFavsData',

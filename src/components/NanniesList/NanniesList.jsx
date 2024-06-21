@@ -9,7 +9,10 @@ import {
   increaseFavsPage,
   increasePage,
 } from '../../redux/nannies/nanniesSlice';
-import { getRatedNanniesData } from '../../redux/nannies/nanniesOperations';
+import {
+  getNanniesData,
+  getRatedNanniesData,
+} from '../../redux/nannies/nanniesOperations';
 import {
   selectFilter,
   selectIsLoadMore,
@@ -31,15 +34,20 @@ const NanniesList = ({ nannies, isFavoritesPage, favorites }) => {
   const visibleNannies = limit * page;
 
   const handleLoadMore = () => {
-    if (filter) {
-      dispatch(getRatedNanniesData(isFavoritesPage));
-      return;
-    }
     if (!isFavoritesPage) {
-      return dispatch(increasePage());
+     
+      if (!filter || filter === 'all') {
+        dispatch(getNanniesData());
+      }
+      if (filter && filter !== 'all') {
+        dispatch(getRatedNanniesData(isFavoritesPage));
+      }
+      dispatch(increasePage()); //послідовність ? можна першим?
     }
-    dispatch(increaseFavsPage());
-    // dispatch(getNanniesData(page));
+    //---------------favs
+    if (isFavoritesPage) {
+      dispatch(increaseFavsPage());
+    }
   };
 
   return (
