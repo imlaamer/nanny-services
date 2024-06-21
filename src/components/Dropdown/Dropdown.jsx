@@ -14,11 +14,13 @@ import {
   selectLastValue,
 } from '../../redux/nannies/nanniesSelectors';
 import {
+  getFavoritesData,
   getNanniesData,
+  getRatedFavsData,
   getRatedNanniesData,
 } from '../../redux/nannies/nanniesOperations';
 
-const Dropdown = () => {
+const Dropdown = ({ isFavoritesPage }) => {
   const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -35,13 +37,23 @@ const Dropdown = () => {
 
     switch (selectedOption?.value) {
       case 'popular':
-        dispatch(getRatedNanniesData());
-        break;
       case 'not-popular':
-        dispatch(getRatedNanniesData());
+      case 'a-to-z':
+      case 'z-to-a':
+      case 'less-than-10':
+      case 'greater-than-10':
+        if (!isFavoritesPage) {
+          dispatch(getRatedNanniesData());
+          break;
+        }
+        dispatch(getRatedFavsData());
         break;
       case 'all':
-        dispatch(getNanniesData(lastValue));
+        if (!isFavoritesPage) {
+          dispatch(getNanniesData());
+          break;
+        }
+        dispatch(getFavoritesData());
         break;
     }
   };

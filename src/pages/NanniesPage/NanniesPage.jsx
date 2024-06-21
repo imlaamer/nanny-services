@@ -67,7 +67,7 @@ const NanniesPage = () => {
   return (
     <section className={s.nannies}>
       <Container className="nanies-page-container">
-        <Dropdown />
+        <Dropdown isFavoritesPage={isFavoritesPage} />
 
         <NanniesList
           nannies={nannies}

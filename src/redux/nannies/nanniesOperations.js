@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { getFavorites, getNannies, getRatedNannies } from '../../services/nannies-api';
+import { getFavorites, getNannies, getRatedFavs, getRatedNannies } from '../../services/nannies-api';
 
 export const getNanniesData = createAsyncThunk(
   'nannies/getNanniesData',
@@ -22,15 +22,15 @@ export const getRatedNanniesData = createAsyncThunk(
   async (isFavoritesPage, ThunkAPI) => {
     const {
       user: { id },
-    } = ThunkAPI.getState().auth;
+    } = ThunkAPI.getState().auth; //-
     try {
       const { filter, firstValue, lastValue } = ThunkAPI.getState().nannies;
       const data = await getRatedNannies(
         filter,
         firstValue,
         lastValue,
-        isFavoritesPage,
-        id
+        isFavoritesPage, //-
+        id //-
       );
       return data;
     } catch (error) {
@@ -50,6 +50,30 @@ export const getFavoritesData = createAsyncThunk(
         user: { id },
       } = ThunkAPI.getState().auth; 
       const data = await getFavorites(lastValue, isFavoritesPage, id);
+      return data;
+    } catch (error) {
+      toast.error(error?.message);
+      return ThunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+
+
+export const getRatedFavsData = createAsyncThunk(
+  'nannies/getRatedFavsData',
+  async (isFavoritesPage, ThunkAPI) => {
+    const {
+      user: { id },
+    } = ThunkAPI.getState().auth;
+    try {
+      const { filter, firstValue, lastValue } = ThunkAPI.getState().nannies;
+      const data = await getRatedFavs(
+        filter,
+        firstValue,
+        lastValue,
+        isFavoritesPage, //-
+        id
+      );
       return data;
     } catch (error) {
       toast.error(error?.message);

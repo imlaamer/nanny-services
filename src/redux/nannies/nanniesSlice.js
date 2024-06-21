@@ -2,6 +2,7 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   getFavoritesData,
   getNanniesData,
+  getRatedFavsData,
   getRatedNanniesData,
 } from './nanniesOperations';
 import { limit } from '../../helpers/constants';
@@ -80,13 +81,31 @@ export const nanniesSlice = createSlice({
       }) //if limit is 3 but its also the last items portion ?
 
       .addCase(getRatedNanniesData.fulfilled, (state, { payload }) => {
+        console.log(payload); //-
         state.isLoading = false;
         // console.log(payload, 'payload sorted, slice');
         state.nannies = [...state.nannies, ...payload];
         if (payload.length < limit) state.isLoadMore = false; //
-        state.firstValue = payload[0].rating;
-        state.lastValue = payload[payload.length - 1].rating;
+
+        if (state.filter === 'popular' || state.filter === 'not-popular') {
+          state.firstValue = payload[0].rating;
+          state.lastValue = payload[payload.length - 1].rating;
+          return;
+        }
+        if (state.filter === 'a-to-z' || state.filter === 'z-to-a') {
+          state.firstValue = payload[0].name;
+          state.lastValue = payload[payload.length - 1].name;
+        }
+        if (
+          state.filter === 'less-than-10' ||
+          state.filter === 'greater-than-10'
+        ) {
+          state.firstValue = payload[0].price_per_hour;
+          state.lastValue = payload[payload.length - 1].price_per_hour;
+        }
       }) //if limit is 3 but its also the last items portion ?
+
+      //firstValue ВИДАЛИТИ
 
       //-----------favorites
       .addCase(getFavoritesData.fulfilled, (state, { payload }) => {
@@ -99,11 +118,21 @@ export const nanniesSlice = createSlice({
         state.lastValue = payload[payload.length - 1].id;
       })
 
+      .addCase(getRatedFavsData.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        // console.log(payload, 'payload sorted, slice');
+        state.favorites = [...state.favorites, ...payload];
+        if (payload.length < limit) state.isLoadMore = false; //
+        state.firstValue = payload[0].rating;
+        state.lastValue = payload[payload.length - 1].rating;
+      }) //if limit is 3 but its also the last items portion ?
+
       .addMatcher(
         isAnyOf(
           getNanniesData.pending,
           getRatedNanniesData.pending,
-          getFavoritesData.pending
+          getFavoritesData.pending,
+          getRatedFavsData.pending
         ),
         (state, action) => {
           state.isLoading = true;
@@ -114,7 +143,8 @@ export const nanniesSlice = createSlice({
         isAnyOf(
           getNanniesData.rejected,
           getRatedNanniesData.rejected,
-          getFavoritesData.rejected
+          getFavoritesData.rejected,
+          getRatedFavsData.rejected
         ),
         (state, { payload }) => {
           state.isLoading = false;

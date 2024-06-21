@@ -48,7 +48,9 @@ const FavoritesPage = () => {
   return (
     <section className={s.favoritesSection}>
       <Container className="favorites-page-container">
-        {favorites?.length !== 0 && <Dropdown />}
+        {favorites?.length !== 0 && (
+          <Dropdown isFavoritesPage={isFavoritesPage} />
+        )}
 
         {favorites?.length !== 0 && (
           <NanniesList
@@ -64,15 +66,10 @@ const FavoritesPage = () => {
               <span className={s.noFavsText}>
                 You don`t have any favorites yet
               </span>
-              <Icon
-                id={'heart-red'}
-                height="120"
-                width="120"
-              />
+              <Icon id={'heart-red'} height="120" width="120" />
             </div>
           </div>
         )}
-       
       </Container>
     </section>
   );
