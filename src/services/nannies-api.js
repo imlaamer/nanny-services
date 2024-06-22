@@ -1,22 +1,16 @@
 import {
-  child,
   get,
-  getDatabase,
   limitToFirst,
-  onValue,
   query,
   ref,
   startAfter,
-  startAt,
   orderByChild,
-  orderByValue,
   limitToLast,
   endBefore,
-  endAt,
 } from 'firebase/database';
+import { toast } from 'react-toastify';
 import { limit } from '../helpers/constants';
 import { db } from '../firebase';
-import { toast } from 'react-toastify';
 
 export const getNannies = async (lastValue) => {
   let nanniesQuery = null;
@@ -46,13 +40,7 @@ export const getNannies = async (lastValue) => {
 
 //------sorting
 
-export const getRatedNannies = async (
-  filter,
-  firstValue,
-  lastValue,
-  isFavoritesPage,
-  id
-) => {
+export const getSortedNannies = async (filter, lastValue) => {
   let nanniesQuery = null;
 
   switch (filter) {
@@ -67,7 +55,7 @@ export const getRatedNannies = async (
         nanniesQuery = query(
           ref(db, 'nannies'),
           orderByChild('rating'),
-          endBefore(lastValue), 
+          endBefore(lastValue),
           limitToLast(limit)
         );
       }
@@ -83,11 +71,12 @@ export const getRatedNannies = async (
         nanniesQuery = query(
           ref(db, 'nannies'),
           orderByChild('rating'),
-          startAfter(lastValue), 
+          startAfter(lastValue),
           limitToFirst(limit)
         );
       }
       break;
+    case null:
     case 'a-to-z':
       if (!lastValue) {
         nanniesQuery = query(
@@ -99,7 +88,7 @@ export const getRatedNannies = async (
         nanniesQuery = query(
           ref(db, 'nannies'),
           orderByChild('name'),
-          startAfter(lastValue), 
+          startAfter(lastValue),
           limitToFirst(limit)
         );
       }
@@ -115,7 +104,7 @@ export const getRatedNannies = async (
         nanniesQuery = query(
           ref(db, 'nannies'),
           orderByChild('name'),
-          endBefore(lastValue), 
+          endBefore(lastValue),
           limitToLast(limit)
         );
       }
@@ -142,7 +131,7 @@ export const getRatedNannies = async (
         nanniesQuery = query(
           ref(db, 'nannies'),
           orderByChild('price_per_hour'),
-          startAfter(10), 
+          startAfter(10),
           limitToFirst(limit)
         );
       } else {
@@ -167,15 +156,16 @@ export const getRatedNannies = async (
     toast.error('There is no more nannies');
     return [];
   }
-  let values = Object.values(snapshot.val()); 
+  let values = Object.values(snapshot.val());
 
   switch (filter) {
     case 'popular':
       return values.sort((a, b) => b.rating - a.rating);
     case 'not-popular':
       return values.sort((a, b) => a.rating - b.rating);
+    case null:
     case 'a-to-z':
-      return values.sort((a, b) => a.name.localeCompare(b.name)); 
+      return values.sort((a, b) => a.name.localeCompare(b.name));
     case 'z-to-a':
       return values.sort((a, b) => b.name.localeCompare(a.name));
     case 'less-than-10':
@@ -189,19 +179,19 @@ export const getRatedNannies = async (
 };
 
 //--------------favorites
-export const getFavorites = async (lastValue, isFavoritesPage, id) => {
+export const getFavorites = async (lastValue, id) => {
   let favsQuery = null;
 
   if (!lastValue) {
     favsQuery = query(
       ref(db, 'users/' + id + '/favorites'),
-      orderByChild('id'), // додай в indexOf
+      orderByChild('id'),
       limitToFirst(limit)
     );
   } else {
     favsQuery = query(
       ref(db, 'users/' + id + '/favorites'),
-      orderByChild('id'), // додай в indexOf
+      orderByChild('id'),
       startAfter(lastValue),
       limitToFirst(limit)
     );
@@ -214,22 +204,16 @@ export const getFavorites = async (lastValue, isFavoritesPage, id) => {
   }
   const values = Object.values(snapshot.val());
 
-  console.log(values, 'values'); //-
+  // console.log(values, 'values'); //-
   return values;
 };
 
-export const getRatedFavs = async (
-  filter,
-  firstValue,
-  lastValue,
-  isFavoritesPage,
-  id
-) => {
+export const getSortedFavorites = async (filter, lastValue, id) => {
   let favsQuery = null;
 
   switch (filter) {
     case 'popular':
-      if (!firstValue) {
+      if (!lastValue) {
         favsQuery = query(
           ref(db, 'users/' + id + '/favorites'),
           orderByChild('rating'),
@@ -244,7 +228,6 @@ export const getRatedFavs = async (
         );
       }
       break;
-
     case 'not-popular':
       if (!lastValue) {
         favsQuery = query(
@@ -261,21 +244,102 @@ export const getRatedFavs = async (
         );
       }
       break;
+    case null:
+    case 'a-to-z':
+      if (!lastValue) {
+        favsQuery = query(
+          ref(db, 'users/' + id + '/favorites'),
+          orderByChild('name'),
+          limitToFirst(limit)
+        );
+      } else {
+        favsQuery = query(
+          ref(db, 'users/' + id + '/favorites'),
+          orderByChild('name'),
+          startAfter(lastValue),
+          limitToFirst(limit)
+        );
+      }
+      break;
+    case 'z-to-a':
+      if (!lastValue) {
+        favsQuery = query(
+          ref(db, 'users/' + id + '/favorites'),
+          orderByChild('name'),
+          limitToLast(limit)
+        );
+      } else {
+        favsQuery = query(
+          ref(db, 'users/' + id + '/favorites'),
+          orderByChild('name'),
+          endBefore(lastValue),
+          limitToLast(limit)
+        );
+      }
+      break;
+    case 'less-than-10': //9, 8..
+      if (!lastValue) {
+        favsQuery = query(
+          ref(db, 'users/' + id + '/favorites'),
+          orderByChild('price_per_hour'),
+          endBefore(10),
+          limitToLast(limit)
+        );
+      } else {
+        favsQuery = query(
+          ref(db, 'users/' + id + '/favorites'),
+          orderByChild('price_per_hour'),
+          endBefore(lastValue), // ????!!!!!!! key and value приймає..key ще передавати щоб не буо повтору і можна endAt startAt?
+          limitToLast(limit)
+        );
+      }
+      break;
+    case 'greater-than-10': //11 12..
+      if (!lastValue) {
+        favsQuery = query(
+          ref(db, 'users/' + id + '/favorites'),
+          orderByChild('price_per_hour'),
+          startAfter(10),
+          limitToFirst(limit)
+        );
+      } else {
+        favsQuery = query(
+          ref(db, 'users/' + id + '/favorites'),
+          orderByChild('price_per_hour'),
+          startAfter(lastValue),
+          limitToFirst(limit)
+        );
+      }
+      break;
     default:
       console.log('Unknown value');
+    // nanniesQuery = query(
+    //   ref(db, 'nannies'),
+    //   orderByChild('id'),
+    //   limitToFirst(limit)
+    // );
   }
   const snapshot = await get(favsQuery);
   if (!snapshot.val()) {
-    toast.error('No favorites'); //
+    toast.error('There is no more favorites');
     return [];
   }
-  let values = Object.values(snapshot.val()); //
+  let values = Object.values(snapshot.val());
 
   switch (filter) {
     case 'popular':
       return values.sort((a, b) => b.rating - a.rating);
     case 'not-popular':
       return values.sort((a, b) => a.rating - b.rating);
+    case null:
+    case 'a-to-z':
+      return values.sort((a, b) => a.name.localeCompare(b.name));
+    case 'z-to-a':
+      return values.sort((a, b) => b.name.localeCompare(a.name));
+    case 'less-than-10':
+      return values.sort((a, b) => b.price_per_hour - a.price_per_hour);
+    case 'greater-than-10':
+      return values.sort((a, b) => a.price_per_hour - b.price_per_hour);
     default:
       console.log('Unknown value');
   }

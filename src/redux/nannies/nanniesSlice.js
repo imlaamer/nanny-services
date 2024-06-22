@@ -2,22 +2,21 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   getFavoritesData,
   getNanniesData,
-  getRatedFavsData,
-  getRatedNanniesData,
+  getSortedFavsData,
+  getSortedNanniesData,
 } from './nanniesOperations';
 import { limit } from '../../helpers/constants';
 
 const initialState = {
   nannies: [],
-  page: 1,
-  favsPage: 1,
+  page: 1, //?
+  favsPage: 1, //?
   lastValue: null,
-  firstValue: null,
-  filter: null,
+  filter: 'a-to-z',
   isLoading: false,
   error: null,
   isLoadMore: true,
-  favorites: [], //?
+  favorites: [],
 };
 
 export const nanniesSlice = createSlice({
@@ -26,44 +25,31 @@ export const nanniesSlice = createSlice({
   reducers: {
     //----------------page
     increasePage: (state) => {
-      // if (state.filteredAdverts.length > 0)
-      //   state.filtersPage = state.filtersPage + 1; // ??
-      // else
       state.page = state.page + 1;
-    },
+    }, //
     increaseFavsPage: (state) => {
       state.favsPage = state.favsPage + 1;
-    },
+    }, //
     updateLast: (state, { payload }) => {
       state.lastValue = payload;
     },
-    updateFirst: (state, { payload }) => {
-      state.firstValue = payload;
-    },
     resetNannies: (state) => {
-      state.nannies = [];
-      state.lastValue = null;
-      state.firstValue = null;
-      state.page = 1;
-      state.favsPage = 1;
-      state.filter = null;
-      state.isLoadMore = true; //
-      state.favorites = []; //
+      return initialState; //
     },
     setFilter: (state, { payload }) => {
       state.filter = payload;
     },
 
     //-------favorites
-    updateFavorites: (state, { payload }) => {
-      state.favorites = [...state.favorites, payload];
-    },
+    // updateFavorites: (state, { payload }) => {
+    //   state.favorites = [...state.favorites, payload];
+    // },
     removeNannieFromFavs: (state, { payload }) => {
       const index = state.favorites.findIndex(
         (fav) => fav.id === payload //payload = id
       );
       state.favorites.splice(index, 1);
-      if (state.favorites < limit) state.isLoadMore = false; //
+      if (state.favorites.length < limit) state.isLoadMore = false; //
     },
   },
 
@@ -72,40 +58,32 @@ export const nanniesSlice = createSlice({
       .addCase(getNanniesData.fulfilled, (state, { payload }) => {
         console.log('payload get nannies', payload);
         state.isLoading = false;
-        // console.log(payload, 'payload'); //
         state.nannies = [...state.nannies, ...payload];
         if (payload.length < limit) state.isLoadMore = false; //
         if (payload.length === 0) return;
-        state.firstValue = payload[0].id;
         state.lastValue = payload[payload.length - 1].id;
       }) //if limit is 3 but its also the last items portion ?
 
-      .addCase(getRatedNanniesData.fulfilled, (state, { payload }) => {
-        console.log(payload); //-
+      .addCase(getSortedNanniesData.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        // console.log(payload, 'payload sorted, slice');
         state.nannies = [...state.nannies, ...payload];
         if (payload.length < limit) state.isLoadMore = false; //
-
+        if (payload.length === 0) return;
         if (state.filter === 'popular' || state.filter === 'not-popular') {
-          state.firstValue = payload[0].rating;
           state.lastValue = payload[payload.length - 1].rating;
           return;
         }
         if (state.filter === 'a-to-z' || state.filter === 'z-to-a') {
-          state.firstValue = payload[0].name;
           state.lastValue = payload[payload.length - 1].name;
+          return;
         }
         if (
           state.filter === 'less-than-10' ||
           state.filter === 'greater-than-10'
         ) {
-          state.firstValue = payload[0].price_per_hour;
           state.lastValue = payload[payload.length - 1].price_per_hour;
         }
       }) //if limit is 3 but its also the last items portion ?
-
-      //firstValue ВИДАЛИТИ
 
       //-----------favorites
       .addCase(getFavoritesData.fulfilled, (state, { payload }) => {
@@ -114,25 +92,37 @@ export const nanniesSlice = createSlice({
         state.favorites = [...state.favorites, ...payload];
         if (payload.length < limit) state.isLoadMore = false; //
         if (payload.length === 0) return;
-        state.firstValue = payload[0].id;
         state.lastValue = payload[payload.length - 1].id;
       })
 
-      .addCase(getRatedFavsData.fulfilled, (state, { payload }) => {
+      .addCase(getSortedFavsData.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         // console.log(payload, 'payload sorted, slice');
         state.favorites = [...state.favorites, ...payload];
-        if (payload.length < limit) state.isLoadMore = false; //
-        state.firstValue = payload[0].rating;
-        state.lastValue = payload[payload.length - 1].rating;
+        if (payload.length < limit) state.isLoadMore = false;
+        if (payload.length === 0) return;
+        if (state.filter === 'popular' || state.filter === 'not-popular') {
+          state.lastValue = payload[payload.length - 1].rating;
+          return;
+        }
+        if (state.filter === 'a-to-z' || state.filter === 'z-to-a') {
+          state.lastValue = payload[payload.length - 1].name;
+          return;
+        }
+        if (
+          state.filter === 'less-than-10' ||
+          state.filter === 'greater-than-10'
+        ) {
+          state.lastValue = payload[payload.length - 1].price_per_hour;
+        }
       }) //if limit is 3 but its also the last items portion ?
 
       .addMatcher(
         isAnyOf(
           getNanniesData.pending,
-          getRatedNanniesData.pending,
+          getSortedNanniesData.pending,
           getFavoritesData.pending,
-          getRatedFavsData.pending
+          getSortedFavsData.pending
         ),
         (state, action) => {
           state.isLoading = true;
@@ -142,9 +132,9 @@ export const nanniesSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getNanniesData.rejected,
-          getRatedNanniesData.rejected,
+          getSortedNanniesData.rejected,
           getFavoritesData.rejected,
-          getRatedFavsData.rejected
+          getSortedFavsData.rejected
         ),
         (state, { payload }) => {
           state.isLoading = false;
@@ -161,5 +151,7 @@ export const {
   setFilter,
   removeNannieFromFavs,
   increaseFavsPage,
-  updateFavorites,
+  // updateFavorites,
 } = nanniesSlice.actions;
+
+//  state.firstValue = payload[0].rating;

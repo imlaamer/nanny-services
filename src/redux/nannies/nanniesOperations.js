@@ -3,10 +3,11 @@ import { toast } from 'react-toastify';
 import {
   getFavorites,
   getNannies,
-  getRatedFavs,
-  getRatedNannies,
+  getSortedFavorites, 
+  getSortedNannies,
 } from '../../services/nannies-api';
 
+//--------------nannies
 export const getNanniesData = createAsyncThunk(
   'nannies/getNanniesData',
   async (_, ThunkAPI) => {
@@ -21,21 +22,14 @@ export const getNanniesData = createAsyncThunk(
   }
 );
 
-//needs refactoring:
-export const getRatedNanniesData = createAsyncThunk(
-  'nannies/getRatedNanniesData',
-  async (isFavoritesPage, ThunkAPI) => {
-    const {
-      user: { id },
-    } = ThunkAPI.getState().auth; //-
+export const getSortedNanniesData = createAsyncThunk(
+  'nannies/getSortedNanniesData',
+  async (_, ThunkAPI) => {
     try {
-      const { filter, firstValue, lastValue } = ThunkAPI.getState().nannies;
-      const data = await getRatedNannies(
+      const { filter, lastValue } = ThunkAPI.getState().nannies;
+      const data = await getSortedNannies(
         filter,
-        firstValue,
         lastValue,
-        isFavoritesPage, //-
-        id //-
       );
       return data;
     } catch (error) {
@@ -44,17 +38,16 @@ export const getRatedNanniesData = createAsyncThunk(
     }
   }
 );
-//---------favorites
-
+//----------------favorites
 export const getFavoritesData = createAsyncThunk(
   'nannies/getFavoritesData',
-  async (isFavoritesPage, ThunkAPI) => {
+  async (_, ThunkAPI) => {
     try {
       const { lastValue } = ThunkAPI.getState().nannies;
       const {
         user: { id },
       } = ThunkAPI.getState().auth;
-      const data = await getFavorites(lastValue, isFavoritesPage, id);
+      const data = await getFavorites(lastValue,  id);
       return data;
     } catch (error) {
       toast.error(error?.message);
@@ -63,21 +56,15 @@ export const getFavoritesData = createAsyncThunk(
   }
 );
 
-export const getRatedFavsData = createAsyncThunk(
-  'nannies/getRatedFavsData',
-  async (isFavoritesPage, ThunkAPI) => {
+export const getSortedFavsData = createAsyncThunk(
+  'nannies/getSortedFavsData',
+  async (_, ThunkAPI) => {
     const {
       user: { id },
     } = ThunkAPI.getState().auth;
     try {
-      const { filter, firstValue, lastValue } = ThunkAPI.getState().nannies;
-      const data = await getRatedFavs(
-        filter,
-        firstValue,
-        lastValue,
-        isFavoritesPage, //-
-        id
-      );
+      const { filter, lastValue } = ThunkAPI.getState().nannies;
+      const data = await getSortedFavorites(filter, lastValue, id);
       return data;
     } catch (error) {
       toast.error(error?.message);

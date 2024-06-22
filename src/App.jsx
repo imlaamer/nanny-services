@@ -3,7 +3,7 @@ import { lazy, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 import SharedLayout from './components/common/SharedLayout/SharedLayout';
-// import { RestrictedRoute } from '../RestrictedRoute/RestrictedRoute';
+
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 
 import './assets/styles/global.module.css';
@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from './redux/auth/authOperations';
 import { selectRefreshingStatus } from './redux/auth/authSelectors';
 import Loader from './components/common/Loader/Loader';
-import { login } from './services/auth-api';
 import { getAuth, getIdToken, onAuthStateChanged } from 'firebase/auth';
 import { child, get, ref } from 'firebase/database';
 import { db } from './firebase';
@@ -28,8 +27,6 @@ const App = () => {
   const refreshingStatus = useSelector(selectRefreshingStatus);
 
   useEffect(() => {
-    // dispatch(refreshUser());
-
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -54,8 +51,7 @@ const App = () => {
     return () => unsubscribe();
   }, [dispatch]);
 
-  if (refreshingStatus ) {
-    //&& !auth.current user
+  if (refreshingStatus) {
     return <Loader />;
   }
 
@@ -65,14 +61,7 @@ const App = () => {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<HomePage />} />
 
-          <Route
-            path="nannies"
-            element={
-              // <RestrictedRoute>
-              <NanniesPage />
-              // </RestrictedRoute>
-            }
-          />
+          <Route path="nannies" element={<NanniesPage />} />
 
           <Route
             path="favorites"

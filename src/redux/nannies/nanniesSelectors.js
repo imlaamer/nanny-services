@@ -23,11 +23,6 @@ export const selectLastValue = createSelector(
   (nannies) => nannies.lastValue
 );
 
-export const selectFirstValue = createSelector(
-  selectAllNannies,
-  (nannies) => nannies.firstValue
-);
-
 export const selectIsLoadMore = createSelector(
   selectAllNannies,
   (nannies) => nannies.isLoadMore

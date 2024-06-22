@@ -95,3 +95,20 @@ export const auth = getAuth(app);
 //------------queries
 
 // QUERY FORMAT ref.orderingFn().querifyingFn()
+
+
+  // useEffect(() => {
+  //   const dbRef = ref(getDatabase());
+  //   get(child(dbRef, 'nannies'))
+  //     .then((snapshot) => {
+  //       if (snapshot.exists()) {
+  //         console.log(snapshot.val()); //array
+  //       } else {
+  //         console.log('No data available');
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //   //----------it works
+  // }, []);
