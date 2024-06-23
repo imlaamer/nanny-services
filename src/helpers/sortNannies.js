@@ -1,4 +1,4 @@
-export const sortNannies = (filter, nannies) => {
+export const sortNannies = (filter, nannies, isFavoritesPage = false) => {
   let newArr = [];
   switch (filter) {
     case 'all':
@@ -16,15 +16,27 @@ export const sortNannies = (filter, nannies) => {
     case 'z-to-a':
       newArr = nannies.sort((a, b) => b.name.localeCompare(a.name));
       break;
+
     case 'less-than-10':
-      newArr = nannies.sort((a, b) => b.price_per_hour - a.price_per_hour);
+      if (!isFavoritesPage) {
+        newArr = nannies.sort((a, b) => b.price_per_hour - a.price_per_hour);
+        break;
+      }
+      newArr = nannies
+        .filter((nanny) => nanny.price_per_hour < 10)
+        .sort((a, b) => b.price_per_hour - a.price_per_hour);
       break;
     case 'greater-than-10':
-      newArr = nannies.sort((a, b) => a.price_per_hour - b.price_per_hour);
+      if (!isFavoritesPage) {
+        newArr = nannies.sort((a, b) => a.price_per_hour - b.price_per_hour);
+        break;
+      }
+      newArr = nannies
+        .filter((nanny) => nanny.price_per_hour > 10)
+        .sort((a, b) => a.price_per_hour - b.price_per_hour);
       break;
     default:
       newArr = nannies.sort((a, b) => a.name.localeCompare(b.name));
   }
-
   return newArr;
 };

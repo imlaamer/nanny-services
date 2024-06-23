@@ -16,9 +16,9 @@ import { nanniesSlice } from './nannies/nanniesSlice';
 import storage from 'redux-persist/lib/storage';
 
 const persistNanniesConfig = {
-  key: 'filter',
+  key: 'nannies', //filter
   storage,
-  whitelist: ['filter'],
+  whitelist: ['filter', 'favorites'],
 };
 
 const persistAuthConfig = {

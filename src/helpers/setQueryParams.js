@@ -30,12 +30,26 @@ export const setQueryParams = (filter, limit, lastValue) => {
       break;
     case 'not-popular':
       queryParams = `orderBy="rating"&limitToFirst=${limit}&startAfter=${lastValue}`;
-
-    case 'less-than-10': //9, 8..  //а 10 куди?
-      queryParams = `orderBy="price_per_hour"&limitToLast=${limit}&endBefore=${10}`;
       break;
-    case 'greater-than-10': //11 12..
-      queryParams = `orderBy="price_per_hour"&limitToFirst=${limit}&startAfter=${10}`;
+
+    case 'less-than-10': //9, 8..
+      if (!lastValue) {
+        // queryParams = `orderBy="price_per_hour"&limitToFirst=${limit}&startAt=0`;
+        queryParams = `orderBy="price_per_hour"&limitToLast=${limit}&endBefore=${10}`;
+        break;
+      }
+      queryParams = `orderBy="price_per_hour"&limitToLast=${limit}&endBefore=${lastValue}`;
+      // queryParams = `orderBy="price_per_hour"&limitToFirst=${limit}&startAfter=${lastValue}`;
+      break;
+
+    case 'greater-than-10': //10, 11 12..
+      if (!lastValue) {
+        // queryParams = `orderBy="price_per_hour"&limitToLast=${limit}&endAt=${10}`;
+        queryParams = `orderBy="price_per_hour"&limitToFirst=${limit}&startAt=${10}`;
+        break;
+      }
+      queryParams = `orderBy="price_per_hour"&limitToFirst=${limit}&startAfter=${lastValue}`;
+      // queryParams = `orderBy="price_per_hour"&limitToLast=${limit}&endBefore=${lastValue}`;
       break;
     default:
       queryParams = `orderBy="id"&limitToFirst=${limit}&startAfter=${lastValue}`;

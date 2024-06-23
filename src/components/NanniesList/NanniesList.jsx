@@ -23,77 +23,80 @@ import {
 import { limit } from '../../helpers/constants';
 
 import s from './NanniesList.module.css';
-import { getNannies, getSortedNannies } from '../../redux/nannies/nanniesOperations';
+import {
+  getNannies,
+  getSortedNannies,
+} from '../../redux/nannies/nanniesOperations';
 
-const NanniesList = ({ nannies, isFavoritesPage, favorites }) => {
+const NanniesList = ({
+  nannies,
+  isFavoritesPage = false,
+  favorites,
+  sortedFavorites = [],
+}) => {
   const dispatch = useDispatch();
+  const [favsPage, setFavsPage] = useState(1);
 
   const isLoadMore = useSelector(selectIsLoadMore);
   const isLoading = useSelector(selectIsLoading);
-  const filter = useSelector(selectFilter);
-  // const page = useSelector(selectPage);
-  // const visibleNannies = limit * page;
 
-  // const filter = 'a-to-z'; //-
+  const visibleFavs = limit * favsPage; //3 * 1 . 3 * 2
+  const isLoadMoreFavs = visibleFavs < favorites.length;
+
+  const currentFavs = !sortedFavorites ? favorites : sortedFavorites;
 
   const handleLoadMore = () => {
-    if (!isFavoritesPage) {
-      dispatch(getSortedNannies())
-        // dispatch(getNannies())
-        .unwrap()
-        .then((data) => {});
-      // if (filter === 'all') {
-      //   dispatch(getNanniesData());
-      // }
-      // if (!filter || filter !== 'all') {
-      //   dispatch(getSortedNanniesData(isFavoritesPage));
-      // }
-      // dispatch(increasePage()); //послідовність ? можна першим?
-    }
-    // //---------------favs
-    // if (isFavoritesPage) {
-    //   dispatch(increaseFavsPage());
-    // }
+    dispatch(getSortedNannies())
+      .unwrap()
+      .then((data) => {});
+  };
+
+  const handleLoadMoreFavs = () => {
+    setFavsPage(favsPage + 1);
   };
 
   return (
     <>
       <ul className={s.nanniesList}>
-        {/* {nannies?.map((nanny, index) => (
-          <NannyCard key={index} nanny={nanny} favorites={favorites} />
-        ))} */}
-
         {!isFavoritesPage &&
           nannies?.map((nanny, index) => (
-            <NannyCard key={index} nanny={nanny} />
+            <NannyCard key={index} nanny={nanny} favorites={favorites} />
           ))}
 
         {isFavoritesPage &&
-          favorites.map((nanny, index) => (
-            <NannyCard key={index} nanny={nanny} favorites={favorites} />
-          ))}
+          currentFavs
+            ?.slice(0, visibleFavs)
+            .map((nanny, index) => (
+              <NannyCard
+                key={index}
+                nanny={nanny}
+                favorites={favorites}
+                isFavoritesPage={isFavoritesPage}
+              />
+            ))}
       </ul>
 
-      {/* !isFavoritesPage && */}
-      {isLoadMore && !isLoading && (
+      {!isFavoritesPage && isLoadMore && !isLoading && (
         <Button
           className="loadMoreBtn"
-          title="Load  more"
+          title="Load more"
           onClick={handleLoadMore}
         />
       )}
-      {/* {isFavoritesPage &&
-        !isLoading &&
-        favorites.length > limit &&
-        isLoadMore && (
-          <Button
-            className="loadMoreBtn"
-            title="Load  more"
-            onClick={handleLoadMore}
-          />
-        )} */}
+      {isFavoritesPage && isLoadMoreFavs && isLoadMore && (
+        <Button
+          className="loadMoreBtn"
+          title="Load more"
+          onClick={handleLoadMoreFavs}
+        />
+      )}
     </>
   );
 };
 
 export default NanniesList;
+
+// isFavoritesPage &&
+//         !isLoading &&
+//         favorites.length > limit &&
+//         isLoadMore &&

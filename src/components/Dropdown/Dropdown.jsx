@@ -4,42 +4,44 @@ import Select from 'react-select';
 import { options } from './dropdown-options';
 import { dropdownStyles } from './dropdown-styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetNannies, setFilter } from '../../redux/nannies/nanniesSlice';
+import {
+  resetNannies,
+  setFavsFilter,
+  setFilter,
+  sortFavorites,
+} from '../../redux/nannies/nanniesSlice';
 
 import { getSortedNannies } from '../../redux/nannies/nanniesOperations';
-import { selectFilter } from '../../redux/nannies/nanniesSelectors';
+import {
+  selectFavsFilter,
+  selectFilter,
+} from '../../redux/nannies/nanniesSelectors';
+import { sortNannies } from '../../helpers/sortNannies';
 
-const Dropdown = ({ isFavoritesPage }) => {
+const Dropdown = ({ isFavoritesPage = false, favorites = [] }) => {
   const dispatch = useDispatch();
   const filter = useSelector(selectFilter);
-  const [selectedOption, setSelectedOption] = useState(filter); //
+  const favsFilter = useSelector(selectFavsFilter);
+
+  const defaultOption = !isFavoritesPage ? filter : favsFilter;
+  const [selectedOption, setSelectedOption] = useState(defaultOption); //
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
     dispatch(resetNannies());
-    dispatch(setFilter(selectedOption?.value));
 
     if (!isFavoritesPage) {
-      return dispatch(getSortedNannies())
+      dispatch(setFilter(selectedOption?.value));
+      dispatch(getSortedNannies())
         .unwrap()
         .then()
         .catch((e) => console.log(e?.message));
+      return;
     }
 
-    if (selectedOption?.value === 'all') {
-      if (!isFavoritesPage) {
-        // return dispatch(getSortedNannies());
-        // return dispatch(getNanniesData());
-      }
-      // return dispatch(getFavoritesData());
-    }
-    if (!isFavoritesPage) {
-      // return dispatch(getSortedNanniesData());
-    }
-    // dispatch(getSortedFavsData());
+    dispatch(setFavsFilter(selectedOption?.value));
+    dispatch(sortFavorites());
   };
-
-  // useEffect(() => {console.log(selectedOption.value);}, [selectedOption.value]);
 
   const selectedLabel = options.find(
     (option) => option.value === selectedOption

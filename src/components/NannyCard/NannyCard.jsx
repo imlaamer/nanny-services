@@ -19,18 +19,27 @@ import { db } from '../../firebase';
 import s from './NannyCard.module.css';
 // import { removeNannieFromFavs } from '../../redux/nannies/nanniesSlice';
 import { toast } from 'react-toastify';
+import {
+  addToFavorites,
+  removeFromFavs,
+  sortFavorites,
+} from '../../redux/nannies/nanniesSlice';
 
-const NannyCard = ({ nanny, favorites }) => {
+const NannyCard = ({
+  nanny,
+  favorites,
+  isFavoritesPage = false,
+  // isFavorite, setIsFavorite
+}) => {
   const dispatch = useDispatch();
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const [isOpenReadMore, setIsOpenReadMore] = useState(false);
   const [isFav, setIsFav] = useState(false);
   const [isFavsAccessModalOpen, setIsFavsAccessModalOpen] = useState(false);
 
   const listRef = useRef(null);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  // const uid = useSelector(selectUserId);
-
-  const uid = ''; //-
 
   const {
     about,
@@ -59,29 +68,14 @@ const NannyCard = ({ nanny, favorites }) => {
 
   const keys = Object.keys(detailsBlocks);
 
-  //--------set red heart if in db favs
   useEffect(() => {
-    if (!uid) {
-      return setIsFav(false);
+    if (isFavoritesPage) {
+      setIsFavorite(true);
+    } else {
+      const favNanny = favorites.find((fav) => fav.id === nanny.id);
+      if (favNanny) setIsFavorite(true);
     }
-    //|| favorites.length === 0 не працює , слухач все одно відпрацьовує
-
-    const favsRef = ref(db, 'users/' + uid + '/favorites');
-    const unsubscribe = onValue(favsRef, (snapshot) => {
-      // if (snapshot.exists()) return;
-      const favs = snapshot.val();
-      if (!favs) return;
-
-      Object.values(favs)?.forEach((fav) => {
-        if (fav.id === nanny.id) {
-          setIsFav(true);
-          return;
-        }
-      });
-    });
-
-    return () => unsubscribe(); // return  unsubscribe ?
-  }, [uid, nanny.id]);
+  }, [isFavoritesPage, favorites]);
 
   const handleCloseModal = () => {
     setIsFavsAccessModalOpen(false);
@@ -92,25 +86,13 @@ const NannyCard = ({ nanny, favorites }) => {
       setIsFavsAccessModalOpen(true);
       return;
     }
-    //---------remove from favs
-    if (isFav) {
-      const nannyRef = ref(db, 'users/' + uid + '/favorites/' + nanny.id);
-      remove(nannyRef)
-        .then(() => {
-          setIsFav(false);
-          // dispatch(removeNannieFromFavs(nanny.id));
-        })
-        .catch((error) => toast.error(error?.message));
-      return;
+    setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      dispatch(addToFavorites(nanny));
+    } else {
+      dispatch(removeFromFavs(nanny.id));
+      dispatch(sortFavorites());
     }
-    //----------add to favs
-    const updates = {};
-    updates['/users/' + uid + '/favorites/' + nanny.id] = nanny;
-    update(ref(db), updates)
-      .then(() => {
-        setIsFav(true);
-      })
-      .catch((error) => toast.error(error?.message));
   };
 
   return (
@@ -124,7 +106,7 @@ const NannyCard = ({ nanny, favorites }) => {
       </div>
       <button className={s.favBtn} type="button" onClick={handleFavClick}>
         <Icon
-          id={!isFav ? 'heart' : 'heart-red'}
+          id={!isFavorite ? 'heart' : 'heart-red'}
           width="26"
           height="26"
           className="favIcon"

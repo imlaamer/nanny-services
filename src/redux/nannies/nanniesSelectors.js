@@ -37,9 +37,20 @@ export const selectFilter = createSelector(
   (nannies) => nannies.filter
 );
 
+export const selectFavsFilter = createSelector(
+  selectAllNannies,
+  (nannies) => nannies.favsFilter
+);
+
+
 export const selectFavorites = createSelector(
   selectAllNannies,
   (nannies) => nannies.favorites
+);
+
+export const selectSortedFavorites = createSelector(
+  selectAllNannies,
+  (nannies) => nannies.sortedFavorites
 );
 // const selectItems = (state) => state.items;
 

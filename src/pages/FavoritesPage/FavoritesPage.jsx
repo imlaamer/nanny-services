@@ -7,12 +7,12 @@ import Icon from '../../components/common/Icon/Icon';
 import NanniesList from '../../components/NanniesList/NanniesList';
 import Dropdown from '../../components/Dropdown/Dropdown';
 
-import { resetNannies } from '../../redux/nannies/nanniesSlice';
+import { resetNannies, sortFavorites } from '../../redux/nannies/nanniesSlice';
 import {
   selectFavorites,
   selectNannies,
+  selectSortedFavorites,
 } from '../../redux/nannies/nanniesSelectors';
-// import { getSortedFavsData } from '../../redux/nannies/nanniesOperations';
 
 import s from './FavoritesPage.module.css';
 
@@ -22,26 +22,31 @@ const FavoritesPage = () => {
   const isFavoritesPage = location.pathname === '/favorites';
   const nannies = useSelector(selectNannies);
   const favorites = useSelector(selectFavorites);
+  const sortedFavorites = useSelector(selectSortedFavorites);
 
   useEffect(() => {
     dispatch(resetNannies());
+    dispatch(sortFavorites());
   }, [dispatch, isFavoritesPage]);
-
-  useEffect(() => {
-    // dispatch(getSortedFavsData());
-  }, [dispatch]);
 
   return (
     <section className={s.favoritesSection}>
       <Container className="favorites-page-container">
-        <Dropdown isFavoritesPage={isFavoritesPage} />
+        <Dropdown isFavoritesPage={isFavoritesPage} favorites={favorites} />
 
         {favorites?.length !== 0 && (
           <NanniesList
-            nannies={nannies}
+            nannies={nannies} //-
             isFavoritesPage={isFavoritesPage}
             favorites={favorites}
+            sortedFavorites={sortedFavorites}
           />
+        )}
+
+        {!favorites?.length === 0 && sortedFavorites?.length === 0 && (
+          <div style={{ fontSize: 22, textAlign: 'center' }}>
+            We didn`t find anything
+          </div>
         )}
 
         {favorites?.length === 0 && (

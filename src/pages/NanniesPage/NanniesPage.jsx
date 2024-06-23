@@ -6,26 +6,21 @@ import Container from '../../components/common/Container/Container';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import NanniesList from '../../components/NanniesList/NanniesList';
 
-// import { getSortedNanniesData } from '../../redux/nannies/nanniesOperations';
 import { resetNannies } from '../../redux/nannies/nanniesSlice';
-import { selectNannies } from '../../redux/nannies/nanniesSelectors';
-// import { selectFavorites } from '../../redux/auth/authSelectors';
+import {
+  selectFavorites,
+  selectNannies,
+} from '../../redux/nannies/nanniesSelectors';
+import { getSortedNannies } from '../../redux/nannies/nanniesOperations';
 
 import s from './NanniesPage.module.css';
-import {
-  getAllNannies,
-  getNannies,
-  getSortedNannies,
-} from '../../redux/nannies/nanniesOperations';
 
 const NanniesPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const isFavoritesPage = location.pathname === '/favorites';
-  // const favorites = useSelector(selectFavorites);
+  const favorites = useSelector(selectFavorites);
   const nannies = useSelector(selectNannies);
-
-  const favorites = []; //-
 
   useEffect(() => {
     dispatch(resetNannies());
@@ -33,13 +28,9 @@ const NanniesPage = () => {
 
   useEffect(() => {
     dispatch(getSortedNannies())
-      // dispatch(getNannies())
-      // dispatch(getAllNannies())
       .unwrap()
-      .then((result) => console.log(result)) //-
+      .then()
       .catch((e) => console.log(e));
-
-    // dispatch(getSortedNanniesData());
   }, [dispatch]);
 
   return (
