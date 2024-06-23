@@ -55,7 +55,9 @@ const BurgerMenu = ({
   const [isOpen, setOpen] = useState(false);
   // const [isToggleStroke, setIsToggleStroke] = useState(false);
 
+
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
   // const loggedInStatus = auth.currentUser; //temporary !
 
   // useLockBodyScroll(true); //- теж блокує  скрол

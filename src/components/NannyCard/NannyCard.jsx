@@ -9,15 +9,15 @@ import { MoreDetails } from '../NannyCard/MoreDetails/MoreDetails';
 
 import { calculateAge } from '../../helpers/formatData';
 import {
-  selectFavorites,
+  // selectFavorites,
   selectIsLoggedIn,
-  selectUserId,
+  // selectUserId,
 } from '../../redux/auth/authSelectors';
 import { db } from '../../firebase';
 // import { removeFromFavorites } from '../../redux/auth/authSlice';
 
 import s from './NannyCard.module.css';
-import { removeNannieFromFavs } from '../../redux/nannies/nanniesSlice';
+// import { removeNannieFromFavs } from '../../redux/nannies/nanniesSlice';
 import { toast } from 'react-toastify';
 
 const NannyCard = ({ nanny, favorites }) => {
@@ -28,7 +28,9 @@ const NannyCard = ({ nanny, favorites }) => {
 
   const listRef = useRef(null);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const uid = useSelector(selectUserId);
+  // const uid = useSelector(selectUserId);
+
+  const uid = ''; //-
 
   const {
     about,
@@ -96,7 +98,7 @@ const NannyCard = ({ nanny, favorites }) => {
       remove(nannyRef)
         .then(() => {
           setIsFav(false);
-          dispatch(removeNannieFromFavs(nanny.id));
+          // dispatch(removeNannieFromFavs(nanny.id));
         })
         .catch((error) => toast.error(error?.message));
       return;

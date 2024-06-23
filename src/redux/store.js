@@ -15,16 +15,24 @@ import { nanniesSlice } from './nannies/nanniesSlice';
 
 import storage from 'redux-persist/lib/storage';
 
-const persistConfig = {
+const persistNanniesConfig = {
+  key: 'filter',
+  storage,
+  whitelist: ['filter'],
+};
+
+const persistAuthConfig = {
   key: 'auth',
   storage,
-  whitelist: ['token', 'user'],
+  whitelist: ['token', 'refreshToken'], // 'user'
 };
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(persistConfig, authSlice.reducer),
-    nannies: nanniesSlice.reducer, 
+    auth: persistReducer(persistAuthConfig, authSlice.reducer),
+    nannies: persistReducer(persistNanniesConfig, nanniesSlice.reducer),
+
+    // nannies: nanniesSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

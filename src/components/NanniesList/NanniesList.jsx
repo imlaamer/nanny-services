@@ -5,24 +5,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../uikit/Button/Button';
 import NannyCard from '../NannyCard/NannyCard';
 
-import {
-  increaseFavsPage,
-  increasePage,
-} from '../../redux/nannies/nanniesSlice';
-import {
-  getNanniesData,
-  getSortedNanniesData,
-} from '../../redux/nannies/nanniesOperations';
+// import {
+//   // increaseFavsPage,
+//   increasePage,
+// } from '../../redux/nannies/nanniesSlice';
+import // getNanniesData,
+// getSortedNanniesData,
+'../../redux/nannies/nanniesOperations';
 import {
   selectFilter,
   selectIsLoadMore,
+  // selectLoading,
   selectIsLoading,
-  selectPage,
+  // selectPage,
 } from '../../redux/nannies/nanniesSelectors';
-import { selectFavorites } from '../../redux/auth/authSelectors';
+// import { selectFavorites } from '../../redux/auth/authSelectors';
 import { limit } from '../../helpers/constants';
 
 import s from './NanniesList.module.css';
+import { getNannies, getSortedNannies } from '../../redux/nannies/nanniesOperations';
 
 const NanniesList = ({ nannies, isFavoritesPage, favorites }) => {
   const dispatch = useDispatch();
@@ -30,24 +31,29 @@ const NanniesList = ({ nannies, isFavoritesPage, favorites }) => {
   const isLoadMore = useSelector(selectIsLoadMore);
   const isLoading = useSelector(selectIsLoading);
   const filter = useSelector(selectFilter);
-  const page = useSelector(selectPage);
-  const visibleNannies = limit * page;
+  // const page = useSelector(selectPage);
+  // const visibleNannies = limit * page;
+
+  // const filter = 'a-to-z'; //-
 
   const handleLoadMore = () => {
     if (!isFavoritesPage) {
-      //!filter ||
-      if (filter === 'all') {
-        dispatch(getNanniesData());
-      }
-      if (!filter || filter !== 'all') {
-        dispatch(getSortedNanniesData(isFavoritesPage));
-      }
-      dispatch(increasePage()); //послідовність ? можна першим?
+      dispatch(getSortedNannies())
+        // dispatch(getNannies())
+        .unwrap()
+        .then((data) => {});
+      // if (filter === 'all') {
+      //   dispatch(getNanniesData());
+      // }
+      // if (!filter || filter !== 'all') {
+      //   dispatch(getSortedNanniesData(isFavoritesPage));
+      // }
+      // dispatch(increasePage()); //послідовність ? можна першим?
     }
-    //---------------favs
-    if (isFavoritesPage) {
-      dispatch(increaseFavsPage());
-    }
+    // //---------------favs
+    // if (isFavoritesPage) {
+    //   dispatch(increaseFavsPage());
+    // }
   };
 
   return (

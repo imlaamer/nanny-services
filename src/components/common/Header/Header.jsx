@@ -5,7 +5,7 @@ import Container from '../Container/Container';
 import Navigation from './Navigation/Navigation';
 import BurgerMenu from '../../BurgerMenu/BurgerMenu';
 
-// import { selectIsLoading } from '../../../redux/items/itemsSelectors';
+
 
 import './Header.css';
 

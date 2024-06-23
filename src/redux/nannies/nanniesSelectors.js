@@ -17,7 +17,6 @@ export const selectFavsPage = createSelector(
   (nannies) => nannies.favsPage
 );
 
-
 export const selectLastValue = createSelector(
   selectAllNannies,
   (nannies) => nannies.lastValue

@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import Icon from '../../Icon/Icon';
 import s from './User.module.css';
-import { selectUser } from '../../../../redux/auth/authSelectors';
+import { selectUserName } from '../../../../redux/auth/authSelectors';
 
 const User = () => {
-  const user = useSelector(selectUser);
+  const username = useSelector(selectUserName);
 
   return (
     <div className={s.userWrapper}>
@@ -17,7 +17,7 @@ const User = () => {
           height="24"
         />
       </div>
-      <p className={s.userName}>{user.username}</p>
+      <p className={s.userName}>{username}</p>
     </div>
   );
 };
