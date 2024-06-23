@@ -9,7 +9,6 @@ export const setQueryParams = (filter, limit, lastValue) => {
     case 'a-to-z':
       if (!lastValue) {
         queryParams = `orderBy="name"&limitToFirst=${limit}&startAfter=${lastValue}`;
-
         break;
       }
       queryParams = `orderBy="name"&limitToFirst=${limit}&startAfter="${lastValue}"`;

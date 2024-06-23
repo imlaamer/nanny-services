@@ -12,7 +12,7 @@ import {
   selectFavorites,
   selectNannies,
 } from '../../redux/nannies/nanniesSelectors';
-import { getSortedFavsData } from '../../redux/nannies/nanniesOperations';
+// import { getSortedFavsData } from '../../redux/nannies/nanniesOperations';
 
 import s from './FavoritesPage.module.css';
 
@@ -28,7 +28,7 @@ const FavoritesPage = () => {
   }, [dispatch, isFavoritesPage]);
 
   useEffect(() => {
-    dispatch(getSortedFavsData());
+    // dispatch(getSortedFavsData());
   }, [dispatch]);
 
   return (
