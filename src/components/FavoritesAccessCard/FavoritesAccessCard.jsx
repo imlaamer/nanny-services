@@ -1,6 +1,5 @@
 import Button from '../../uikit/Button/Button';
 import Container from '../common/Container/Container';
-
 import s from './FavoritesAccessCard.module.css';
 
 const FavoritesAccessCard = ({ onClose }) => {

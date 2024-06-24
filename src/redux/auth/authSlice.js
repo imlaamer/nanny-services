@@ -1,25 +1,22 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
-  registerUser,
-  loginUser,
-  logoutUser,
-  refreshUser,
-  setUser,
+  signUp,
+  signIn,
   getUser,
-  // resetUser,
+  refreshToken,
+  updateProfile,
 } from './authOperations';
 
 const initialState = {
   user: {
-    id: null,
     username: null,
     email: null,
-    favorites: [], //id
   },
-  isLoggedIn: false,
-  isRefreshing: false,
-  token: '',
+  token: null,
+  localId: null,
+  refreshToken: null, 
   loading: false,
+  loadingUser: false, 
   error: null,
 };
 
@@ -27,105 +24,69 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    resetUser: () => {
-      return initialState;
-    },
-    // updateFavorites: (state, { payload }) => {
-    //   state.user.favorites = [...state.user.favorites, payload];
-    // },
-    removeFromFavorites: (state, { payload }) => {
-      const index = state.user.favorites.findIndex(
-        (fav) => fav.id === payload //payload = id
-      );
-      state.user.favorites.splice(index, 1);
-    },
+    signOut: () => initialState,
   },
   extraReducers: (builder) => {
     builder
-      // ---------------  SET USER - sign up  ------------
-      .addCase(setUser.fulfilled, (state, { payload }) => {
+      .addCase(signUp.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.isLoggedIn = true;
-        state.user = payload.user;
-        state.token = payload.token;
+        state.user.email = payload.email;
+        state.token = payload.idToken;
+        state.refreshToken = payload.refreshToken;
+        state.localId = payload.localId;
       })
-      // ---------------  GET USER - sign in ------------
-      .addCase(getUser.fulfilled, (state, { payload }) => {
+      .addCase(updateProfile.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.isLoggedIn = true;
-        // state.user = payload.user;
-        state.user = { ...payload.user, favorites: null }; //?
-
-        state.token = payload.token;
+        state.user.username = payload.displayName;
       })
-      //--------------- REFRESH  ------------------
-      .addCase(refreshUser.pending, (state) => {
-        state.isRefreshing = true;
+      .addCase(signIn.fulfilled, (state, { payload }) => {
         state.loading = false;
+        state.user.email = payload.email;
+        state.user.username = payload.displayName;
+        state.token = payload.idToken;
+        state.refreshToken = payload.refreshToken;
+        state.localId = payload.localId;
+      })
+      .addCase(getUser.pending, (state) => {
         state.error = null;
+        state.loadingUser = true;
       })
-      //-------------- RESET USER - logout ------------------
-      // .addCase(resetUser.fulfilled, () => {
-      //   return initialState;
-      // })
-
-      // ---------------  REGISTER  ------------
-      .addCase(registerUser.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.isLoggedIn = true;
-        state.user = payload.user;
-        state.token = payload.token;
+      .addCase(getUser.fulfilled, (state, { payload }) => {
+        state.loadingUser = false;
+        state.user.email = payload.email;
+        state.user.username = payload.displayName;
+        state.localId = payload.localId;
       })
-      // --------------  LOGIN  ----------------
-      .addCase(loginUser.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.isLoggedIn = true;
-        state.user = payload.user;
-        state.token = payload.token;
+      .addCase(getUser.rejected, (state, { payload }) => {
+        state.error = payload;
+        state.loadingUser = false;
+        state.token = null;
       })
-      //-------------- LOGOUT ------------------
-      .addCase(logoutUser.fulfilled, () => {
-        return initialState;
+      .addCase(refreshToken.fulfilled, (state, { payload }) => {
+        state.loadingUser = false;
+        state.token = payload.id_token;
+        state.refreshToken = payload.refresh_token;
       })
-
-      .addCase(refreshUser.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.isLoggedIn = true;
-        state.isRefreshing = false;
-        state.user = { ...state.user, ...payload };
+      .addCase(refreshToken.rejected, (state, { payload }) => {
+        state.error = payload;
+        state.loadingUser = false;
+        state.token = null;
+        state.refreshToken = null;
       })
-      .addCase(refreshUser.rejected, (state) => {
-        // state.isRefreshing = false;
-        return initialState; // ?
-      })
-
       .addMatcher(
-        //pending
         isAnyOf(
-          registerUser.pending,
-          loginUser.pending,
-          logoutUser.pending,
-
-          setUser.pending,
-          getUser.pending
-          // resetUser.pending
+          signUp.pending,
+          signIn.pending,
+          refreshToken.pending,
+          updateProfile.pending
         ),
         (state) => {
           state.error = null;
           state.loading = true;
         }
       )
-      //rejected
       .addMatcher(
-        isAnyOf(
-          registerUser.rejected,
-          loginUser.rejected,
-          logoutUser.rejected,
-
-          setUser.rejected,
-          getUser.rejected
-          // resetUser.rejected
-        ),
+        isAnyOf(signUp.rejected, signIn.rejected, updateProfile.rejected),
         (state, action) => {
           state.error = action.payload;
           state.loading = false;
@@ -134,5 +95,4 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetUser, updateFavorites, removeFromFavorites } =
-  authSlice.actions;
+export const { signOut } = authSlice.actions;

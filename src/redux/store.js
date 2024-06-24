@@ -9,22 +9,26 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { customMiddlewareLogger } from './Middleware/customMiddlewareLogger';
 import { authSlice } from '../redux/auth/authSlice';
 import { nanniesSlice } from './nannies/nanniesSlice';
-
 import storage from 'redux-persist/lib/storage';
 
-const persistConfig = {
+const persistNanniesConfig = {
+  key: 'nannies', 
+  storage,
+  whitelist: ['filter', 'favorites'],
+};
+
+const persistAuthConfig = {
   key: 'auth',
   storage,
-  whitelist: ['token', 'user'],
+  whitelist: ['token', 'refreshToken'], 
 };
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(persistConfig, authSlice.reducer),
-    nannies: nanniesSlice.reducer, 
+    auth: persistReducer(persistAuthConfig, authSlice.reducer),
+    nannies: persistReducer(persistNanniesConfig, nanniesSlice.reducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -32,7 +36,5 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  //.concat(customMiddlewareLogger),
-  // devTools: import.meta.env.VITE_NODE_ENV !== 'production',
 });
 export const persistor = persistStore(store);

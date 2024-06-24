@@ -7,12 +7,10 @@ const EyeBtn = () => {
   const [isOpenEye, setIsOpenEye] = useState(false);
 
   const handleToggleEye = (e) => {
+    setIsOpenEye(!isOpenEye);
     if (isOpenEye) {
-      setIsOpenEye(false);
       e.currentTarget.previousElementSibling.type = 'password';
-    }
-    if (!isOpenEye) {
-      setIsOpenEye(true);
+    } else {
       e.currentTarget.previousElementSibling.type = 'text';
     }
   };

@@ -1,20 +1,19 @@
-import { Route, Routes } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-
-import SharedLayout from './components/common/SharedLayout/SharedLayout';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { ToastContainer} from 'react-toastify';
 
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
+import SharedLayout from './components/common/SharedLayout/SharedLayout';
+import Loader from './components/common/Loader/Loader';
+
+import {
+  selectLoadingUser,
+} from './redux/auth/authSelectors';
+import { getUser } from './redux/auth/authOperations';
 
 import './assets/styles/global.module.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { refreshUser } from './redux/auth/authOperations';
-import { selectRefreshingStatus } from './redux/auth/authSelectors';
-import Loader from './components/common/Loader/Loader';
-import { getAuth, getIdToken, onAuthStateChanged } from 'firebase/auth';
-import { child, get, ref } from 'firebase/database';
-import { db } from './firebase';
 
 const HomePage = lazy(() => import('pages/HomePage/HomePage'));
 const NanniesPage = lazy(() => import('pages/NanniesPage/NanniesPage'));
@@ -23,35 +22,13 @@ const ErrorPage = lazy(() => import('pages/ErrorPage/ErrorPage'));
 
 const App = () => {
   const dispatch = useDispatch();
-
-  const refreshingStatus = useSelector(selectRefreshingStatus);
+  const isLoadingUser = useSelector(selectLoadingUser);
 
   useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        return;
-      }
-      const token = await getIdToken(user);
-      if (!token) {
-        return toast.error('No token');
-      }
-      const dbRef = ref(db);
-      const snapshot = await get(child(dbRef, `users/${user.uid}`));
-      if (!snapshot.exists()) {
-        return toast.error('No user data');
-      }
-      const { email, username, favorites: newFavorites = [] } = snapshot.val();
-      const favorites = Object.values(newFavorites);
-      const data = { email, username, favorites, id: user.uid };
+    dispatch(getUser());
+  }, [dispatch]); 
 
-      dispatch(refreshUser(data)); //token  -?
-    });
-
-    return () => unsubscribe();
-  }, [dispatch]);
-
-  if (refreshingStatus) {
+  if (isLoadingUser) {
     return <Loader />;
   }
 

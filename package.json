@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "antd": "^5.18.0",
+    "axios": "^1.7.2",
     "dayjs": "^1.11.11",
     "firebase": "^10.12.2",
     "framer-motion": "10.16.4",

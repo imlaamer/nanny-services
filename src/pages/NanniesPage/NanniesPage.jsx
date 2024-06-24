@@ -1,21 +1,17 @@
 import { useLocation } from 'react-use';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 
 import Container from '../../components/common/Container/Container';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import NanniesList from '../../components/NanniesList/NanniesList';
 
+import { resetNannies } from '../../redux/nannies/nanniesSlice';
 import {
-  getSortedNanniesData,
-} from '../../redux/nannies/nanniesOperations';
-import {
-  resetNannies,
-} from '../../redux/nannies/nanniesSlice';
-import {
+  selectFavorites,
   selectNannies,
 } from '../../redux/nannies/nanniesSelectors';
-import { selectFavorites } from '../../redux/auth/authSelectors';
+import { getSortedNannies } from '../../redux/nannies/nanniesOperations';
 
 import s from './NanniesPage.module.css';
 
@@ -25,14 +21,14 @@ const NanniesPage = () => {
   const isFavoritesPage = location.pathname === '/favorites';
   const favorites = useSelector(selectFavorites);
   const nannies = useSelector(selectNannies);
- 
+
   useEffect(() => {
     dispatch(resetNannies());
   }, [dispatch, isFavoritesPage]);
 
   useEffect(() => {
-    dispatch(getSortedNanniesData());
-  }, [dispatch]); 
+    dispatch(getSortedNannies());
+  }, [dispatch]);
 
   return (
     <section className={s.nannies}>

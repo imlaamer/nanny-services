@@ -1,45 +1,40 @@
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
-import { useState } from 'react';
 
 import Button from '../../../uikit/Button/Button';
 import Input from '../../../uikit/Input/Input';
 import Textarea from '../../../uikit/Textarea/Textarea';
 import Container from '../../common/Container/Container';
-// import Icon from '../../common/Icon/Icon';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-
 import appointmentFormValidationSchema from '../../../schemas/appointmentFormValidationSchema';
 
 import './AntD.css';
 import s from './AppointmentForm.module.css';
 
-const AppointmentForm = ({ name, avatar }) => {
-  const [selectedTime, setSelectedTime] = useState(dayjs());
+const AppointmentForm = ({ name, avatar, handleCloseModal }) => {
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(appointmentFormValidationSchema),
+    defaultValues: {
+      time: '00:00',
+    },
   });
 
   const onSubmitHandler = (data) => {
-    console.log({ data });
-    reset();
+    const body = { data, nanny: name };
+    toast.success('Appointment created successfully.');
+    handleCloseModal();
   };
-
-  // const formatTime = (dateTimeStr) => {
-
-  // };
-
-  // const handleChange = () => {
-
-  // };
 
   return (
     <Container className="auth-container">
@@ -70,7 +65,6 @@ const AppointmentForm = ({ name, avatar }) => {
             <div className={s.errorMessageBox}>
               <Input
                 type="address"
-                // name="address"
                 placeholder="Address"
                 {...register('address')}
                 className={
@@ -88,7 +82,6 @@ const AppointmentForm = ({ name, avatar }) => {
             <div className={s.errorMessageBox}>
               <Input
                 type="tel"
-                // name="tel"
                 placeholder="+380"
                 {...register('tel')}
                 className={
@@ -106,7 +99,6 @@ const AppointmentForm = ({ name, avatar }) => {
             <div className={s.errorMessageBox}>
               <Input
                 type="text"
-                // name="age"
                 placeholder="Child`s age"
                 {...register('age')}
                 className={
@@ -121,59 +113,35 @@ const AppointmentForm = ({ name, avatar }) => {
               />
             </div>
 
-            {/* <label>
-            <Input type="time" name="time" placeholder="00:00" />
-          </label> */}
-
             <div className={s.errorMessageBox}>
-              <TimePicker
-                className="input customInput appointmentWrappedInput"
-                // {...register('time')}
-                // className={
-                //   errors.time?.message
-                //     ? 'errorInput input customInput appointmentWrappedInput'
-                //     : 'input customInput appointmentWrappedInput'
-                // }
-                // name="time"
-                //00:00
-                defaultValue={dayjs()}
-                value={dayjs(selectedTime, 'HH:mm')}
-                onCalendarChange={(value) => {
-                  const timeString = dayjs(value).format('HH:mm');
-                  setSelectedTime(timeString);
-                  console.log(timeString);
-                }}
-                format="HH:mm"
-                minuteStep="5"
-                showNow={false}
-                // value={
-                //   isEditable
-                //     ? dayjs(formatTime(time), 'h:mm A')
-                //     : dayjs(time, 'h:mm A')
-                // }
-                // onChange={(value) => {
-                //   setIsEditable(true);
-                //   setTime(dayjs(value));
-                // }}
-                // value={
-                //   isEditable
-                //     ? dayjs(formatTime(time), 'h:mm A')
-                //     : dayjs(defaultTime, 'h:mm A')
-                // }
-                // onChange={(value) =>
-                //   isEditable
-                //     ? setTime(dayjs(value))
-                //     : setDefaultTime(dayjs(value).format('h:mm A'))
-                // }
+              <Controller
+                name="time"
+                control={control}
+                defaultValue={dayjs().format('HH:mm')}
+                render={({ field }) => (
+                  <TimePicker
+                    className="input customInput appointmentWrappedInput"
+                    value={dayjs(field.value, 'HH:mm')}
+                    onCalendarChange={(time) => {
+                      const formattedTime = time ? time.format('HH:mm') : '';
+                      field.onChange(formattedTime);
+                    }}
+                    format="HH:mm"
+                    minuteStep="5"
+                    showNow={false}
+                  />
+                )}
               />
-              {/* <ErrorMessage errorMessage={errors.time?.message} className='appointmentErrMessage'  /> */}
+              <ErrorMessage
+                errorMessage={errors.time?.message}
+                className="appointmentErrMessage"
+              />
             </div>
           </div>
 
           <div className={s.errorMessageBox}>
             <Input
               type="email"
-              // name="email"
               placeholder="Email"
               {...register('email')}
               className={
@@ -191,7 +159,6 @@ const AppointmentForm = ({ name, avatar }) => {
           <div className={s.errorMessageBox}>
             <Input
               type="name"
-              // name="username"
               placeholder="Father's or mother's name"
               {...register('username')}
               className={
@@ -207,21 +174,8 @@ const AppointmentForm = ({ name, avatar }) => {
           </div>
 
           <div className={s.lastErrorMessageBox}>
-            {/* <Input
-            type="text"
-            // name="comment"
-            placeholder="Comment"
-            {...register('comment')}
-            className={
-              errors.comment?.message
-                ? 'errorInput appointmentWrappedInput'
-                : 'appointmentWrappedInput'
-            }
-          /> */}
-
             <Textarea
               form="appointment-form"
-              // name="comment"
               placeholder="Comment"
               {...register('comment')}
               className={
@@ -240,8 +194,7 @@ const AppointmentForm = ({ name, avatar }) => {
             type="submit"
             title="Send"
             className="formSendBtn"
-            //   loading={loadingSave}
-            //   disabled={loadingSave}
+            disabled={isDisabled}
           />
         </form>
       </div>

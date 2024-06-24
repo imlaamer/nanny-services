@@ -37,8 +37,6 @@ export const dropdownStyles = {
   dropdownIndicator: (baseStyles, state) => ({
     ...baseStyles,
     color: 'var(--primary-white)',
-    // transform: state.isFocused ? 'rotate(180deg)' : 'rotate(0)',
-    // transition: 'var(--transition)',
     ':hover': {
       color: 'var(--primary-white)',
     },

@@ -1,157 +1,125 @@
+import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import {
-  createUserAndSetData,
-  login,
-  logout,
-  refreshAndGetCurrentUser,
-} from '../../services/auth-api';
-import { child, get, ref, set } from 'firebase/database';
-import { db } from '../../firebase';
 
+const BASE_URL = import.meta.env.VITE_USER_BASE_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
-export const setUser = createAsyncThunk(
-  'auth/setUser',
-  async (data, ThunkAPI) => {
-    const { id, token, email, username, favorites } = data;
+export const signUp = createAsyncThunk(
+  'auth/signUp',
+  async (credentials, { rejectWithValue }) => {
+    const body = { ...credentials, returnSecureToken: true };
     try {
-      await set(ref(db, 'users/' + id), {
-        username,
-        email,
-      });
-      return {
-        user: {
-          id,
-          username,
-          email,
-          favorites,
-        },
-        token,
-      };
-    } catch (error) {
-      toast.error(error?.message);
-      return ThunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const getUser = createAsyncThunk('auth/getUser', async (data, ThunkAPI) => {
-  const { id, token } = data;
-  try {
-    const dbRef = ref(db);
-    const snapshot = await get(child(dbRef, `users/${id}`));
-    const { email, username, favorites = [] } = snapshot.val(); //favorites 
-    return {
-      user: {
-        id,
-        username,
-        email,
-        favorites,
-      },
-      token,
-    };
-  } catch (error) {
-    toast.error(error?.message);
-    return ThunkAPI.rejectWithValue(error.message);
-  }
-});
-
-export const refreshUser = createAsyncThunk(
-  'auth/refreshUser',
-  async (data, thunkAPI) => {
-    try {
+      const { data } = await axios.post(
+        `${BASE_URL}:signUp?key=${API_KEY}`,
+        body
+      );
       return data;
     } catch (error) {
-      toast.error(error?.message);
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-//-------------------------
-
-export const registerUser = createAsyncThunk(
-  'auth/registerUser',
-  async (credentials, ThunkAPI) => {
-    try {
-      const user = await createUserAndSetData(credentials);
-      toast.success('You`ve been successfully registered!');
-      return user;
-    } catch (error) {
-      const errorCode = error?.code;
-
-      if (errorCode === 'auth/email-already-in-use') {
-        toast.error('The provided email is already in use by an existing user');
+      const errMsg = error.response.data.error.message;
+    
+      if (errMsg === 'EMAIL_EXISTS') {
+        toast.error('The email address is already in use by another account');
+      } else if (errMsg === 'TOO_MANY_ATTEMPTS_TRY_LATER') {
+        toast.error(
+          'We have blocked all requests from this device due to unusual activity. Try again later.'
+        );
       } else {
-        toast.error(error?.message);
+        toast.error(error.response.data.error.message);
       }
-      return ThunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.response.data.error.message);
     }
   }
 );
 
-export const loginUser = createAsyncThunk(
-  'auth/loginUser',
-  async (credentials, ThunkAPI) => {
+export const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async (credentials, { rejectWithValue }) => {
+    const body = { ...credentials, returnSecureToken: true };
     try {
-      const user = await login(credentials);
-      toast.success('Welcome!');
-      return user;
+      const { data } = await axios.post(
+        `${BASE_URL}:update?key=${API_KEY}`,
+        body
+      );
+      return data;
     } catch (error) {
-      // const errorCode = error?.code;
-      //'auth/wrong-password'
-      // toast.error(
-      //   'Invalid login or password. Also, please check if you have registered.'
-      // );
-      toast.error(error?.messsage);
-      return ThunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.response.data.error.message);
     }
   }
 );
 
-export const logoutUser = createAsyncThunk(
-  'auth/logoutUser',
-  async (_, ThunkAPI) => {
+export const signIn = createAsyncThunk(
+  'auth/signIn',
+  async (credentials, { rejectWithValue }) => {
+    const body = { ...credentials, returnSecureToken: true };
     try {
-      await logout();
-      return;
+      const { data } = await axios.post(
+        `${BASE_URL}:signInWithPassword?key=${API_KEY}`,
+        body
+      );
+      return data;
     } catch (error) {
-      return ThunkAPI.rejectWithValue(error.message);
+      const errMsg = error.response.data.error.message;
+      if (errMsg === 'INVALID_LOGIN_CREDENTIALS') {
+        toast.error(
+          'Invalid login or password. Also, please check if you have registered.'
+        );
+      } else {
+        toast.error(error.response.data.error.message);
+      }
+      return rejectWithValue(error.response.data.error.message);
     }
   }
 );
 
-// export const refreshUser = createAsyncThunk(
-//   'auth/refreshUser',
-//   async (_, thunkAPI) => {
-//     try {
-//       const state = thunkAPI.getState();
-//       const id = state.auth.user.id; //or token
-//       if (!id) {
-//         return thunkAPI.rejectWithValue('No id');
-//       } //?
-//       const user = await refreshAndGetCurrentUser(id, thunkAPI);
-//       // console.log(user, 'user from thunk');
-//       return user;
-//     } catch (error) {
-//       toast.error(error?.message);
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+export const getUser = createAsyncThunk(
+  'auth/getUser',
+  async (token, thunkApi) => {
+    const persistedToken = token ?? thunkApi.getState().auth.token;
 
-// export const updateUserData = createAsyncThunk(
-//   'auth/updateUserData',
-//   async (userData, thunkApi) => {
-//     try {
-//       const state = thunkApi.getState();
-//       const token = state.auth.token;
-//       const { data } = await apiUpdateUserData(userData, token);
-//       toast.success('Your data were successfully updated!');
-//       return data;
-//     } catch (error) {
-//       toast.error(error.response?.data?.message);
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
+    if (!persistedToken) {
+      return thunkApi.rejectWithValue();
+    }
+    try {
+      const body = { idToken: persistedToken };
+      const { data } = await axios.post(
+        `${BASE_URL}:lookup?key=${API_KEY}`,
+        body
+      );
+      return data.users[0];
+    } catch (error) {
+      const errMsg = error.response.data.error.message;
+      if (errMsg === 'INVALID_ID_TOKEN') {
+        thunkApi.dispatch(refreshToken());
+      }
+      return thunkApi.rejectWithValue(errMsg);
+    }
+  }
+);
+
+export const refreshToken = createAsyncThunk(
+  'auth/refreshToken',
+  async (_, thunkApi) => {
+    try {
+      const persistedRefreshToken = thunkApi.getState().auth.refreshToken;
+
+      if (!persistedRefreshToken) {
+        return thunkApi.rejectWithValue();
+      }
+
+      const body = {
+        grant_type: 'refresh_token',
+        refresh_token: persistedRefreshToken,
+      };
+      const { data } = await axios.post(
+        `https://securetoken.googleapis.com/v1/token?key=${API_KEY}`,
+        body
+      );
+      thunkApi.dispatch(getUser(data.id_token));
+      return data;
+    } catch (error) {
+      const errMsg = error.response.data.error.message;
+      return thunkApi.rejectWithValue(errMsg);
+    }
+  }
+);

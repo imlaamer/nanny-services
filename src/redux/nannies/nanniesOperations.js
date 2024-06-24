@@ -1,74 +1,41 @@
+import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import {
-  getFavorites,
-  getNannies,
-  getSortedFavorites, 
-  getSortedNannies,
-} from '../../services/nannies-api';
+import { limit } from '../../helpers/constants';
+import { setQueryParams } from '../../helpers/setQueryParams';
+import { sortNannies } from '../../helpers/sortNannies';
+import { setLastValuePayload } from '../../helpers/setLastValuePayload';
 
-//--------------nannies
-export const getNanniesData = createAsyncThunk(
-  'nannies/getNanniesData',
-  async (_, ThunkAPI) => {
-    try {
-      const { lastValue } = ThunkAPI.getState().nannies;
-      const data = await getNannies(lastValue);
-      return data;
-    } catch (error) {
-      toast.error(error?.message);
-      return ThunkAPI.rejectWithValue(error?.message);
-    }
-  }
-);
+const BASE_URL = import.meta.env.VITE_DATABASE_URL;
+const API_ENDPOINT = 'nannies';
 
-export const getSortedNanniesData = createAsyncThunk(
-  'nannies/getSortedNanniesData',
+export const getSortedNannies = createAsyncThunk(
+  'nannies/getSortedNannies',
   async (_, ThunkAPI) => {
+    let items = [];
+    const { lastValue, filter } = ThunkAPI.getState().nannies;
+    const queryParams = setQueryParams(filter, limit, lastValue);
     try {
-      const { filter, lastValue } = ThunkAPI.getState().nannies;
-      const data = await getSortedNannies(
-        filter,
-        lastValue,
+      const { data } = await axios.get(
+        `${BASE_URL}/${API_ENDPOINT}.json/?${queryParams}`
       );
-      return data;
+      if (!data) return [];
+      let arr = [];
+      if (Array.isArray(data)) {
+        data.map((item) => {
+          if (item !== null) {
+            arr.push(item);
+          }
+        });
+      } else {
+        arr = Object.values(data);
+      }
+      const property = setLastValuePayload(filter);
+      items = sortNannies(filter, arr);
+      return { items, property };
     } catch (error) {
-      toast.error(error?.message);
-      return ThunkAPI.rejectWithValue(error?.message);
-    }
-  }
-);
-//----------------favorites
-export const getFavoritesData = createAsyncThunk(
-  'nannies/getFavoritesData',
-  async (_, ThunkAPI) => {
-    try {
-      const { lastValue } = ThunkAPI.getState().nannies;
-      const {
-        user: { id },
-      } = ThunkAPI.getState().auth;
-      const data = await getFavorites(lastValue,  id);
-      return data;
-    } catch (error) {
-      toast.error(error?.message);
-      return ThunkAPI.rejectWithValue(error?.message);
-    }
-  }
-);
-
-export const getSortedFavsData = createAsyncThunk(
-  'nannies/getSortedFavsData',
-  async (_, ThunkAPI) => {
-    const {
-      user: { id },
-    } = ThunkAPI.getState().auth;
-    try {
-      const { filter, lastValue } = ThunkAPI.getState().nannies;
-      const data = await getSortedFavorites(filter, lastValue, id);
-      return data;
-    } catch (error) {
-      toast.error(error?.message);
-      return ThunkAPI.rejectWithValue(error?.message);
+      toast.error(error.response.data.error.message);
+      return ThunkAPI.rejectWithValue(error.response.data.error.message);
     }
   }
 );

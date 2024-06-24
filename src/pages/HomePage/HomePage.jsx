@@ -1,27 +1,17 @@
+import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Container from '../../components/common/Container/Container';
 import Icon from '../../components/common/Icon/Icon';
-import Button from '../../uikit/Button/Button';
-import Modal from '../../components/common/Modal/Modal';
+
+import { resetNannies } from '../../redux/nannies/nanniesSlice';
 
 import s from './HomePage.module.css';
-import { useDispatch } from 'react-redux';
-import { resetNannies } from '../../redux/nannies/nanniesSlice';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-
   const [isHover, setIsHover] = useState(false);
-
-  // const handleOpenModal = () => {
-  //   setIsModalOpen(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setIsModalOpen(false);
-  // };
 
   const handleHover = () => {
     setIsHover(true);
@@ -51,11 +41,6 @@ const HomePage = () => {
             onMouseOver={handleHover}
             onMouseLeave={handleResetHover}
           >
-            {/* <Button
-            title="Get started"
-            className="heroBtn"
-            onClick={handleOpenModal}
-          > */}
             <p>Get started</p>
             {!isHover && (
               <Icon
@@ -74,18 +59,12 @@ const HomePage = () => {
                 height="15"
                 stroke="#fbfbfb"
                 fill="#fbfbfb"
-                // className="hero-arrow"
               />
             )}
-
-            {/* </Button>
-          {isModalOpen && <Modal onClose={handleCloseModal} />} */}
-            {/* arrow-up-right */}
           </NavLink>
         </Container>
       </div>
       <div className={s.rightBox}>
-        {/* <Container className="hero-img-container"> */}
         <div className={s.heroImgContainer}>
           <div className={s.statisticWrapper}>
             <div className={s.statisticIconBox}>
@@ -103,8 +82,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
-        {/* </Container> */}
       </div>
     </section>
   );

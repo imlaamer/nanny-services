@@ -1,5 +1,4 @@
 import Spinner from '../../components/common/Spinner/Spinner';
-
 import s from './Button.module.css';
 
 const Button = ({
@@ -23,7 +22,6 @@ const Button = ({
       type={type}
       onClick={onClick}
       className={buttonClasses}
-      // disabled={isDisabled}
       disabled={disabled}
       id={id}
       {...rest}
@@ -36,19 +34,3 @@ const Button = ({
 };
 
 export default Button;
-
-{
-  /* НЕ працює спінер по такій умові хоча  loading стає тру */
-}
-
-{
-  /* {loading && <Spinner />}
-      {children}
-      {!loading && title} */
-}
-{
-  /* {(loading || disabled) && <Spinner color="#fff" width="10" heigh="10" />} */
-}
-{
-  /* {!loading && !|| disabled && title} */
-}

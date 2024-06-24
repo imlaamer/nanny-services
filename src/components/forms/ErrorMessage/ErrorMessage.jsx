@@ -1,7 +1,7 @@
 import s from './ErrorMessage.module.css';
-const ErrorMessage = ({ touched, errorMessage, className }) => {
+
+const ErrorMessage = ({ errorMessage, className }) => {
   return (
-    // touched &&
     errorMessage && (
       <div className={`${s[className]} ${s.errorMessage}`}>{errorMessage}</div>
     )
@@ -9,4 +9,3 @@ const ErrorMessage = ({ touched, errorMessage, className }) => {
 };
 export default ErrorMessage;
 
-// 'errorMessage',

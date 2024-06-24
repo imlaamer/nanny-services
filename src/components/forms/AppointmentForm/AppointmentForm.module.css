@@ -6,7 +6,6 @@
 .title {
   margin-bottom: 20px;
   font-size: clamp(22px, 2vw + 1rem, 40px);
-  /* font-size: clamp(28px, 5vw + 1rem, 40px); */
   line-height: 1.2;
   letter-spacing: -0.8px;
   max-width: calc(100% - 30px);
@@ -48,9 +47,6 @@
   height: 44px;
 }
 
-/* --------- form ---- */
-/*  винести ще й тільки  форму  окремо  в компонент?  */
-
 .errorMessageBox {
   margin-bottom: 16px;
 }
@@ -87,7 +83,6 @@
   }
 
   .scrollContainer {
-    /* max-height: unset; */
     overflow-y: auto;
   }
 
