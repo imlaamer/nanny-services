@@ -97,7 +97,7 @@ The application consists of 3 main pages:
     a meeting with a nanny.
   - Form validation: handled by React Hook Form and Yup.
 
-- **Modal windows**
+- **Modal Windows**
   - Modal window closes on clicking the close button, backdrop, or pressing the
     Esc key.
 
