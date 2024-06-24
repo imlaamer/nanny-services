@@ -35,7 +35,7 @@ project is a web application that allows users to browse nanny profiles, manage
 favorites, and book appointments. The application utilizes Firebase for user
 authentication and realtime database management.
 
- <img src="./public/screenshots/readme.png" width=600>
+ <img src="./public/screenshots/home-page.png" width=700>
 
 ## Pages
 
