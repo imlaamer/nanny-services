@@ -16,10 +16,12 @@ import {
 const useValidationSchema = () => {
   const baseValidationSchema = {
     email: Yup.string()
+      .trim()
       .required(REQUIRED_EMAIL_MESSAGE)
       .matches(EMAIL_REGEX, EMAIL_ERROR_MESSAGE),
 
     password: Yup.string()
+      .trim()
       .required(REQUIRED_PASSWORD_MESSAGE)
       .matches(PASSWORD_REGEX, PASSWORD_ERROR_MESSAGE),
   };
@@ -27,6 +29,7 @@ const useValidationSchema = () => {
   const signupFormSchema = Yup.object().shape({
     ...baseValidationSchema,
     username: Yup.string()
+      .trim()
       .required(REQUIRED_USER_NAME_MESSAGE)
       .matches(USER_NAME_REGEX, USER_NAME_ERROR_MESSAGE),
   });
@@ -37,5 +40,4 @@ const useValidationSchema = () => {
 
   return { signupFormSchema, signinFormSchema };
 };
-
 export default useValidationSchema;

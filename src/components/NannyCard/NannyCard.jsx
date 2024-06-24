@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { onValue, ref, remove, update } from 'firebase/database';
 import { useEffect, useRef, useState } from 'react';
 
 import Icon from '../common/Icon/Icon';
@@ -9,33 +8,24 @@ import { MoreDetails } from '../NannyCard/MoreDetails/MoreDetails';
 
 import { calculateAge } from '../../helpers/formatData';
 import {
-  // selectFavorites,
   selectIsLoggedIn,
-  // selectUserId,
 } from '../../redux/auth/authSelectors';
-import { db } from '../../firebase';
-// import { removeFromFavorites } from '../../redux/auth/authSlice';
-
-import s from './NannyCard.module.css';
-// import { removeNannieFromFavs } from '../../redux/nannies/nanniesSlice';
-import { toast } from 'react-toastify';
 import {
   addToFavorites,
   removeFromFavs,
   sortFavorites,
 } from '../../redux/nannies/nanniesSlice';
 
+import s from './NannyCard.module.css';
+
 const NannyCard = ({
   nanny,
   favorites,
   isFavoritesPage = false,
-  // isFavorite, setIsFavorite
 }) => {
   const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
-
   const [isOpenReadMore, setIsOpenReadMore] = useState(false);
-  const [isFav, setIsFav] = useState(false);
   const [isFavsAccessModalOpen, setIsFavsAccessModalOpen] = useState(false);
 
   const listRef = useRef(null);
@@ -154,7 +144,6 @@ const NannyCard = ({
 
         <div className={s.detailsWrapper}>
           {keys.map((key, index) => {
-            // винести в хелпери?
             let value = detailsBlocks[key];
             if (key === 'Characters') {
               const formattedArr = detailsBlocks[key]
@@ -162,7 +151,6 @@ const NannyCard = ({
                 .join(', ');
               value = formattedArr;
             }
-
             return (
               <div className={s.detailBox} key={index}>
                 <p className={key === 'Age' ? s.accentBorderText : ''}>
@@ -174,20 +162,19 @@ const NannyCard = ({
         </div>
 
         <p className={s.aboutText}>{about}</p>
-
         <p
           className={s.readMoreText}
           onClick={() => setIsOpenReadMore(!isOpenReadMore)}
         >
           {!isOpenReadMore ? 'Read more' : 'Hide'}
         </p>
-
         {isOpenReadMore && (
           <MoreDetails
             ref={listRef}
             reviews={reviews}
             name={name}
             avatar={avatar_url}
+      
           />
         )}
       </div>

@@ -1,11 +1,9 @@
 import { forwardRef } from 'react';
 import { useState } from 'react';
-
 import Comment from './Comment/Comment';
 import Button from '../../../uikit/Button/Button';
 import Modal from '../../common/Modal/Modal';
 import AppointmentForm from '../../forms/AppointmentForm/AppointmentForm';
-
 import s from './MoreDetails.module.css';
 
 export const MoreDetails = forwardRef(function MoreDetails(
@@ -40,11 +38,14 @@ export const MoreDetails = forwardRef(function MoreDetails(
           className="appointmentModal"
           isOpen={isModalOpen}
         >
-          <AppointmentForm name={name} avatar={avatar} />
+          <AppointmentForm
+            name={name}
+            avatar={avatar}
+            handleCloseModal={handleCloseModal}
+          />
         </Modal>
       )}
     </ul>
   );
 });
 
-// export default MoreDetails;

@@ -1,9 +1,6 @@
 .container {
   width: 100%;
   max-width: 1184px;
-  /* min-width: 280px; */
-  /* width: 280px; */
-
   padding: 0 20px;
   margin: 0px auto;
 }
@@ -12,10 +9,7 @@
   max-width: 518px;
 }
 
-/* --signup login logout modals-- */
-/* .container */
 .auth-container {
-  /* max-width: 438px; */
   padding: 0;
   color: var(--primary-dark);
   margin: 0;
@@ -39,10 +33,6 @@
   .hero-colored-container {
     margin: 0;
     margin-right: 64px;
-  }
-
-  .header-container {
-    /* position: relative; */
   }
 }
 

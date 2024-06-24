@@ -37,7 +37,6 @@
 .logBtn,
 .registerBtn {
   font-size: clamp(10px, 12px, 14px);
-  /* ?? */
 }
 
 .heroBtn {
@@ -118,17 +117,12 @@
   }
 }
 
-/* ---------btns in mob menu---- */
 @media screen and (min-width: 320px) and (max-width: 960px) {
   .navRegisterBtn,
   .navLogBtn {
     width: 100%;
     margin: 0;
     min-width: 260px;
-  }
-
-  .navRegisterBtn:hover,
-  .navRegisterBtn {
   }
 
   .navLogBtn {

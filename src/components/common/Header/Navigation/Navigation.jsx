@@ -26,8 +26,6 @@ const Navigation = ({
 
   return (
     <div className={s.logoNavWrapper}>
-      {/* {loggedInStatus && <User />} */}
-
       {!isLoggedIn && (
         <NavLink to="/" className={s.logo}>
           <img src={logo} alt="logo" />
@@ -81,7 +79,6 @@ const Navigation = ({
               id={isLoggedIn ? 'logout' : 'log'}
             />
 
-            {/*  !loggedInStatus && */}
             {isLogModalOpen && (
               <Modal
                 onClose={handleCloseModal}
@@ -106,7 +103,6 @@ const Navigation = ({
             {!isLoggedIn && (
               <Button
                 title="Sign up"
-                // title="Registration"
                 onClick={handleOpenModal}
                 className={isHomePage ? 'registerBtn' : 'whiteRegisterBtn'}
                 id="signup"

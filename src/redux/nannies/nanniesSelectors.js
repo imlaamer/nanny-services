@@ -52,8 +52,4 @@ export const selectSortedFavorites = createSelector(
   selectAllNannies,
   (nannies) => nannies.sortedFavorites
 );
-// const selectItems = (state) => state.items;
 
-// export const selectError = createSelector(selectItems, (items) => items.error);
-
-// export const selectNannies = (state) => state.nannies.nannies;

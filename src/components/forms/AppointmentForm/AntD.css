@@ -4,7 +4,6 @@
 
 .input {
   flex-basis: calc(100% / 2 - 8px);
-
   display: flex;
   align-items: center;
   padding: 16px 18px;
@@ -27,41 +26,17 @@
   max-height: 180px !important;
 }
 
-.ant-picker-panel-container .ant-picker-time-panel-container {
-  /* height: 180px !important; */
-  /* overflow: scroll; */
-}
-
 .ant-picker:is(:focus, :hover, :focus-within) {
   box-shadow: none;
   border-color: var(--primary-blue);
-}
-
-.ant-picker-dropdown .ant-picker-panel > .ant-picker-time-panel {
 }
 
 .ant-picker-dropdown .ant-picker-ranges {
   display: none;
 }
 
-/* --------Meeting time------- */
-/* якщо вдасться змінити висоту дропдавна */
-
 .ant-picker-footer {
   display: none;
-  /* position: absolute;
-  top: 0;
-  right: 0; */
-}
-
-.ant-picker-footer::after {
-  /* content: 'Meeting time';
-  color: black;
-  position: absolute;
-  top: 16px;
-  right: 0;
-  right: 40px;
-  width: 100%; */
 }
 
 .ant-picker-panel-layout {
@@ -96,7 +71,6 @@
   .ant-picker-time-panel-column
   > li.ant-picker-time-panel-cell
   .ant-picker-time-panel-cell-inner:hover {
-  /* background-color: transparent !important; */
   background-color: var(--secondary-light-green);
 }
 
@@ -104,4 +78,8 @@
   .ant-picker {
     width: unset;
   }
+}
+
+.ant-picker:hover .ant-picker-clear {
+  display: none;
 }

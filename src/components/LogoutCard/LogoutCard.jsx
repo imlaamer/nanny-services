@@ -1,9 +1,6 @@
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-
 import Button from '../../uikit/Button/Button';
 import Container from '../common/Container/Container';
-
 import { signOut } from '../../redux/auth/authSlice';
 import s from './LogoutCard.module.css';
 

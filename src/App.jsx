@@ -1,23 +1,19 @@
-import { Route, Routes } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-
-import SharedLayout from './components/common/SharedLayout/SharedLayout';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { ToastContainer} from 'react-toastify';
 
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
-
-import './assets/styles/global.module.css';
-import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from 'react-redux';
-// import { refreshUser } from './redux/auth/authOperations';
-// import { selectRefreshingStatus } from './redux/auth/authSelectors';
+import SharedLayout from './components/common/SharedLayout/SharedLayout';
 import Loader from './components/common/Loader/Loader';
 
 import {
-  selectIsLoggedIn,
   selectLoadingUser,
 } from './redux/auth/authSelectors';
 import { getUser } from './redux/auth/authOperations';
+
+import './assets/styles/global.module.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const HomePage = lazy(() => import('pages/HomePage/HomePage'));
 const NanniesPage = lazy(() => import('pages/NanniesPage/NanniesPage'));
@@ -27,12 +23,10 @@ const ErrorPage = lazy(() => import('pages/ErrorPage/ErrorPage'));
 const App = () => {
   const dispatch = useDispatch();
   const isLoadingUser = useSelector(selectLoadingUser);
-  // const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     dispatch(getUser());
-  }, [dispatch]); //isLoggedIn
-
+  }, [dispatch]); 
 
   if (isLoadingUser) {
     return <Loader />;

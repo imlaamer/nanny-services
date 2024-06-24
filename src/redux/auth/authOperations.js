@@ -41,7 +41,6 @@ export const updateProfile = createAsyncThunk(
         `${BASE_URL}:update?key=${API_KEY}`,
         body
       );
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.error.message);
@@ -61,7 +60,6 @@ export const signIn = createAsyncThunk(
       return data;
     } catch (error) {
       const errMsg = error.response.data.error.message;
-
       if (errMsg === 'INVALID_LOGIN_CREDENTIALS') {
         toast.error(
           'Invalid login or password. Also, please check if you have registered.'
@@ -69,21 +67,6 @@ export const signIn = createAsyncThunk(
       } else {
         toast.error(error.response.data.error.message);
       }
-
-      // if (errMsg === 'EMAIL_NOT_FOUND') {
-      //   toast.error(
-      //     'There is no user record corresponding to this identifier. The user may have been deleted.'
-      //   );
-      // }
-      // if (errMsg === 'INVALID_PASSWORD') {
-      //   toast.error(
-      //     'The password is invalid or the user does not have a password.'
-      //   );
-      // }
-      // if (errMsg === 'USER_DISABLED') {
-      //   toast.error('The user account has been disabled by an administrator.');
-      // }
-
       return rejectWithValue(error.response.data.error.message);
     }
   }
@@ -97,7 +80,6 @@ export const getUser = createAsyncThunk(
     if (!persistedToken) {
       return thunkApi.rejectWithValue();
     }
-
     try {
       const body = { idToken: persistedToken };
       const { data } = await axios.post(

@@ -27,10 +27,7 @@ const NanniesPage = () => {
   }, [dispatch, isFavoritesPage]);
 
   useEffect(() => {
-    dispatch(getSortedNannies())
-      .unwrap()
-      .then()
-      .catch((e) => console.log(e));
+    dispatch(getSortedNannies());
   }, [dispatch]);
 
   return (

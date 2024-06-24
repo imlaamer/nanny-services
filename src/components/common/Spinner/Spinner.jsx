@@ -1,7 +1,6 @@
 import { ThreeDots } from 'react-loader-spinner';
 
 const Spinner = ({ color = '#fff', width = 40, height = 30 }) => {
-  // console.log('Spinner');
   return (
     <ThreeDots
       visible={true}

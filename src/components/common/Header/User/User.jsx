@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import Icon from '../../Icon/Icon';
-import s from './User.module.css';
 import { selectUserName } from '../../../../redux/auth/authSelectors';
+import s from './User.module.css';
 
 const User = () => {
   const username = useSelector(selectUserName);

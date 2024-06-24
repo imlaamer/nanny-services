@@ -1,3 +1,4 @@
+import { useDispatch} from 'react-redux';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,26 +11,17 @@ import EyeBtn from '../../EyeBtn/EyeBtn';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 import useValidationSchema from '../../../schemas/authFormValidationSchema';
-import { useDispatch, useSelector } from 'react-redux';
 import {
-  // registerUser,
-  // setUser,
   signUp,
   updateProfile,
 } from '../../../redux/auth/authOperations';
-// import { selectLoading } from '../../../redux/auth/authSelectors';
-// import { useAuth } from '../../../hooks/useAuth';
 
 import s from './SignupForm.module.css';
 
 const SignupForm = ({ handleCloseModal }) => {
-  const { signupFormSchema } = useValidationSchema();
   const dispatch = useDispatch();
-
+  const { signupFormSchema } = useValidationSchema();
   const [isDisabled, setIsDisabled] = useState(false);
-  // const loading = useSelector(selectLoading);
-  //defaultValues
-  //proxy ?? чи є різниця чи стрілочна функція
 
   const {
     register,
@@ -57,14 +49,9 @@ const SignupForm = ({ handleCloseModal }) => {
         handleCloseModal();
         setIsDisabled(false);
       })
-      .catch((e) => {
+      .catch(() => {
         setIsDisabled(false);
-
-        // toast.error(error?.message);
-        //  'The provided email is already in use by an existing user' - errorCode === 'auth/email-already-in-use'
       });
-
-    // console.log(isDirty, isSubmitting, touchedFields, submitCount, isLoading);
   };
 
   return (

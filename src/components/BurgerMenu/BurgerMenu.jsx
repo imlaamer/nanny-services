@@ -2,18 +2,17 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useLockBodyScroll } from 'react-use';
+
 import Icon from '../common/Icon/Icon';
 import Button from '../../uikit/Button/Button';
 import Modal from '../common/Modal/Modal';
 import ToggleButton from './ToggleButton/ToggleButton';
-import LoginForm from '../forms/LoginForm/LoginForm';
-// import NavItem from '../Navigation/NavItem/NavItem';
-// import { navConfig } from '../../data/navigation';
-import SignupForm from '../forms/SignupForm/SignupForm';
 import LogoutCard from '../LogoutCard/LogoutCard';
 
+import LoginForm from '../forms/LoginForm/LoginForm';
+import SignupForm from '../forms/SignupForm/SignupForm';
 import { selectIsLoggedIn } from '../../redux/auth/authSelectors';
+
 import s from './BurgerMenu.module.css';
 
 const variants = {
@@ -23,23 +22,16 @@ const variants = {
       type: 'spring',
       stiffness: 40,
       damping: 20,
-      // duration: 0.0005,
-      // duration: 0.1,
     },
   },
   closed: {
     x: '100%',
-
     transition: {
       delay: 0.1,
-
-      // delay: 0.05,
       type: 'spring',
       stiffness: 450,
       damping: 40,
-      duration: 0.1, //не змінюється
-      // duration: 0.05,
-      // duration: 0.0005,
+      duration: 0.1,
     },
   },
 };
@@ -53,14 +45,7 @@ const BurgerMenu = ({
   isLogoutModalOpen,
 }) => {
   const [isOpen, setOpen] = useState(false);
-  // const [isToggleStroke, setIsToggleStroke] = useState(false);
-
-
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
-  // const loggedInStatus = auth.currentUser; //temporary !
-
-  // useLockBodyScroll(true); //- теж блокує  скрол
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -69,10 +54,8 @@ const BurgerMenu = ({
         !event.target.closest(`.${s.button}`)
       ) {
         setOpen(false);
-        // setIsToggleStroke(false);
       }
     };
-
     document.addEventListener('mousedown', handleOutsideClick);
 
     return () => {
@@ -82,26 +65,19 @@ const BurgerMenu = ({
 
   const handleOpen = (e) => {
     setOpen(false);
-
     setTimeout(() => {
       handleOpenModal(e);
     }, 200);
   };
 
-  //  ???
   return (
-    <motion.div
-      className={s.sidebar}
-      animate={isOpen ? 'open' : 'closed'}
-      // animate={{ opacity: isOpen ? 1 : 0 }}
-    >
+    <motion.div className={s.sidebar} animate={isOpen ? 'open' : 'closed'}>
       <motion.div
         className={isHomePage ? s.bg : s.notHomePageBg}
         variants={variants}
         animate={{ opacity: isOpen ? 1 : 0 }}
       >
         <nav className={s.container}>
-          {/* <div> */}
           <div>
             <Button
               onClick={handleOpen}
@@ -109,41 +85,20 @@ const BurgerMenu = ({
               className="navLogBtn"
               id={isLoggedIn ? 'logout' : 'log'}
             />
-
-            {/* {!loggedInStatus && (
-              <Button
-                onClick={handleOpen}
-                title="Log in"
-                className="navLogBtn"
-                id="log"
-              />
-            )}
-
-            {loggedInStatus && (
-              <Button
-                onClick={handleOpen}
-                title="Log out"
-                className="navLogBtn"
-                id="logout"
-              />
-            )} */}
-
-            {/* !loggedInStatus */}
             {isLogModalOpen && (
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                isOpen={isLogModalOpen} //scroll
+                isOpen={isLogModalOpen}
               >
                 <LoginForm handleCloseModal={handleCloseModal} />
               </Modal>
             )}
-            {/* && loggedInStatus */}
             {isLogoutModalOpen && (
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                isOpen={isLogoutModalOpen} //scroll
+                isOpen={isLogoutModalOpen}
               >
                 <LogoutCard handleCloseModal={handleCloseModal} />
               </Modal>
@@ -152,7 +107,6 @@ const BurgerMenu = ({
               <Button
                 onClick={handleOpen}
                 title="Sign up"
-                // title="Registration"
                 className="navRegisterBtn"
                 id="signup"
               />
@@ -161,16 +115,12 @@ const BurgerMenu = ({
               <Modal
                 onClose={handleCloseModal}
                 className="authModal"
-                isOpen={isSignupModalOpen} //scroll
+                isOpen={isSignupModalOpen}
               >
                 <SignupForm handleCloseModal={handleCloseModal} />
               </Modal>
             )}
           </div>
-          {/* <nav className={s.container}> */}
-          {/* {navConfig.map(({ id, name, path }) => (
-            <NavItem key={id} name={name} to={path} />
-          ))} */}
 
           <NavLink
             className={({ isActive }) =>
@@ -213,12 +163,9 @@ const BurgerMenu = ({
             </NavLink>
           )}
         </nav>
-        {/* </div> */}
       </motion.div>
       <ToggleButton
         setOpen={setOpen}
-        // isToggleStroke={isToggleStroke}
-        // setIsToggleStroke={setIsToggleStroke}
         isHomePage={isHomePage}
         handleCloseModal={handleCloseModal}
       />

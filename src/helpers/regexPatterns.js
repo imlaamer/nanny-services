@@ -5,11 +5,10 @@ export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const PASSWORD_REGEX = /^[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?\w\d]{8,64}$/;
 
-// export const ADRESS_REGEX
+export const TEL_REGEX = /^\+\d{12}$/;
 
-// export const TEL_REGEX
+export const AGE_REGEX = /^[\d\sа-яА-ЯіІїЇєЄґҐa-zA-Z.,\/]+$/;
 
-// export const AGE_REGEX
+export const ADDRESS_REGEX = /^[А-ЯІЇЄҐа-яіїєґA-Za-z0-9\s,'\/-]+$/;
 
-// export const TIME_REGEX  ? -
-// Yup.date().nullable().required(REQUIRED_DATE_MESSAGE);
+export const TIME_REGEX = /^(?!00:00$)([01]?[0-9]|2[0-3]):[0-5][0-9]$/;

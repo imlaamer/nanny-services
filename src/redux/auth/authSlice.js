@@ -11,14 +11,12 @@ const initialState = {
   user: {
     username: null,
     email: null,
-    // favorites: [],
   },
   token: null,
-  localId: null, //uid
+  localId: null,
   refreshToken: null, 
   loading: false,
   loadingUser: false, 
-
   error: null,
 };
 
@@ -75,10 +73,7 @@ export const authSlice = createSlice({
         state.token = null;
         state.refreshToken = null;
       })
-
-      //
       .addMatcher(
-        //pending
         isAnyOf(
           signUp.pending,
           signIn.pending,
@@ -90,7 +85,6 @@ export const authSlice = createSlice({
           state.loading = true;
         }
       )
-      //rejected
       .addMatcher(
         isAnyOf(signUp.rejected, signIn.rejected, updateProfile.rejected),
         (state, action) => {
