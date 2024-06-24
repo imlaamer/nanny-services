@@ -115,7 +115,6 @@ The application consists of 3 main pages:
 - **Framer Motion**
 - **React Loader Spinner**
 - **React Toastify**
-- **React Toastify**
 
 ## Layout and Design
 
